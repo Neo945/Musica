@@ -1,6 +1,6 @@
 const User = require('./schema');
 
-function response(req,res){
+function response(req,res){  
     res.json({message:'message from user'});
 }
 
@@ -19,12 +19,13 @@ async function addUserAsync(req,res){
         const nu = await User.create({...req.body});
         res.status(201).json(nu);
     }catch(err){
-        // console.log(err.message);
+        console.log(err.message);
         const data = Object.values(err.errors);
         let error = []
         data.forEach((ele) =>{
             error.push(ele.message);
         })
+        // console.log(err);
         res.status(403).json({message:error});
     }
 }
@@ -33,6 +34,11 @@ function getAllUser(req,res){
     User.find()
     .then(users => res.json(users))
     .catch(err => res.status(400).json('Error: ' + err));
+}
+
+async function login(req,res) {
+    const {password:pass,username:user} = req.body;
+    
 }
 
 module.exports = {
