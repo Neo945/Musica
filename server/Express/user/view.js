@@ -37,13 +37,17 @@ function getAllUser(req,res){
 }
 
 async function login(req,res) {
-    const {password:pass,username:user} = req.body;
-    
+    const {password:pass,username:username} = req.body;
+    res.cookie('jwt',await User.login(username,password),{
+        maxAge:3 * 24 * 3600 * 1000
+    })
+    res.json({mesage:'Success'});
 }
 
 module.exports = {
     response,
     addUser,
     getAllUser,
-    addUserAsync
+    addUserAsync,
+    login
 };

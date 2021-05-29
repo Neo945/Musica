@@ -4,6 +4,16 @@ const view = require('./view')
 
 // router.get('/',view.response);
 router.post('/add',view.addUserAsync);
-router.get('/',view.getAllUser);
+router.get('/users',view.getAllUser);
+router.get('/',view.response);
+router.post('/login',view.login);
+
+
+// router.get('/cookie-test',function (req,res) {
+    // const {password:pass,username:user} = req.body;
+    // res.setHeader('Set-Cookie','jwt=jwt');
+    // res.cookie('jwt','jwt',{ maxAge:1000,secure:true /* https */ , httpOnly:true });
+    // console.log(req.cookies);
+// })
 
 module.exports = router;

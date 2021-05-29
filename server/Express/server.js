@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
+const cp = require('cookie-parser')
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ mongoose.connection.once('open',()=>{
     console.log("Connection with database established successfully");
 });
 
+app.use(cp());
 app.use(cors());
 app.use(express.json());
 app.use(require('./middleware/logger'));
