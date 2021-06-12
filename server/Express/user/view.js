@@ -38,10 +38,16 @@ function getAllUser(req,res){
 
 async function login(req,res) {
     const {password:pass,username:username} = req.body;
-    res.cookie('jwt',await User.login(username,password),{
-        maxAge:3 * 24 * 3600 * 1000
-    })
-    res.json({mesage:'Success'});
+    const token = await User.login(username,pass);
+    if (token){
+        res.cookie('jwt',token,{
+            maxAge:3 * 24 * 3600 * 1000
+        })    
+        res.json({mesage:'Success'});
+    }else{
+        res.clearCookie('jwt');
+        res.json({mesage:'User not found'});
+    }
 }
 
 module.exports = {

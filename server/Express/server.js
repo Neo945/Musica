@@ -24,6 +24,7 @@ app.use(cp());
 app.use(cors());
 app.use(express.json());
 app.use(require('./middleware/logger'));
+app.use(require('./middleware/UserAuthetication'));
 
 app.use('/static',express.static(path.join(__dirname,'public')));
 
