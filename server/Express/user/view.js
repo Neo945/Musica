@@ -14,7 +14,6 @@ function addUser(req,res){
 }
 
 async function addUserAsync(req,res){
-    console.log(req.body)
     try{
         const nu = await User.create({...req.body});
         res.status(201).json(nu);
@@ -25,7 +24,6 @@ async function addUserAsync(req,res){
         data.forEach((ele) =>{
             error.push(ele.message);
         })
-        // console.log(err);
         res.status(403).json({message:error});
     }
 }

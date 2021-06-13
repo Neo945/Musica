@@ -9,10 +9,12 @@ async function UserAuthentication(req,res,next) {
                 req.user = null;
                 next();
             }else{
-                User.findById(id)
-                .then(user => req.user = user)
+                User.findById(id.id)
+                .then(user => {
+                    req.user = user;
+                    next();
+                })
                 .catch(erro => console.log(erro));
-                next();
             }
         })    
     }else{

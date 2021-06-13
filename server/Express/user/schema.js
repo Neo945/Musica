@@ -18,7 +18,7 @@ const UserSchema = new Schema({
         required:[true,'Please fill the passwords'],
         trim:true,
         unique:true,
-        minlength: [10,'Please Length less than 10']
+        minlength: [10,'Password Length less than 10']
     },
     email:{
         type:String,
