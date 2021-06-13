@@ -8,6 +8,7 @@ router.post('/add',view.addUserAsync);
 router.get('/users',isa,view.getAllUser);
 router.get('/',view.response);
 router.post('/login',view.login);
+router.get('/logout',view.logout);
 
 
 // router.get('/cookie-test',function (req,res) {

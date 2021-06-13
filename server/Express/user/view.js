@@ -47,11 +47,15 @@ async function login(req,res) {
         res.json({mesage:'User not found'});
     }
 }
-
+function logout(req,res){
+    res.clearCookie('jwt');
+    res.json({mesage:'Logged out successfully'});
+}
 module.exports = {
     response,
     addUser,
     getAllUser,
     addUserAsync,
-    login
+    login,
+    logout
 };
