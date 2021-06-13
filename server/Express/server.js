@@ -21,7 +21,10 @@ mongoose.connection.once('open',()=>{
 });
 
 app.use(cp());
-app.use(cors());
+app.use(cors({
+    origin:'http://localhost:3000',
+    credentials:true
+}));
 app.use(express.json());
 app.use(require('./middleware/logger'));
 app.use(require('./middleware/UserAuthetication'));

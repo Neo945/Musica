@@ -36,11 +36,19 @@ function getAllUser(req,res){
 
 async function login(req,res) {
     const {password:pass,username:username} = req.body;
+    console.log(req.body,username,pass);
     const token = await User.login(username,pass);
     if (token){
         res.cookie('jwt',token,{
             maxAge:3 * 24 * 3600 * 1000
-        })    
+        });
+        console.log(req.headers);
+        // res.set('Access-Control-Allow-Origin', req.headers.origin); //req.headers.origin
+        // res.set('Access-Control-Allow-Credentials', 'true');
+        // res.set(
+            // 'Access-Control-Expose-Headers',
+            // 'date, etag, access-control-allow-origin, access-control-allow-credentials'
+        // );
         res.json({mesage:'Success'});
     }else{
         res.clearCookie('jwt');
