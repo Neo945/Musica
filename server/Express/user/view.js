@@ -1,8 +1,5 @@
 const User = require('./schema');
 
-function response(req,res){  
-    res.json({message:'message from user'});
-}
 
 function addUser(req,res){
     const username = req.body;
@@ -60,7 +57,6 @@ function logout(req,res){
     res.json({mesage:'Logged out successfully'});
 }
 module.exports = {
-    response,
     addUser,
     getAllUser,
     addUserAsync,
