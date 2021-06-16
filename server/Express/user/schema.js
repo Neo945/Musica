@@ -28,6 +28,11 @@ const UserSchema = new Schema({
         trim:true,
         minlength: [10,'Email Length less than 10'],
         validate:[isEmail,'Invalid email']
+    },
+    isArtist:{
+        type: Boolean,
+        required: true,
+        default: false
     }
 },{
     timestamps:true,

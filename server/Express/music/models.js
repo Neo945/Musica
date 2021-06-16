@@ -2,10 +2,56 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+const LanguageSchema = new Schema({
+    lang:{
+        type: String,
+        required: [true,'Cannot be empty'],
+        trim: true,
+        unique: true,
+        minLength: 5
+    },
+});
+const TagsSchema = new Schema({
+    tag:{
+        type: String,
+        required: [true,'Cannot be empty'],
+        trim: true,
+        unique: true,
+        minLength: 5
+    },
+});
+const GenreSchema = new Schema({
+    genre:{
+        type: String,
+        required: [true,'Cannot be empty'],
+        trim: true,
+        unique: true,
+        minLength: 5
+    },
+});
+
+const AlbumSchema = new Schema({
+    title:{
+        type: String,
+        required: [true,'Cannot be empty'],
+        trim: true,
+        unique: true,
+        minLength: 5
+    },
+    artist:{ 
+        type: Schema.Types.ObjectId, ref: 'user' 
+    },
+    songs:[{
+        type: Schema.Types.ObjectId, ref: 'music'
+    }],
+},{
+    timestamps:true
+})
+
 const MusicSchema = new Schema({
     title:{
         type: String,
-        required: [true],
+        required: [true,'Cannot be empty'],
         trim: true,
         unique: true,
         minLength: 5
@@ -13,10 +59,28 @@ const MusicSchema = new Schema({
     length:{
         type: Number,
         required: [true],
+        validate: {
+            validator: function(v) {return v>0},
+            message: props => `${props.value} Length cannot be 0 ${props}`
+          },
         min: 0
-    }
+    },
+    artists:[{type: Schema.Types.ObjectId, ref: 'user'}],
+    tags:[{type: Schema.Types.ObjectId, ref: 'tags'}],
+    lang:{type: Schema.Types.ObjectId, ref: 'language'},
+    genre:[{type: Schema.Types.ObjectId, ref: 'genre'}],
 },{
     timestamps:true,
 });
 const Music = mongoose.model('music',MusicSchema);
-module.exports = Music;
+const Language = mongoose.model('language',LanguageSchema);
+const Tag = mongoose.model('tags',TagsSchema);
+const Genre = mongoose.model('genre',GenreSchema);
+const Album = mongoose.model('album',AlbumSchema);
+module.exports = {
+    Music,
+    Language,
+    Tag,
+    Genre,
+    Album
+};
