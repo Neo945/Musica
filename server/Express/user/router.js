@@ -5,7 +5,6 @@ const isa = require('../Authentication/isauthenticated');
 
 router.post('/add',view.addUserAsync);
 router.get('/users',isa,view.getAllUser);
-router.get('/',view.response);
 router.post('/login',view.login);
 router.get('/logout',view.logout);
 

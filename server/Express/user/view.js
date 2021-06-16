@@ -1,5 +1,12 @@
-const User = require('./schema');
+const {User,Artist} = require('./schema');
 
+// async function response(req,res) {
+//     const val = new Artist({
+//         isArtist: true,
+//         phone : '12345623456787890123'
+//     });
+//     res.send(await val.save());
+// }
 
 function addUser(req,res){
     const username = req.body;
@@ -13,7 +20,8 @@ function addUser(req,res){
 async function addUserAsync(req,res){
     try{
         const nu = await User.create({...req.body});
-        res.status(201).json(nu);
+        const nua = await Artist.create({...req.body,user:nu._id});
+        res.status(201).json(nua);
     }catch(err){
         console.log(err.message);
         const data = Object.values(err.errors);
@@ -61,5 +69,5 @@ module.exports = {
     getAllUser,
     addUserAsync,
     login,
-    logout
+    logout,
 };

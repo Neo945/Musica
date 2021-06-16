@@ -38,10 +38,10 @@ const AlbumSchema = new Schema({
         unique: true,
         minLength: 5
     },
-    artist:{ 
-        type: Schema.Types.ObjectId, ref: 'user' 
+    artist:{
+        type: Schema.Types.ObjectId, ref: 'artist' 
     },
-    songs:[{
+    music:[{
         type: Schema.Types.ObjectId, ref: 'music'
     }],
 },{
@@ -65,9 +65,9 @@ const MusicSchema = new Schema({
           },
         min: 0
     },
-    artists:[{type: Schema.Types.ObjectId, ref: 'user'}],
-    tags:[{type: Schema.Types.ObjectId, ref: 'tags'}],
-    lang:{type: Schema.Types.ObjectId, ref: 'language'},
+    artist:[{type: Schema.Types.ObjectId, ref: 'artist'}],
+    tag:[{type: Schema.Types.ObjectId, ref: 'tags'}],
+    language:{type: Schema.Types.ObjectId, ref: 'language'},
     genre:[{type: Schema.Types.ObjectId, ref: 'genre'}],
 },{
     timestamps:true,

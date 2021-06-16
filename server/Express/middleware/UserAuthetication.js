@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('../user/schema');
+const {User, Artist} = require('../user/schema');
 
 async function UserAuthentication(req,res,next) {
     if (req.cookies.jwt){
@@ -9,12 +9,20 @@ async function UserAuthentication(req,res,next) {
                 req.user = null;
                 next();
             }else{
-                User.findById(id.id)
+                Artist.findOne({user:id.id})
+                .populate('user')
                 .then(user => {
+                    console.log(user);
                     req.user = user;
                     next();
                 })
                 .catch(erro => console.log(erro));
+                // User.findById(id.id)
+                // .then(user => {
+                    // req.user = user;
+                    // next();
+                // })
+                // .catch(erro => console.log(erro));
             }
         })    
     }else{
