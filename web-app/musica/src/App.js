@@ -1,36 +1,18 @@
 import './App.css';
+import {Login,Navbar} from './components';
+import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 
 function App() {
-  function formHandle(event){
-    event.preventDefault();
-    console.log(event.target);
-    const fd = new FormData(event.target);
-    let data = {}
-    fd.forEach((k,v)=>{
-      data[v] = k;
-    });
-    const reqd = JSON.stringify(data);
-    fetch("http://localhost:5000/api/user/login",{
-      method:"POST",
-      body: reqd,
-      credentials: 'include',
-      mode:"cors",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    }).then(res => res.json())
-    .then(data => console.log(data));
-  }
   return (
-    <div>
-      <form method="POST" onSubmit={formHandle}>
-        <input type="username" name="username"/>
-        {/* <input type="email" name="email"/> */}
-        <input type="password" name="password"/>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  );
+    <Router>
+      <Navbar/>
+      <Switch>
+        <Route path="/login">
+          <Login/>
+        </Route>
+      </Switch>
+    </Router>
+  )
 }
 
 export default App;
