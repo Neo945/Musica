@@ -10,7 +10,7 @@ async function UserAuthentication(req,res,next) {
                 next();
             }else{
                 Artist.findOne({user:id.id})
-                .populate('user')
+                // .populate('user')
                 .then(user => {
                     console.log(user);
                     req.user = user;

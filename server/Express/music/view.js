@@ -9,13 +9,11 @@ const { Album } = require("./models")
 */ 
 module.exports = {
     addAlbum:async (req,res)=>{
-        console.log({...req.body,artist:req.user._id})
-        const newAlbum = new Album({...req.body,artist:req.user._id});
-        const na = await newAlbum.save();
-        res.send(na);
+        const newAlbum = Album.create({...req.body,artist:req.user._id});
+        res.send(newAlbum);
     },
     getAlbum: async (req,res)=>{
-        const na = await Album.findOne().populate('user');
+        const na = await Album.findOne().populate('artist');
         res.send(na);
     },
 }
