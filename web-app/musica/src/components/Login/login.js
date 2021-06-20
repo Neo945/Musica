@@ -22,12 +22,12 @@ function Login(params) {
         .then(data => console.log(data));
         }
       return (
-        <div>
-          {/* <form method="POST" onSubmit={formHandle}>
+        <div style={{'marginTop':'100px'}}>
+          <form method="POST" onSubmit={formHandle}>
             <TextField error label="Username" variant="outlined" name="username"/><br/>
           <TextField label="Password" variant="outlined" type="password" name="password"/><br/>
             <Button variant="contained" color="primary" type="submit">Submit</Button>
-          </form> */}
+          </form>
         </div>
       );
 }
