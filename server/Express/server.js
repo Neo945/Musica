@@ -1,16 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const path = require('path');
-const cp = require('cookie-parser')
+const cp = require('cookie-parser');
+const env = require('./config/config');
 
-dotenv.config();
-
-const port = process.env.PORT || 5000;
 const app = express();
 
-mongoose.connect(process.env.ATLAS_URI,
+mongoose.connect(env.ATLAS_URI,
     {
         useNewUrlParser:true,
         useCreateIndex:true,
@@ -33,6 +30,6 @@ app.use('/static',express.static(path.join(__dirname,'public')));
 
 app.use('/api',require('./router'));
 
-app.listen(port,()=>{
-    console.log(`Server is running on port: ${port}`);
+app.listen(env.PORT,()=>{
+    console.log(`Server is running on port: ${env.PORT}`);
 });
