@@ -1,12 +1,5 @@
 const {User,Artist} = require('./schema');
-
-// async function response(req,res) {
-//     const val = new Artist({
-//         isArtist: true,
-//         phone : '12345623456787890123'
-//     });
-//     res.send(await val.save());
-// }
+const passport = require('../config/passport-setup');
 
 function addUser(req,res){
     const username = req.body;
@@ -48,12 +41,6 @@ async function login(req,res) {
             maxAge:3 * 24 * 3600 * 1000
         });
         console.log(req.headers);
-        // res.set('Access-Control-Allow-Origin', req.headers.origin); //req.headers.origin
-        // res.set('Access-Control-Allow-Credentials', 'true');
-        // res.set(
-            // 'Access-Control-Expose-Headers',
-            // 'date, etag, access-control-allow-origin, access-control-allow-credentials'
-        // );
         res.json({mesage:'Success'});
     }else{
         res.clearCookie('jwt');
@@ -64,10 +51,14 @@ function logout(req,res){
     res.clearCookie('jwt');
     res.json({mesage:'Logged out successfully'});
 }
+function googleOauthRedirect(req,res){
+    res.send('Google redirect');
+}
 module.exports = {
     addUser,
     getAllUser,
     addUserAsync,
     login,
     logout,
+    googleOauthRedirect,
 };

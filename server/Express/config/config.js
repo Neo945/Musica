@@ -13,8 +13,6 @@ const schema = Joi.object().keys({
 }).unknown();
 
 const { value: env,error:err } = schema.prefs({errors:{label:'key'}}).validate(process.env);
-if (err){
-    throw Error(err);
-}
+if (err) throw Error(err);
 
 module.exports = env;
