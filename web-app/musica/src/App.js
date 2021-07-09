@@ -1,5 +1,5 @@
 import './App.css';
-import {Login,Navbar} from './components';
+import {Login,Navbar,Signup} from './components';
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 
 function App() {
@@ -9,6 +9,9 @@ function App() {
       <Switch>
         <Route path="/login">
           <Login/>
+        </Route>
+        <Route path="/signup">
+          <Signup/>
         </Route>
       </Switch>
     </Router>
