@@ -1,5 +1,5 @@
-import Login from "./Login/login";
-import Navbar from "./Login/Navbar";
+import Login from "./login"
+import Navbar from "./Navbar";
 export {
     Login,
     Navbar
