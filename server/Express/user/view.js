@@ -53,6 +53,7 @@ function logout(req,res){
 function googleOauthRedirect(req,res){
     res.send('Google redirect');
 }
+
 module.exports = {
     addUser,
     getAllUser,
