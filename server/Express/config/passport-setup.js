@@ -5,9 +5,9 @@ const env = require('./config');
 passport.use(new GoogleStratagy({
         clientID:env.CLIENT_ID,
         clientSecret:env.CLIENT_SECRET,
-        callbackURL:'/auth/google/redirect'
-    }, (access, reresh, profile, done)=>{
-
+        callbackURL:'http://localhost:5000/api/auth/google/redirect'
+    }, (access, refresh,email, done)=>{
+        console.log('email ',email);
     }
 ));
 module.exports = passport;

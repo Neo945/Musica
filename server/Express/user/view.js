@@ -2,9 +2,8 @@ const {User,Artist} = require('./schema');
 const passport = require('../config/passport-setup');
 
 function addUser(req,res){
-    const username = req.body;
     console.log(req.body)
-    const nu = new User({...req.body});
+    const nu = new User({...req.body,isOauth:false});
     nu.save()
     .then((g) => res.json({message:'user added',...g}))
     .catch(err => res.status(400).json('Error: ' + err));
@@ -12,7 +11,7 @@ function addUser(req,res){
 
 async function addUserAsync(req,res){
     try{
-        const nu = await User.create({...req.body});
+        const nu = await User.create({...req.body,isOauth:false});
         const nua = await Artist.create({...req.body,user:nu._id});
         res.status(201).json(nua);
     }catch(err){

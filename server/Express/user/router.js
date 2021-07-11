@@ -11,7 +11,7 @@ router.get('/logout',view.logout);
 
 
 router.get('/google',passport.authenticate('google',{
-    scope:['profile']
+    scope:['email']
 }));
 router.get('/google/redirect',passport.authenticate('google'),view.googleOauthRedirect);
 

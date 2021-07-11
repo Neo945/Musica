@@ -14,7 +14,7 @@ const UserSchema = new Schema({
         trim:true,
     },
     isOauth:{
-        typle: Boolean,
+        type: Boolean,
         required: [true, 'Please specify the method'],
     },
     username:{
