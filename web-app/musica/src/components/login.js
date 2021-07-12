@@ -1,9 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 import {Button,TextField,FormControlLabel,Checkbox,Link,Grid, Typography, Container} from '@material-ui/core';
 import OauthButton from './oauthButton';
+import lookup from './fetchData/lookup';
 
 const useStyles = makeStyles((theme) => {
-  console.log(theme.spacing(1,1,1,1))
+  console.log(theme)
   return {
   paper: {
     marginTop: theme.spacing(20),
@@ -24,10 +25,22 @@ const useStyles = makeStyles((theme) => {
   },
   remember: {
     margin: theme.spacing(1, 0, 0),
+  },
+  text:{
+    margin: theme.spacing(1,0,1,0),
   }
 }});
 
 export default function Login() {
+  function formHandle(event) {
+    event.preventDefault();
+    let data = {};
+    const formdata = new FormData(event.target);
+    formdata.forEach((e,v)=>{
+      data[v] = e;
+    });
+    lookup('POST',data,'/api/auth/user/login');
+  }
   const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
@@ -36,8 +49,9 @@ export default function Login() {
           Sign in
         </Typography>
         <OauthButton/>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={formHandle}>
           <TextField
+          className={classes.text}
             variant="outlined"
             required
             fullWidth
@@ -48,7 +62,8 @@ export default function Login() {
           />
           
           <TextField
-            variant="outlined"
+          className={classes.text}
+          variant="outlined"
             margin="normal"
             required
             fullWidth

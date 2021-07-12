@@ -13,7 +13,7 @@ passport.deserializeUser(async (id,done)=>{
 passport.use(new GoogleStratagy({
         clientID:env.CLIENT_ID,
         clientSecret:env.CLIENT_SECRET,
-        callbackURL:'http://localhost:5000/api/auth/google/redirect'
+        callbackURL:'http://localhost:3000/'
     },async (access, refresh,email, done)=>{
         const user = await User.findOne({googleID:email.id});
         if (user){

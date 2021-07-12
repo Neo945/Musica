@@ -20,13 +20,13 @@ const UserSchema = new Schema({
     username:{
         type:String,
         required:[true,'Please fill the username'],
-        unique:[true,'Already taken'],
         trim:true,
         minlength: 5
     },
     password:{
         type:String,
         trim:true,
+        // required:[true,'Please fill the password'],
         validate:[isStrongPassword,'not a strong password'],
         unique:true,
         minlength: [10,'Password Length less than 10']
@@ -102,13 +102,19 @@ function getToken(id){
         expiresIn: 3*24*3600
     })
 }
-UserSchema.statics.login = async function(username,password) {
-    const user = await this.findOne({ username });
+UserSchema.statics.login = async function(email,password) {
+    const user = await this.findOne({ email });
     if (await bcrypt.compare(password,user.password)){
         return getToken(user._id);
     }
 }
 
+UserSchema.statics.savePass = async function(username,password) {
+    const user = await this.findOne({ username });
+    const salt = await bcrypt.genSalt();
+    user.password = await bcrypt.hash(password,salt);
+    user.save();
+}
 
 const User = mongoose.model('user',UserSchema);
 const Artist = mongoose.model('artist',ArtistsSchema);

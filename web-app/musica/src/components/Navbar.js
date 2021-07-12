@@ -2,6 +2,7 @@ import {React,useState} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import {AppBar,Toolbar,IconButton,Typography,Button,Drawer,List,ListItem,ListItemText} from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu';
+import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => {
     return {
@@ -30,7 +31,7 @@ function Navbar(params) {
                         <div className={classes.drawerList}>
                             <List>
                                 <ListItem button>
-                                    <ListItemText primary="Hello world"/>
+                                    <ListItemText primary="Login"/>
                                 </ListItem>
                             </List>
                         </div>
@@ -38,9 +39,11 @@ function Navbar(params) {
                     <Typography variant="h4" className={classes.title}>
                         Musica
                     </Typography>
-                    <Button color="inherit" variant="h6">
-                        Login
-                    </Button>
+                    <Link to='/' style={{textDecoration:'none',color:'white'}}>
+                        <Button color="inherit" variant="h6">
+                        {window.location.pathname==='/login' ? 'Register' : window.location.pathname==='/signup' ? 'Login' : "Logout"}
+                        </Button>
+                    </Link>
                 </Toolbar>
             </AppBar>
     )

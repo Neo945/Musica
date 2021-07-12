@@ -1,5 +1,4 @@
 const {User,Artist} = require('./schema');
-const passport = require('../config/passport-setup');
 
 function addUser(req,res){
     console.log(req.body)
@@ -32,9 +31,9 @@ function getAllUser(req,res){
 }
 
 async function login(req,res) {
-    const {password:pass,username:username} = req.body;
+    const {password:pass,email:email} = req.body;
     console.log(req.body,username,pass);
-    const token = await User.login(username,pass);
+    const token = await User.login(email,pass);
     if (token){
         res.cookie('jwt',token,{
             maxAge:3 * 24 * 3600 * 1000
@@ -52,6 +51,7 @@ function logout(req,res){
 }
 function googleOauthRedirect(req,res){
     res.send('Google redirect');
+    // res.redirect('https://www.google.co.in');
 }
 
 module.exports = {
