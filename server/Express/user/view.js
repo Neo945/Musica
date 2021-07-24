@@ -1,11 +1,11 @@
 const {User,Artist} = require('./schema');
 
 function addUser(req,res){
-    console.log(req.body)
+    console.log(req.body);
     const nu = new User({...req.body,isOauth:false});
     nu.save()
-    .then((g) => res.json({message:'user added',...g}))
-    .catch(err => res.status(400).json('Error: ' + err));
+        .then((g) => res.json({message:'user added',...g}))
+        .catch(err => res.status(400).json('Error: ' + err));
 }
 
 async function addUserAsync(req,res){
@@ -16,23 +16,22 @@ async function addUserAsync(req,res){
     }catch(err){
         console.log(err.message);
         const data = Object.values(err.errors);
-        let error = []
+        let error = [];
         data.forEach((ele) =>{
             error.push(ele.message);
-        })
+        });
         res.status(403).json({message:error});
     }
 }
 
 function getAllUser(req,res){
     User.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
+        .then(users => res.json(users))
+        .catch(err => res.status(400).json('Error: ' + err));
 }
 
 async function login(req,res) {
     const {password:pass,email:email} = req.body;
-    console.log(req.body,username,pass);
     const token = await User.login(email,pass);
     if (token){
         res.cookie('jwt',token,{

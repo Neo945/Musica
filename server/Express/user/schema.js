@@ -72,10 +72,10 @@ const ArtistsSchema = new Schema({
 });
 
 UserSchema.pre('save',async function (next) {
-    const salt = await bcrypt.genSalt()
+    const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password,salt);
     next();
-})
+});
 
 UserSchema.post('save',function (doc,next){
     console.log(doc);
@@ -84,21 +84,21 @@ UserSchema.post('save',function (doc,next){
 function getToken(id){
     return jwt.sign({id},require('../config/config').SECRET_KEY,{
         expiresIn: 3*24*3600
-    })
+    });
 }
 UserSchema.statics.login = async function(email,password) {
     const user = await this.findOne({ email });
     if (await bcrypt.compare(password,user.password)){
         return getToken(user._id);
     }
-}
+};
 
 UserSchema.statics.savePass = async function(username,password) {
     const user = await this.findOne({ username });
     const salt = await bcrypt.genSalt();
     user.password = await bcrypt.hash(password,salt);
     user.save();
-}
+};
 
 const User = mongoose.model('user',UserSchema);
 const Artist = mongoose.model('artist',ArtistsSchema);

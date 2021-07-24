@@ -46,7 +46,7 @@ const AlbumSchema = new Schema({
     }],
 },{
     timestamps:true
-})
+});
 
 const MusicSchema = new Schema({
     title:{
@@ -60,9 +60,9 @@ const MusicSchema = new Schema({
         type: Number,
         required: [true],
         validate: {
-            validator: function(v) {return v>0},
+            validator: function(v) {return v>0;},
             message: props => `${props.value} Length cannot be 0 ${props}`
-          },
+        },
         min: 0
     },
     artist:[{type: Schema.Types.ObjectId, ref: 'artist'}],

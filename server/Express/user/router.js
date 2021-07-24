@@ -1,5 +1,4 @@
-const router = require('express').Router()
-const User = require('./schema');
+const router = require('express').Router();
 const view = require('./view');
 const isa = require('../Authentication/isauthenticated');
 const passport = require('../config/passport-setup');

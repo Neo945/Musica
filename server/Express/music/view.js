@@ -1,4 +1,4 @@
-const { Album } = require("./models")
+const { Album } = require('./models');
 
 /**
  * LanguageSchema{lang,}
@@ -16,4 +16,4 @@ module.exports = {
         const na = await Album.findOne().populate('artist');
         res.send(na);
     },
-}
+};

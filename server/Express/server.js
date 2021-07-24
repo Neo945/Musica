@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-require('./config/passport-setup')
+require('./config/passport-setup');
 const cp = require('cookie-parser');
 const cs = require('cookie-session');
 const passport = require('passport');
