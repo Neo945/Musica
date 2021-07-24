@@ -1,21 +1,21 @@
 const jwt = require('jsonwebtoken');
-const {Artist} = require('../user/schema');
+const { Artist } = require('../user/schema');
 
-async function UserAuthentication(req,res,next) {
-    if (req.cookies.jwt){
-        jwt.verify(req.cookies.jwt,process.env.SECRET_KEY,(err,id)=>{
-            if (err){
+async function UserAuthentication(req, res, next) {
+    if (req.cookies.jwt) {
+        jwt.verify(req.cookies.jwt, process.env.SECRET_KEY, (err, id) => {
+            if (err) {
                 console.log(err);
                 req.user = null;
                 next();
-            }else{
-                Artist.findOne({user:id.id}).populate('user')
-                    .then(user => {
+            } else {
+                Artist.findOne({ user: id.id }).populate('user')
+                    .then((user) => {
                         console.log(user);
                         req.user = user;
                         next();
                     })
-                    .catch(erro => console.log(erro));
+                    .catch((erro) => console.log(erro));
                 // User.findById(id.id)
                 // .then(user => {
                 // req.user = user;
@@ -23,8 +23,8 @@ async function UserAuthentication(req,res,next) {
                 // })
                 // .catch(erro => console.log(erro));
             }
-        });    
-    }else{
+        });
+    } else {
         req.user = null;
         next();
     }

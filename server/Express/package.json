@@ -6,16 +6,26 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "yarn server",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^7.30.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "^7.0.1",
     "jest": "^27.0.6",
-    "nodemon": "^2.0.7",
-    "prettier": "^2.3.2"
+    "nodemon": "^2.0.7"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -25,6 +35,8 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "global": "^4.4.0",
+    "install-peerdeps": "^3.0.3",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
@@ -33,6 +45,7 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
     "pm2": "^5.1.0",
+    "remove": "^0.1.5",
     "validator": "^13.6.0"
   }
 }

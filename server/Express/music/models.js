@@ -1,86 +1,86 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const LanguageSchema = new Schema({
-    lang:{
+    lang: {
         type: String,
-        required: [true,'Cannot be empty'],
+        required: [true, 'Cannot be empty'],
         trim: true,
         unique: true,
-        minLength: 5
+        minLength: 5,
     },
 });
 const TagsSchema = new Schema({
-    tag:{
+    tag: {
         type: String,
-        required: [true,'Cannot be empty'],
+        required: [true, 'Cannot be empty'],
         trim: true,
         unique: true,
-        minLength: 5
+        minLength: 5,
     },
 });
 const GenreSchema = new Schema({
-    genre:{
+    genre: {
         type: String,
-        required: [true,'Cannot be empty'],
+        required: [true, 'Cannot be empty'],
         trim: true,
         unique: true,
-        minLength: 5
+        minLength: 5,
     },
 });
 
 const AlbumSchema = new Schema({
-    title:{
+    title: {
         type: String,
-        required: [true,'Cannot be empty'],
+        required: [true, 'Cannot be empty'],
         trim: true,
         unique: true,
-        minLength: 5
+        minLength: 5,
     },
-    artist:{
-        type: Schema.Types.ObjectId, ref: 'artist' 
+    artist: {
+        type: Schema.Types.ObjectId, ref: 'artist',
     },
-    music:[{
-        type: Schema.Types.ObjectId, ref: 'music'
+    music: [{
+        type: Schema.Types.ObjectId, ref: 'music',
     }],
-},{
-    timestamps:true
+}, {
+    timestamps: true,
 });
 
 const MusicSchema = new Schema({
-    title:{
+    title: {
         type: String,
-        required: [true,'Cannot be empty'],
+        required: [true, 'Cannot be empty'],
         trim: true,
         unique: true,
-        minLength: 5
+        minLength: 5,
     },
-    length:{
+    length: {
         type: Number,
         required: [true],
         validate: {
-            validator: function(v) {return v>0;},
-            message: props => `${props.value} Length cannot be 0 ${props}`
+            validator: function (v) { return v > 0; },
+            message: (props) => `${props.value} Length cannot be 0 ${props}`,
         },
-        min: 0
+        min: 0,
     },
-    artist:[{type: Schema.Types.ObjectId, ref: 'artist'}],
-    tag:[{type: Schema.Types.ObjectId, ref: 'tags'}],
-    language:{type: Schema.Types.ObjectId, ref: 'language'},
-    genre:[{type: Schema.Types.ObjectId, ref: 'genre'}],
-},{
-    timestamps:true,
+    artist: [{ type: Schema.Types.ObjectId, ref: 'artist' }],
+    tag: [{ type: Schema.Types.ObjectId, ref: 'tags' }],
+    language: { type: Schema.Types.ObjectId, ref: 'language' },
+    genre: [{ type: Schema.Types.ObjectId, ref: 'genre' }],
+}, {
+    timestamps: true,
 });
-const Music = mongoose.model('music',MusicSchema);
-const Language = mongoose.model('language',LanguageSchema);
-const Tag = mongoose.model('tags',TagsSchema);
-const Genre = mongoose.model('genre',GenreSchema);
-const Album = mongoose.model('album',AlbumSchema);
+const Music = mongoose.model('music', MusicSchema);
+const Language = mongoose.model('language', LanguageSchema);
+const Tag = mongoose.model('tags', TagsSchema);
+const Genre = mongoose.model('genre', GenreSchema);
+const Album = mongoose.model('album', AlbumSchema);
 module.exports = {
     Music,
     Language,
     Tag,
     Genre,
-    Album
+    Album,
 };
