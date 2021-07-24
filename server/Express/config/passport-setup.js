@@ -1,4 +1,5 @@
 const passport = require('passport');
+const bcrypt = require('bcrypt');
 const GoogleStratagy = require('passport-google-oauth20');
 const env = require('./config');
 const {User} = require('../user/schema');
@@ -21,10 +22,10 @@ passport.use(new GoogleStratagy({
             done(null,user);
         }else{
             done(null,await User.create({
-                    googleID: email.id,
+                    id: email.id,
                     username: email.displayName,
                     email: email.emails[0].value,
-                    isOauth: true,
+                    password: await bcrypt.genSalt()
                 })
             );
         }

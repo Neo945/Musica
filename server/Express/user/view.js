@@ -10,7 +10,7 @@ function addUser(req,res){
 
 async function addUserAsync(req,res){
     try{
-        const nu = await User.create({...req.body,isOauth:false});
+        const nu = await User.create({...req.body});
         const nua = await Artist.create({...req.body,user:nu._id});
         res.status(201).json(nua);
     }catch(err){
@@ -51,7 +51,6 @@ function logout(req,res){
 }
 function googleOauthRedirect(req,res){
     res.send('Google redirect');
-    // res.redirect('https://www.google.co.in');
 }
 
 module.exports = {

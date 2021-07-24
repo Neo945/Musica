@@ -8,15 +8,6 @@ const isStrongPassword  = require('validator').default.isStrongPassword;
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-    googleID:{
-        type:String,
-        unique:[true,'Already taken'],
-        trim:true,
-    },
-    isOauth:{
-        type: Boolean,
-        required: [true, 'Please specify the method'],
-    },
     username:{
         type:String,
         required:[true,'Please fill the username'],
@@ -26,7 +17,7 @@ const UserSchema = new Schema({
     password:{
         type:String,
         trim:true,
-        // required:[true,'Please fill the password'],
+        required:[true,'Please fill the password'],
         validate:[isStrongPassword,'not a strong password'],
         unique:true,
         minlength: [10,'Password Length less than 10']
@@ -81,16 +72,9 @@ const ArtistsSchema = new Schema({
 });
 
 UserSchema.pre('save',async function (next) {
-    if (!this.isOauth){
-        const salt = await bcrypt.genSalt()
-        this.password = await bcrypt.hash(this.password,salt);
-        next();
-    }
-    if (this.googleID){
-        next();
-    }else{
-        throw new Error('Please verify your google ID');
-    }
+    const salt = await bcrypt.genSalt()
+    this.password = await bcrypt.hash(this.password,salt);
+    next();
 })
 
 UserSchema.post('save',function (doc,next){
