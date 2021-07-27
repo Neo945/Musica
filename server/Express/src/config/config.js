@@ -2,7 +2,7 @@ const Joi = require('joi');
 const dotenv = require('dotenv');
 const path = require('path');
 
-dotenv.config({ path: path.join(__dirname, '../.env') });
+dotenv.config({ path: path.join(__dirname, './.env') });
 
 const schema = Joi.object().keys({
     ATLAS_URI: Joi.string().required().description('MongoDB atlas link'),

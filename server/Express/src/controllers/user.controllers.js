@@ -1,4 +1,4 @@
-const { User, Artist } = require('./schema');
+const { User, Artist } = require('../models/user');
 
 function addUser(req, res) {
     console.log(req.body);

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { Artist } = require('../user/schema');
+const { Artist } = require('../models/user');
 
 async function UserAuthentication(req, res, next) {
     if (req.cookies.jwt) {

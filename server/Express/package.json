@@ -2,14 +2,15 @@
   "name": "musica",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "yarn index",
-    "dev": "yarn run lint:fix && nodemon index",
+    "start": "yarn ./src/index",
+    "dev": "yarn run lint:fix && nodemon ./src/index",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "check":"yarn run lint"
+    "check": "yarn run lint",
+    "code": "nodemon ./src/run.env"
   },
   "author": "",
   "license": "ISC",
@@ -43,6 +44,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "mongoose": "^5.12.10",
+    "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
     "passport": "^0.4.1",

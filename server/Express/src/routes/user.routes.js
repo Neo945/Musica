@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const view = require('./view');
-const isa = require('../Authentication/isauthenticated');
-const passport = require('../config/passport-setup');
+const view = require('../controllers/user.controllers');
+const isa = require('../middleware/authCheck.middleware');
+const passport = require('../config/passport.config');
 
 router.post('/add', view.addUserAsync);
 router.get('/users', isa, view.getAllUser);

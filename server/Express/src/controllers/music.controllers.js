@@ -1,4 +1,4 @@
-const { Album } = require('./models');
+const { Album } = require('../models/music');
 
 /**
  * LanguageSchema{lang,}
