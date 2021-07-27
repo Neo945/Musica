@@ -34,6 +34,8 @@
         "class-methods-use-this": "off",
         "no-underscore-dangle":"off",
         "global-require":"off",
-        "node/no-unsupported-features/es-syntax":"off"
+        "node/no-unsupported-features/es-syntax":"off",
+        "space-infix-ops":"warn",
+        "no-multiple-empty-lines":"warn"
     }
 }
