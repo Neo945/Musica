@@ -1,4 +1,5 @@
-const { Album } = require('../models/music');
+const { Album, Music } = require('../models/music');
+const { uploadSingle } = require('../config/s3.config');
 
 /**
  * LanguageSchema{lang,}
@@ -8,12 +9,23 @@ const { Album } = require('../models/music');
  * MusicSchema{title,length,artists[],tags[],lang,genre[]}
 */
 module.exports = {
-    addAlbum: async (req, res) => {
+    createAlbum: async (req, res) => {
         const newAlbum = Album.create({ ...req.body, artist: req.user._id });
         res.send(newAlbum);
     },
-    getAlbum: async (req, res) => {
-        const na = await Album.findOne().populate('artist');
-        res.send(na);
+    getAllUserAlbum: async (req, res) => {
+        const albums = await Album.findOne({ artist: req.user._id }).populate('artist');
+        res.send(albums);
+    },
+    createMusic: (req, res) => {
+        uploadSingle(req, res, async (err) => {
+            if (err) return res.status(400).json({ message: err.message });
+            let album = await Album.findOne({ title: req.body.title });
+            if (!album) {
+                album = Album.create({ ...req.body, artist: req.user._id });
+            }
+            return 1;
+        });
+        res.status(201).send({ message: 'music successfully saved' });
     },
 };

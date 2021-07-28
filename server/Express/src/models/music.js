@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { isURL } = require('validator').default;
 
 const { Schema } = mongoose;
 
@@ -55,6 +56,13 @@ const MusicSchema = new Schema({
         trim: true,
         unique: true,
         minLength: 5,
+    },
+    link: {
+        type: String,
+        required: [true, 'Please Provide a link'],
+        trim: true,
+        unique: true,
+        validate: [isURL, 'Prease provide a valid link'],
     },
     length: {
         type: Number,

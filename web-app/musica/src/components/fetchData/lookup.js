@@ -1,4 +1,4 @@
-export default async function lookup(method,data,endpoint) {
+export async function lookup(method,data,endpoint) {
     if (method==='GET'){
         const response = await fetch(`http://localhost:5000/api${endpoint}`,{
             method:method,

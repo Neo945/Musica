@@ -2,7 +2,7 @@ Arguments:
   /usr/bin/node /usr/bin/yarn run lint:fix
 
 PATH: 
-  /tmp/yarn--1627412265549-0.24459817810493534:/home/shreesh/Desktop/Musica/server/Express/node_modules/.bin:/home/shreesh/.config/yarn/link/node_modules/.bin:/home/shreesh/.yarn/bin:/usr/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/lib/node_modules/npm/bin/node-gyp-bin:/usr/bin/node_modules/npm/bin/node-gyp-bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+  /tmp/yarn--1627478412984-0.12529358289692616:/home/shreesh/Desktop/Musica/server/Express/node_modules/.bin:/home/shreesh/.config/yarn/link/node_modules/.bin:/home/shreesh/.yarn/bin:/usr/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/lib/node_modules/npm/bin/node-gyp-bin:/usr/bin/node_modules/npm/bin/node-gyp-bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 
 Yarn version: 
   1.22.10

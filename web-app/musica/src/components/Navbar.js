@@ -40,7 +40,7 @@ function Navbar(params) {
                         Musica
                     </Typography>
                     <Link to='/' style={{textDecoration:'none',color:'white'}}>
-                        <Button color="inherit" variant="h6">
+                        <Button color="inherit" >
                         {window.location.pathname==='/login' ? 'Register' : window.location.pathname==='/signup' ? 'Login' : "Logout"}
                         </Button>
                     </Link>

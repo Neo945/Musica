@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import {Button,TextField,FormControlLabel,Checkbox,Link,Grid, Typography, Container} from '@material-ui/core';
 import OauthButton from './oauthButton';
-import lookup from './fetchData/lookup';
+import {lookup} from './fetchData/lookup';
 
 const useStyles = makeStyles((theme) => {
   console.log(theme)

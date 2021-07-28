@@ -40,15 +40,10 @@ const ArtistsSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'user',
     },
-    isArtist: {
-        type: Boolean,
-        required: true,
-        default: false,
-    },
-    language: {
+    language: [{
         type: mongoose.Types.ObjectId,
         ref: 'language',
-    },
+    }],
     phone: {
         type: String,
         required: true,

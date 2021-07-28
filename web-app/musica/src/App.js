@@ -1,5 +1,5 @@
 import './App.css';
-import {Login,Navbar,Signup} from './components';
+import {Login,Navbar,Signup,LanguageSelect} from './components';
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 
 function App() {
@@ -12,6 +12,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <Signup/>
+        </Route>
+        <Route path="/language">
+          <LanguageSelect/>
         </Route>
       </Switch>
     </Router>
