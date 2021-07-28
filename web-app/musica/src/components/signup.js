@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import {Button,TextField,Grid, Typography, Container} from '@material-ui/core';
 import OauthButton from './oauthButton';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => {
   console.log(theme.spacing(1,1,1,1))
@@ -27,8 +28,16 @@ const useStyles = makeStyles((theme) => {
   }
 }});
 
-export default function Signup() {
+function EmailInputSignup(params) {
   const classes = useStyles();
+  function formHandle(event) {
+    event.preventDefault();
+    let data = {};
+    const formdata = new FormData(event.target);
+    formdata.forEach((e,v)=>data[v] = e);
+    console.log(formdata);
+    params.fun(1);
+  }
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -36,7 +45,7 @@ export default function Signup() {
           Sign Up
         </Typography>
         <OauthButton/>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={formHandle}>
           <TextField
             variant="outlined"
             required
@@ -63,5 +72,29 @@ export default function Signup() {
         </form>
       </div>
     </Container>
+  );
+}
+function UserDataInutSignup(params) {
+  const classes = useStyles();
+  return (
+    <Container component="main" maxWidth="xs">
+      <div className={classes.paper}></div>
+      <Button
+            variant="contained"
+            color="primary"
+            className={'submit'}
+            onClick={() => params.fun(0)}
+          >
+            Back
+          </Button>
+    </Container>
+  );
+}
+export default function Signup() {
+  const [step,setStep] = useState(0);
+  return (
+    <div>
+      {step === 0 ? <EmailInputSignup fun={setStep}/> : <UserDataInutSignup fun={setStep}/>}
+    </div>
   );
 }

@@ -16,12 +16,6 @@ async function UserAuthentication(req, res, next) {
                         next();
                     })
                     .catch((erro) => console.log(erro));
-                // User.findById(id.id)
-                // .then(user => {
-                // req.user = user;
-                // next();
-                // })
-                // .catch(erro => console.log(erro));
             }
         });
     } else {

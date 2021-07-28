@@ -27,6 +27,7 @@ export default function OauthButton(params) {
         <>
         <form className={classes.form + " " + classes.buttonForm}>
             <Button
+              onClick={() => window.location.href = 'http://localhost:5000/api/auth/google'}
               variant="contained"
               color="primary"
                 fullWidth
@@ -38,7 +39,6 @@ export default function OauthButton(params) {
               Login with Google
             </Button>
             <Button
-              onClick={() => window.location.href = 'http://localhost:5000/api/auth/google'}
               variant="contained"
               color="primary"
                 fullWidth
