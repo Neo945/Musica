@@ -46,22 +46,13 @@ const ArtistsSchema = new Schema({
     }],
     phone: {
         type: String,
-        required: true,
         trim: true,
         unique: true,
         minLength: 12,
         validate: [isMobilePhone, 'Invalid Phone number'],
     },
-    name: {
-        type: String,
-        required: [true, 'Please fill the name'],
-        unique: [true, 'Already have a account'],
-        trim: true,
-        minlength: [10, 'Name length less than 10'],
-    },
     age: {
         type: Number,
-        required: true,
         min: [12, 'Grow Up'],
     },
 });

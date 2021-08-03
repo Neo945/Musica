@@ -1,4 +1,4 @@
-const { Album, Music } = require('../models/music');
+const { Album } = require('../models/music');
 const { uploadSingle } = require('../config/s3.config');
 
 /**

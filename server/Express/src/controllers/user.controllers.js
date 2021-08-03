@@ -11,13 +11,15 @@ module.exports = {
     },
     addInfo: (req, res) => {
         errorHandler(req, res, async () => {
-            const nua = await Artist.create({ ...req.body, user: req.user._id });
+            const nua = await Artist.findOne({ user: req.user._id });
+            nua.save();
             res.status(201).json({ message: 'success', user: nua });
         });
     },
     register: (req, res) => {
         errorHandler(req, res, async () => {
             const nu = await User.create({ ...req.body });
+            await User.create({ user: nu._id });
             res.status(201).json({ message: 'success', user: nu });
         });
     },

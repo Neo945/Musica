@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "yarn ./src/index",
-    "dev": "yarn run lint:fix && nodemon ./src/index",
+    "dev": "yarn run lint:fix && cross-env NODE_ENV=development nodemon ./src/index",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "check": "yarn run lint",
@@ -36,6 +36,7 @@
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "global": "^4.4.0",
