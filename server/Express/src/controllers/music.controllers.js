@@ -1,4 +1,4 @@
-const { Album } = require('../models/music');
+const { Album, Music } = require('../models/music');
 const { uploadSingle } = require('../config/s3.config');
 
 /**
@@ -14,7 +14,7 @@ module.exports = {
         res.send(newAlbum);
     },
     getAllUserAlbum: async (req, res) => {
-        const albums = await Album.findOne({ artist: req.user._id }).populate('artist');
+        const albums = await Album.find({ artist: req.user._id }).populate('artist');
         res.send(albums);
     },
     createMusic: (req, res) => {
@@ -22,9 +22,10 @@ module.exports = {
             if (err) return res.status(400).json({ message: err.message });
             let album = await Album.findOne({ title: req.body.title });
             if (!album) {
-                album = Album.create({ ...req.body, artist: req.user._id });
+                album = Album.findOne({ id: req.body.albumId });
+                await Music.create({ ...req.body });
             }
-            return 1;
+            return res.status(201).send({ message: 'music successfully saved' });
         });
         res.status(201).send({ message: 'music successfully saved' });
     },

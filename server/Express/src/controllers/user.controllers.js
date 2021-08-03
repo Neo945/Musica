@@ -47,6 +47,6 @@ module.exports = {
         });
     },
     googleOauthRedirect: (req, res) => {
-        res.send('Google redirect');
+        res.redirect('http://localhost:3000/');
     },
 };

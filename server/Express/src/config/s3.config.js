@@ -8,6 +8,14 @@ const s3 = new aws.S3({
     secretAccessKey: env.SECRET_S3_ACCESS_KEY,
     region: env.S3_BUCKET_REGION,
 });
+// eslint-disable-next-line no-unused-vars
+const deleteParams = {
+    Bucket: 'musica-music',
+    key: '',
+    Delete: {
+        key: [],
+    },
+};
 const upload = (bucket) => multer({
     storage: multerS3({
         s3: s3,
