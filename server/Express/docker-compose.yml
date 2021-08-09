@@ -1,0 +1,35 @@
+
+version: '3'
+
+services:
+  musica:
+    build: .
+    restart: always
+    image: musica
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/musica
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/app/server
+    networks:
+      - node-network
+
+  mongodb:
+    image: mongo:latest
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+      - db_data:/data/db
+    networks:
+      - node-network
+
+volumes:
+  db_data:
+
+networks:
+  node-network:
+    driver: bridge

@@ -3,7 +3,6 @@ import {Button, Icon} from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 
 const useStyles = makeStyles((theme) => {
-    console.log(theme.spacing(1,1,1,1))
     return {
         icon:{
           display: "flex",

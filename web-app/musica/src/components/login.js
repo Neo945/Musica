@@ -4,7 +4,6 @@ import OauthButton from './oauthButton';
 import {lookup} from './fetchData/lookup';
 
 const useStyles = makeStyles((theme) => {
-  console.log(theme)
   return {
   paper: {
     marginTop: theme.spacing(20),
