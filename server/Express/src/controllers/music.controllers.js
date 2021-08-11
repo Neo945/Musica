@@ -1,5 +1,5 @@
 const { Album, Music } = require('../models/music');
-const { uploadSingle } = require('../config/s3.config');
+const { uploadSingle, s3 } = require('../config/s3.config');
 
 /**
  * LanguageSchema{lang,}
@@ -20,13 +20,23 @@ module.exports = {
     createMusic: (req, res) => {
         uploadSingle(req, res, async (err) => {
             if (err) return res.status(400).json({ message: err.message });
-            let album = await Album.findOne({ title: req.body.title });
-            if (!album) {
-                album = Album.findOne({ id: req.body.albumId });
-                await Music.create({ ...req.body });
-            }
+            console.log('req.file', req.file);
+            console.log('req.files', req.files);
+            // let album = await Album.findOne({ title: req.body.title });
+            // if (!album) {
+            // album = Album.findOne({ id: req.body.albumId });
+            // await Music.create({ ...req.body });
+            // }
             return res.status(201).send({ message: 'music successfully saved' });
         });
-        res.status(201).send({ message: 'music successfully saved' });
+        // res.status(201).send({ message: 'music successfully saved' });
+    },
+    getMusic: (req, res) => {
+        s3.getObject({
+            Bucket: 'musica-music',
+            Key: 'auio.mp3',
+        }, (er, data) => {
+            res.send(data.Body);
+        });
     },
 };

@@ -5,6 +5,7 @@ require('./config/passport.config');
 const cp = require('cookie-parser');
 const cs = require('cookie-session');
 const passport = require('passport');
+require('./config/s3.config');
 
 const app = express();
 

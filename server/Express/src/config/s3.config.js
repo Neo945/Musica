@@ -21,13 +21,15 @@ const upload = (bucket) => multer({
         s3: s3,
         bucket: bucket,
         metadata: function (req, file, cb) {
+            console.log('file metadata ', file);
             cb(null, { fieldName: file.fieldname });
         },
         key: function (req, file, cb) {
+            console.log('file key ', file);
             cb(null, 'auio.mp3');
         },
     }),
 });
 const uploadSingle = upload('musica-music').single('audio');
 
-module.exports = { uploadSingle };
+module.exports = { uploadSingle, s3 };
