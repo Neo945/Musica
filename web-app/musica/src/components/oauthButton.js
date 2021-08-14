@@ -11,6 +11,10 @@ const useStyles = makeStyles((theme) => {
         },
         googleButton:{
           margin: theme.spacing(2,0,0,0),
+          backgroundColor: theme.palette.action.selected,
+          '&:hover':{
+            backgroundColor: theme.palette.action.hover,
+          },
         },
         buttonForm:{
           margin: theme.spacing(2,0,2,0),

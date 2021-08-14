@@ -11,22 +11,25 @@ const useStyles = makeStyles((theme) => {
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-  },
+  backgroundColor: theme.palette.action.selected,
+  '&:hover':{
+    backgroundColor: theme.palette.action.hover,
+  },},
   remember: {
     margin: theme.spacing(1, 0, 0),
   },
   text:{
     margin: theme.spacing(1,0,1,0),
+    color: theme.palette.text.primary,
+    '&:active':{
+      color: theme.palette.text.secondary,
+    },
   }
 }});
 

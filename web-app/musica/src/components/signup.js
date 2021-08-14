@@ -13,20 +13,25 @@ const useStyles = makeStyles((theme) => {
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    backgroundColor: theme.palette.action.selected,
+    '&:hover':{
+      backgroundColor: theme.palette.action.hover,
+    },width: '80%',
   },
-  remember: {
-    margin: theme.spacing(1, 0, 0),
-  },
+    btn: {
+      backgroundColor: theme.palette.action.selected,
+      '&:hover':{
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+    remember: {
+      margin: theme.spacing(1, 0, 0),
+    },
   textField:{
     margin: theme.spacing(1),
   },
@@ -67,7 +72,7 @@ function EmailInputSignup(params) {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            className={classes.btn}
           >
             Sign Up
           </Button>
@@ -106,7 +111,7 @@ function PasswordSignup(params) {
           <Typography style={{color:"gray",fontSize:"0.75em"}}>
           * Sign Up Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at dictum purus. Sed finibus mollis augue, ut congue est consequat rhoncus. Nullam eget ultrices velit.
         </Typography>
-          <Container style={{display:'flex'}}>
+          <Container style={{display:'flex', justifyContent:'space-around',width:"100%"}}>
         <IconButton aria-label="back" onClick={() => params.fun(0)}>
           <ArrowBackIosIcon />
         </IconButton>
@@ -114,7 +119,7 @@ function PasswordSignup(params) {
             fullWidth
             variant="contained"
             color="primary"
-            className={'submit'}
+            className={'submit ' + classes.submit}
             onClick={() => params.fun(2)}
           >
             Continue
@@ -159,14 +164,28 @@ function UserInfoSignup(params) {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
+        {/* <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={'submit ' + classes.submit}
+          >
+            Save
+          </Button> */}
+          <Container style={{display:'flex', justifyContent:'space-around',width:"100%"}}>
+        <IconButton aria-label="back" onClick={() => params.fun(1)}>
+          <ArrowBackIosIcon />
+        </IconButton>
         <Button
             fullWidth
             variant="contained"
             color="primary"
-            className={'submit'}
+            className={'submit ' + classes.submit}
+            // onClick={() => params.fun()}
           >
             Save
           </Button>
+        </Container>
         
     </Container>
   );

@@ -14,7 +14,10 @@ const useStyles = makeStyles((theme) => {
             fontFamily:"'Dancing Script', cursive",
             fontWeight:'bold',
             marginLeft:'25px'
-        }
+        },
+        navbar: {
+            backgroundColor: theme.palette.background.paper,
+        },
     }
 })
 
@@ -22,7 +25,7 @@ function Navbar(params) {
     const classes = useStyles();
     const [draw, setDraw] = useState(false);
     return (
-            <AppBar position="fixed">
+            <AppBar position="fixed" className={classes.navbar}>
                 <Toolbar>
                     <IconButton color="inherit" onClick={()=>{setDraw(true)}}>
                         <MenuIcon/>
