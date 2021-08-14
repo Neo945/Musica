@@ -18,25 +18,38 @@ module.exports = {
         res.send(albums);
     },
     createMusic: (req, res) => {
+        const album = Album.findOne({ id: req.body.albumId });
+        if (album) res.status(403).send({ message: 'Album not found, FIrst create the ablum and them try to add the audio' });
         uploadSingle(req, res, async (err) => {
             if (err) return res.status(400).json({ message: err.message });
-            console.log('req.file', req.file);
-            console.log('req.files', req.files);
-            // let album = await Album.findOne({ title: req.body.title });
-            // if (!album) {
-            // album = Album.findOne({ id: req.body.albumId });
-            // await Music.create({ ...req.body });
-            // }
+            const newAudio = Music.create({ ...req.body });
+            Music.findOneAndUpdate({ id: newAudio._id }, { $push: { album: album._id } });
+            const { language } = req.body;
+            const { genre } = req.body;
             return res.status(201).send({ message: 'music successfully saved' });
         });
-        // res.status(201).send({ message: 'music successfully saved' });
     },
-    getMusic: (req, res) => {
+    getAudio: (req, res) => {
         s3.getObject({
             Bucket: 'musica-music',
             Key: 'auio.mp3',
         }, (er, data) => {
+            if (er) throw new Error(er);
             res.send(data.Body);
+        });
+    },
+    deleteAudio: (req, res) => {
+        const musicObj = Music.deleteOne({ id: req.body.id });
+        const albumId = musicObj.album;
+        const album = Album.findOne({ id: albumId });
+        if (album.music.length === 0) Album.deleteOne({ id: album._id });
+        s3.deleteObject({
+            Bucket: 'musica-music',
+            Key: `${req.user.id}/${musicObj.id}.mp3`,
+        }, (err, data) => {
+            if (err) throw new Error(err);
+            if (err) res.status(400).send({ message: err.message });
+            res.send(data);
         });
     },
 };
