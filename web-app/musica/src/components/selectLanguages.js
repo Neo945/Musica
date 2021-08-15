@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
   }));
 export default function LanguageSelect(params) {
     let [selected, setSelected] = useState([]);
-    console.log(selected);
     const classes = useStyles();
     return (
         <Container component="div" maxWidth="lg" className={classes.flexCenter} style={{padding: 0,flexDirection:'column', height:'100vh'}}>
