@@ -6,7 +6,7 @@ import FormTest from './temp/form';
 import { makeStyles } from '@material-ui/core';
 
 function App() {
-  const classes = makeStyles(theme => ({
+  makeStyles(theme => ({
     '@global': {
       '#root': {
         position: 'fixed',
