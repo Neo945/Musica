@@ -1,4 +1,5 @@
-const { Album, Music } = require('../models/music');
+const Music = require('../models/music');
+const Album = require('../models/album');
 const { uploadSingle, s3 } = require('../config/s3.config');
 
 /**
@@ -24,8 +25,8 @@ module.exports = {
             if (err) return res.status(400).json({ message: err.message });
             const newAudio = Music.create({ ...req.body });
             Music.findOneAndUpdate({ id: newAudio._id }, { $push: { album: album._id } });
-            const { language } = req.body;
-            const { genre } = req.body;
+            // const { language } = req.body;
+            // const { genre } = req.body;
             return res.status(201).send({ message: 'music successfully saved' });
         });
     },
