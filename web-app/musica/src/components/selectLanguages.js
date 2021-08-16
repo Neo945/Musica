@@ -1,8 +1,8 @@
-import {Container,Paper} from '@material-ui/core';
+import {Container,Paper, Button} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import {useState} from 'react'
-
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const language = [
     'English',
@@ -41,6 +41,14 @@ const useStyles = makeStyles((theme) => ({
         filter: "hue-rotate(270deg)",
         // filter: "blur(5px)",
         transform:'scale(1.3)'
+    },
+    button: {
+        position: 'absolute',
+        bottom: theme.spacing(4),
+        right: theme.spacing(4),
+        margin: theme.spacing(1),
+        padding: theme.spacing(1),
+        fontSize: '1em',
     }
 }));
 
@@ -67,6 +75,15 @@ export default function LanguageSelect(params) {
                     </Paper>
                 </ButtonBase>
             )}
+            <Button 
+            aria-label="add" 
+            color="inherit" 
+            className={classes.button}
+            endIcon={<ArrowForwardIcon />}
+            size="large"
+            >
+                Next
+            </Button>
         </Container>
     );
 }
