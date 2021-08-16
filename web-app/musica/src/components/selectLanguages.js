@@ -15,23 +15,40 @@ const useStyles = makeStyles((theme) => ({
       height: '25%',
       width: '100%',
       margin: theme.spacing(1),
+      overflow:'hidden',
+      borderRadius: '10px'
 },
     paper: {
-      height: '100%',
+      height: '200px',
       width: '100%',
       color:'white',
       fontSize:'3em',
       fontFamily:"'Style Script', cursive",
+      background: 'url(https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__340.jpg) center / cover no-repeat',
+      transition: 'all 0.5s ease',
     },
     flexCenter:{
-        display:'flex',justifyContent:'center', alignItems:'center'
+        display:'flex',
+        justifyContent:'center', 
+        alignItems:'center'
+    },
+    zoom: {
+        '&:hover':{
+            transform: 'scale(1.05)',
+          }
+    },
+    focused:{
+        filter: "hue-rotate(270deg)",
+        // filter: "blur(5px)",
+        transform:'scale(1.3)'
     }
-  }));
+}));
+
 export default function LanguageSelect(params) {
     let [selected, setSelected] = useState([]);
     const classes = useStyles();
     return (
-        <Container component="div" maxWidth="lg" className={classes.flexCenter} style={{padding: 0,flexDirection:'column', height:'100vh'}}>
+        <Container component="div" maxWidth="lg" style={{padding: 0}}>
             {language.map((ele,i)=>
                 <ButtonBase
                 onClick={() => {
@@ -45,12 +62,7 @@ export default function LanguageSelect(params) {
                 key={i}
                 className={classes.ripple}>
                     <Paper
-                        style={{
-                            background:(selected.indexOf(i)>=0 ?  
-                            "linear-gradient(0deg, rgba(2,173,231,0.5), rgba(2,173,231,0.5)), url(https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__340.jpg) center / cover no-repeat" : 
-                            "url(https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__340.jpg) center / cover no-repeat"),
-                        }}
-                    className={classes.flexCenter + " " + classes.paper}>
+                    className={classes.flexCenter + " " + classes.paper + ' ' + (selected.indexOf(i)>=0 ? classes.focused : classes.zoom)}>
                         {ele}
                     </Paper>
                 </ButtonBase>

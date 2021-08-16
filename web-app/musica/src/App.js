@@ -4,6 +4,7 @@ import {Login,Navbar,Signup,LanguageSelect} from './components';
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 import FormTest from './temp/form';
 import { makeStyles } from '@material-ui/core';
+import {Box} from '@material-ui/core'
 
 function App() {
   makeStyles(theme => ({
@@ -23,8 +24,7 @@ function App() {
     <div>
     <Router>
       <Navbar/>
-      {/* <div style={{height:"550px"}}> */}
-      {/* </div> */}
+      <Box height="64px"/>
       <Switch>
         <Route path="/login">
           <Login/>

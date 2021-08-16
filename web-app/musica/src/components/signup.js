@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import {Button,TextField,Grid, Typography, Container, IconButton, InputAdornment,FormControlLabel,Checkbox} from '@material-ui/core';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import OauthButton from './oauthButton';
 import { useState } from 'react';
 
@@ -187,7 +187,7 @@ function PasswordSignup(params) {
         </Typography>
           <Container className={classes.container}>
         <IconButton aria-label="back" onClick={() => params.fun(0)}>
-          <ArrowBackIosIcon />
+          <ChevronLeft />
         </IconButton>
         <Button
             fullWidth
@@ -272,7 +272,7 @@ function UserInfoSignup(params) {
           />
           <Container className={classes.container}>
         <IconButton aria-label="back" onClick={() => params.fun(1)}>
-          <ArrowBackIosIcon />
+          <ChevronLeft />
         </IconButton>
         <Button
             fullWidth
@@ -304,7 +304,7 @@ export default function Signup() {
     username: '',
     age: 0
   });
-  const [step,setStep] = useState(3);
+  const [step,setStep] = useState(0);
   return (
     <div>
       {step === 0 ? 
