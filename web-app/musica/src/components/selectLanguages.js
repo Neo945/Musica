@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         padding: theme.spacing(1),
         fontSize: '1em',
+        width: '80px',
+        height: '80px',
+        borderRadius: '50%',
     }
 }));
 
