@@ -2,9 +2,10 @@ import './App.css';
 // eslint-disable-next-line
 import {Login,Navbar,Signup,LanguageSelect} from './components';
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
-import FormTest from './temp/form';
+import FormTest from './components/temp/form';
 import { makeStyles } from '@material-ui/core';
 import {Box} from '@material-ui/core'
+import PlayerPage from './components/player';
 
 function App() {
   makeStyles(theme => ({
@@ -23,10 +24,10 @@ function App() {
   return (
     <div>
     <Router>
-      <Navbar/>
-      <Box height="64px"/>
       <Switch>
         <Route path="/login">
+          <Navbar/>
+          <Box height="64px"/>
           <Login/>
         </Route>
         <Route path="/test">
@@ -37,6 +38,9 @@ function App() {
         </Route>
         <Route path="/language">
           <LanguageSelect/>
+        </Route>
+        <Route path="/player">
+          <PlayerPage />
         </Route>
       </Switch>
     </Router>
