@@ -9,10 +9,12 @@ require('./config/s3.config');
 
 const app = express();
 
-app.use(cs({
-    maxAge: 24 * 60 * 60 * 1000,
-    keys: require('./config/config').SECRET_KEY,
-}));
+app.use(
+    cs({
+        maxAge: 24 * 60 * 60 * 1000,
+        keys: require('./config/config').SECRET_KEY,
+    })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cp());

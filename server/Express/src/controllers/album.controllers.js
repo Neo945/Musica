@@ -5,7 +5,7 @@ const Album = require('../models/album');
  * GenreSchema{genre}
  * AlbumSchema{title,artist,songs[]}
  * MusicSchema{title,length,artists[],tags[],lang,genre[]}
-*/
+ */
 module.exports = {
     createAlbum: async (req, res) => {
         const newAlbum = Album.create({ ...req.body, artist: req.user._id });

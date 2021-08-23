@@ -7,43 +7,48 @@ const { isStrongPassword } = require('validator').default;
 
 const { Schema } = mongoose;
 
-const UserSchema = new Schema({
-    username: {
-        type: String,
-        required: [true, 'Please fill the username'],
-        trim: true,
-        minlength: 5,
+const UserSchema = new Schema(
+    {
+        username: {
+            type: String,
+            required: [true, 'Please fill the username'],
+            trim: true,
+            minlength: 5,
+        },
+        password: {
+            type: String,
+            trim: true,
+            required: [true, 'Please fill the password'],
+            validate: [isStrongPassword, 'not a strong password'],
+            unique: true,
+            minlength: [10, 'Password Length less than 10'],
+        },
+        email: {
+            type: String,
+            required: [true, 'Please fill the email'],
+            unique: [true, 'Already have a account'],
+            lowercase: true,
+            trim: true,
+            minlength: [10, 'Email Length less than 10'],
+            validate: [isEmail, 'Invalid email'],
+        },
     },
-    password: {
-        type: String,
-        trim: true,
-        required: [true, 'Please fill the password'],
-        validate: [isStrongPassword, 'not a strong password'],
-        unique: true,
-        minlength: [10, 'Password Length less than 10'],
-    },
-    email: {
-        type: String,
-        required: [true, 'Please fill the email'],
-        unique: [true, 'Already have a account'],
-        lowercase: true,
-        trim: true,
-        minlength: [10, 'Email Length less than 10'],
-        validate: [isEmail, 'Invalid email'],
-    },
-}, {
-    timestamps: true,
-});
+    {
+        timestamps: true,
+    }
+);
 
 const ArtistsSchema = new Schema({
     user: {
         type: mongoose.Types.ObjectId,
         ref: 'user',
     },
-    language: [{
-        type: mongoose.Types.ObjectId,
-        ref: 'language',
-    }],
+    language: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'language',
+        },
+    ],
     phone: {
         type: String,
         trim: true,

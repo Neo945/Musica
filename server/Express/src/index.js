@@ -2,12 +2,11 @@ const mongoose = require('mongoose');
 const env = require('./config/config');
 const app = require('./server');
 
-mongoose.connect(env.ATLAS_URI,
-    {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-    });
+mongoose.connect(env.ATLAS_URI, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+});
 mongoose.connection.once('open', () => {
     // eslint-disable-next-line node/no-unsupported-features/node-builtins
     console.clear();
