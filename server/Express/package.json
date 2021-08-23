@@ -28,7 +28,8 @@
     "faker": "^5.5.3",
     "husky": "^7.0.1",
     "jest": "^27.0.6",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "prettier": "^2.3.2"
   },
   "dependencies": {
     "aws-sdk": "^2.954.0",

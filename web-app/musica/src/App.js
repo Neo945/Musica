@@ -24,10 +24,10 @@ function App() {
   return (
     <div>
     <Router>
+      <Navbar/>
+      <Box height="64px"/>
       <Switch>
         <Route path="/login">
-          <Navbar/>
-          <Box height="64px"/>
           <Login/>
         </Route>
         <Route path="/test">
