@@ -1,4 +1,7 @@
 const Music = require('../models/music');
+const Language = require('../models/language');
+const Tag = require('../models/tags');
+const Genre = require('../models/genre');
 const Album = require('../models/album');
 const { uploadSingle, s3 } = require('../config/s3.config');
 
@@ -21,13 +24,20 @@ module.exports = {
     createMusic: (req, res) => {
         const album = Album.findOne({ id: req.body.albumId });
         if (album)
-            res.status(403).send({ message: 'Album not found, FIrst create the ablum and them try to add the audio' });
+            res.status(403).send({ message: 'Album not found, First create the ablum and them try to add the audio' });
         uploadSingle(req, res, async (err) => {
             if (err) return res.status(400).json({ message: err.message });
             const newAudio = Music.create({ ...req.body });
-            Music.findOneAndUpdate({ id: newAudio._id }, { $push: { album: album._id } });
-            // const { language } = req.body;
-            // const { genre } = req.body;
+            await Music.findOneAndUpdate({ id: newAudio._id }, { $push: { album: album._id } });
+            const { language } = req.body;
+            const { genre } = req.body;
+            const { tags } = req.body;
+            let uploaded = await Language.insertMany(language);
+            Music.findByIdAndUpdate({ _id: newAudio._id }, { $push: { language: { $each: uploaded } } });
+            uploaded = await Tag.insertMany(tags);
+            Music.findByIdAndUpdate({ _id: newAudio._id }, { $push: { tags: { $each: uploaded } } });
+            uploaded = await Genre.insertMany(genre);
+            Music.findByIdAndUpdate({ _id: newAudio._id }, { $push: { genre: { $each: uploaded } } });
             return res.status(201).send({ message: 'music successfully saved' });
         });
     },
