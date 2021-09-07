@@ -1,10 +1,9 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-const mongoose = require('mongoose');
 const GoogleStratagy = require('passport-google-oauth20');
 const { errorOHandler } = require('../utils/errorHandler');
 const env = require('./config');
-const { User, Artist } = require('../models/user');
+const { User } = require('../models/user');
 
 passport.serializeUser((user, done) => {
     done(null, user._id);
@@ -21,21 +20,16 @@ passport.use(
             callbackURL: 'http://localhost:5000/api/auth/google/redirect',
         },
         async (access, refresh, email, done) => {
-            const user = await User.findOne({ googleID: email.id });
+            const user = await User.findOne({ email: email.emails[0].value });
             if (user) {
-                console.log('Current user ', user);
                 done(null, user);
             } else {
                 errorOHandler(async () => {
                     const nu = await User.create({
-                        // eslint-disable-next-line radix
-                        _id: mongoose.Types.ObjectId(parseInt(email.id)),
                         username: email.displayName,
                         email: email.emails[0].value,
                         password: await bcrypt.genSalt(),
                     });
-                    // console.log(nu, email.id, email);
-                    await Artist.create({ user: nu._id });
                     done(null, nu);
                 });
             }
