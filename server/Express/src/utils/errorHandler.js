@@ -16,7 +16,7 @@ module.exports = {
         try {
             await cb();
         } catch (err) {
-            console.log({ message: err });
+            console.log({ message: err.message });
         }
     },
 };

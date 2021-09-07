@@ -2,37 +2,33 @@ const { User, Artist } = require('../models/user');
 const { errorHandler } = require('../utils/errorHandler');
 
 module.exports = {
-    getAllUser: (req, res) => {
-        errorHandler(req, res, () => {
-            User.find()
-                .then((users) => res.json(users))
-                .catch((err) => res.status(400).json(`Error: ${err}`));
+    getUser: (req, res) => {
+        errorHandler(req, res, async () => {
+            const artist = await Artist.findOne({ user: req.user._id }).populate('user', '-password');
+            res.status(200).json({ message: 'success', artist });
         });
     },
-    addInfo: (req, res) => {
+    createArtistForExistingUser: (req, res) => {
         errorHandler(req, res, async () => {
-            const nua = await Artist.findOne({ user: req.user._id });
-            nua.save();
-            res.status(201).json({ message: 'success', user: nua });
+            const newArtistAccount = await Artist.create({ ...req.body, user: req.user._id });
+            res.status(201).json({ message: 'success', user: newArtistAccount });
         });
     },
-    register: (req, res) => {
+    registerUser: (req, res) => {
         errorHandler(req, res, async () => {
-            const nu = await User.create({ ...req.body });
-            await User.create({ user: nu._id });
-            res.status(201).json({ message: 'success', user: nu });
+            const newUser = await User.create({ ...req.body });
+            res.status(201).json({ message: 'success', user: { ...newUser, password: null } });
         });
     },
     login: (req, res) => {
         errorHandler(req, res, async () => {
-            const { password: pass, email } = req.body;
-            const token = await User.login(email, pass);
+            const { password, email } = req.body;
+            const token = await User.login(email, password);
             if (token) {
                 res.cookie('jwt', token, {
-                    maxAge: 3 * 24 * 3600 * 1000,
+                    maxAge: require('../config/config').TOKEN_LENGTH,
                 });
-                console.log(req.headers);
-                res.json({ mesage: 'Success' });
+                res.status(201).json({ mesage: 'login Successful' });
             } else {
                 res.clearCookie('jwt');
                 res.json({ mesage: 'User not found' });
@@ -41,7 +37,11 @@ module.exports = {
     },
     logout: (req, res) => {
         errorHandler(req, res, () => {
-            req.logout();
+            try {
+                req.logout();
+            } catch (err) {
+                console.log(err);
+            }
             res.clearCookie('jwt');
             res.json({ mesage: 'Logged out successfully' });
         });

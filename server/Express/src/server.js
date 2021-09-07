@@ -11,7 +11,7 @@ const app = express();
 
 app.use(
     cs({
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: require('./config/config').TOKEN_LENGTH,
         keys: require('./config/config').SECRET_KEY,
     })
 );
