@@ -9,6 +9,10 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema(
     {
+        isVarified: {
+            type: Boolean,
+            default: false,
+        },
         username: {
             type: String,
             required: [true, 'Please fill the username'],
@@ -84,6 +88,25 @@ UserSchema.statics.login = async function (email, password) {
         return getToken(user._id);
     }
     return null;
+};
+
+UserSchema.statics.generateEmailVerificationToken = async function (email) {
+    const user = await this.findOne({ email });
+    if (user) {
+        const token = await bcrypt.hash(user._id, await bcrypt.genSalt());
+        return token;
+    }
+    return null;
+};
+
+UserSchema.statics.verifyEmailToken = async function (id, token) {
+    const user = await this.findById(id);
+    if (await bcrypt.compare(token, user._id)) {
+        user.isVerified = true;
+        user.save();
+        return true;
+    }
+    return false;
 };
 
 UserSchema.statics.savePass = async function (username, password) {

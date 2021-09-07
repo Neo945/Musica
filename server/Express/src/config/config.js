@@ -14,6 +14,9 @@ const schema = Joi.object()
         S3_ACCESS_KEY_ID: Joi.string().required().description('Access key user'),
         SECRET_S3_ACCESS_KEY: Joi.string().required().description('Secret key user'),
         S3_BUCKET_REGION: Joi.string().required().description('S3 bucket region'),
+        EMAIL_SERVICE: Joi.string().required().description('Email server'),
+        USER_EMAIL: Joi.string().required().description('Email of user'),
+        USER_PASSWORD: Joi.string().required().description('Email password'),
     })
     .unknown();
 

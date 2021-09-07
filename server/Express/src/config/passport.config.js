@@ -26,6 +26,7 @@ passport.use(
             } else {
                 errorOHandler(async () => {
                     const newUser = await User.create({
+                        isVerified: true,
                         username: email.displayName,
                         email: email.emails[0].value,
                         password: await bcrypt.genSalt(),
