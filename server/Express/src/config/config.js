@@ -17,6 +17,7 @@ const schema = Joi.object()
         EMAIL_SERVICE: Joi.string().required().description('Email server'),
         USER_EMAIL: Joi.string().required().description('Email of user'),
         USER_PASSWORD: Joi.string().required().description('Email password'),
+        NODE_ENV: Joi.string().required().description('Environment'),
     })
     .unknown();
 

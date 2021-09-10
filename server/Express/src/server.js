@@ -22,7 +22,10 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 if (process.env.NODE_ENV === 'development') app.use(require('morgan')('dev'));
 app.use(require('./middleware/UserAuth.middleware'));
-app.use('/api', require('./router'));
+// app.use('/api', require('./router'));
+app.get('/', (req, res) => {
+    res.send('Hello to muscia');
+});
 
 app.use('/static', express.static(path.join(__dirname, 'public')));
 

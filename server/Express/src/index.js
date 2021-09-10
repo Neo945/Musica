@@ -13,5 +13,6 @@ mongoose.connection.once('open', () => {
     console.log('Connection with database established successfully');
     app.listen(env.PORT, () => {
         console.log(`Server is running on port: ${env.PORT}`);
+        console.log(`Environment: ${env.NODE_ENV}`);
     });
 });
