@@ -10,13 +10,14 @@ jobs:
     build:
         runs-on: self-hosted
     steps:
-        - uses: actions/checkout@v2
-        - name: User Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v1
-          with:
-          node-version: ${{ matrix.node-version }}
-        - run: |
-              cd server/Express
-              yarn install
-              yarn run test
-              yarn run dev
+    - uses: actions/checkout@v2
+    - name: User Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: |
+            cd server/Express
+            yarn install
+            yarn run test
+            yarn run dev
+
