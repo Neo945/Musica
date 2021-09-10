@@ -1,24 +1,52 @@
+# name: musica CI
+
+# on:
+#     push:
+#         branches: [master]
+#     pull_request:
+#         branches: [master]
+
+# jobs:
+#     build:
+#         runs-on: self-hosted
+
+#         steps:
+#         - uses: actions/checkout@v2
+#         - name: User Node.js ${{ matrix.node-version }}
+#           uses: actions/setup-node@v1
+#           with:
+#             node-version: ${{ matrix.node-version }}
+#         - run: |
+#             cd server/Express
+#             yarn install
+#             yarn run test
+#             yarn run dev
+
 name: musica CI
 
 on:
-    push:
-        branches: [master]
-    pull_request:
-        branches: [master]
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-    build:
-        runs-on: self-hosted
+  build:
 
-        steps:
-        - uses: actions/checkout@v2
-        - name: User Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v1
-          with:
-            node-version: ${{ matrix.node-version }}
-        - run: |
-            cd server/Express
-            yarn install
-            yarn run test
-            yarn run dev
+    runs-on: self-hosted
 
+#     strategy:
+#       matrix:
+#         node-version: [12.x, 14.x, 16.x]
+#         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: cd server/Express
+    - run: npm run test
+    - run: npm run dev
