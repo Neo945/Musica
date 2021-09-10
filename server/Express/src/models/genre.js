@@ -8,7 +8,7 @@ const GenreSchema = new Schema({
         required: [true, 'Cannot be empty'],
         trim: true,
         unique: true,
-        minLength: 5,
+        minLength: 2,
     },
 });
 const Genre = mongoose.model('genre', GenreSchema);
