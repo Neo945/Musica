@@ -18,9 +18,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install packages
-        run: |
-          cd ./server/Express
-          yarn install --no-lockfile
+        # run: |
+        # cd ./server/Express
+        # yarn install --no-lockfile
 
       - name: Environment setup
         run: |
