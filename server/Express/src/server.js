@@ -25,6 +25,7 @@ app.use(require('./middleware/UserAuth.middleware'));
 // app.use('/api', require('./router'));
 app.get('/', (req, res) => {
     res.send('Hello! from muscia');
+    res.send('Setup completed');
 });
 
 app.use('/static', express.static(path.join(__dirname, 'public')));
