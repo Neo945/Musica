@@ -16,8 +16,23 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: |
+
+      - name: Install packages
+        run: |
           cd ./server/Express
           yarn install --no-lockfile
+
+      - name: Environment setup
+        run: |
+          cd ./server/Express/src/config
+          echo 'SECRET_KEY={{ secrets.SECRET_KEY }}\nPORT={{ secrets.PORT }}\nATLAS_URI={{ secrets.ATLAS_URI }}\nCLIENT_ID={{ secrets.CLIENT_ID }}\nCLIENT_SECRET={{ secrets.CLIENT_SECRET }}\nS3_ACCESS_KEY_ID={{ secrets.S3_ACCESS_KEY_ID }}\nSECRET_S3_ACCESS_KEY={{ secrets.SECRET_S3_ACCESS_KEY }}\nS3_BUCKET_REGION={{ secrets.S3_BUCKET_REGION }}\nRECAPTCHA_SITE_KEY={{ secrets.RECAPTCHA_SITE_KEY }}\nRECAPTCHA_SECRET_KEY={{ secrets.RECAPTCHA_SECRET_KEY }}\nTOKEN_LENGTH={{ secrets.TOKEN_LENGTH }}\nEMAIL_SERVICE={{ secrets.EMAIL_SERVICE }}\nUSER_EMAIL={{ secrets.USER_EMAIL }}\nUSER_PASSWORD={{ secrets.USER_PASSWORD }}\nNODE_ENV={{ secrets.NODE_ENV }}\n' > .env
+
+      - name: Code Testing
+        run: |
+          cd ./server/Express
           yarn run test
+
+      - name: Run production server
+        run: |
+          cd ./server/Express
           yarn start
