@@ -4,7 +4,7 @@
     "description": "",
     "main": "./src/index.js",
     "scripts": {
-        "start": "pm2 start config.ecosystem.json --no-daemon",
+        "start": "pm2 start config.ecosystem.json",
         "test": "jest -i --colors --verbose --detectOpenHandles",
         "test:watch": "jest -i --watchAll",
         "coverage": "jest -i --coverage",
