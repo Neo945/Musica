@@ -35,9 +35,11 @@ jobs:
           cd ./server/Express
           yarn run test
 
-
       - name: Run production server
         run: |
           cd ./server/Express
           yarn start
-
+      - name: Restart services
+        run: |
+          yarn run restart
+          sudo service nginx restart
