@@ -24,8 +24,7 @@ if (process.env.NODE_ENV === 'development') app.use(require('morgan')('dev'));
 app.use(require('./middleware/UserAuth.middleware'));
 // app.use('/api', require('./router'));
 app.get('/', (req, res) => {
-    res.send('Hello! from muscia');
-    res.send('Setup completed');
+    res.send('Hello! from muscia, and setup done');
 });
 
 app.use('/static', express.static(path.join(__dirname, 'public')));
