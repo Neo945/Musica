@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          SECRET_KEY: ${{ secrets.env }}
 
 #       - name: Install packages
         # run: |
@@ -32,6 +32,8 @@ jobs:
           echo "${{ secrets.SECRET_KEY }}"
           echo "${{ env.SECRET_KEY }}"
           echo "${{ secrets.env.SECRET_KEY }}"
+          echo "${{ SECRET_KEY.SECRET_KEY }}"
+          echo "${{ secrets.TEST }}"
           cat .env
 
       # - name: Code Testing
