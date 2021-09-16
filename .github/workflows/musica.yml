@@ -41,5 +41,6 @@ jobs:
           yarn start
       - name: Restart services
         run: |
+          cd ./server/Express
           yarn run restart
           sudo service nginx restart
