@@ -32,7 +32,6 @@ jobs:
           echo "${{ secrets.SECRET_KEY }}"
           echo "${{ env.SECRET_KEY }}"
           echo "${{ secrets.env.SECRET_KEY }}"
-          echo "${{ SECRET_KEY.SECRET_KEY }}"
           echo "${{ secrets.TEST }}"
           cat .env
 
