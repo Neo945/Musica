@@ -24,7 +24,7 @@ function App() {
   return (
     <div>
       <Router>
-        <Navbar />
+        {/* <Navbar /> */}
         <Box height="10%" />
         <Switch>
           <Route path="/login">

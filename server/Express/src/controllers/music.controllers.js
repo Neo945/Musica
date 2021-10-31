@@ -1,7 +1,4 @@
 const Music = require('../models/music');
-const Language = require('../models/language');
-const Tag = require('../models/tags');
-const Genre = require('../models/genre');
 const Album = require('../models/album');
 const { uploadSingle, s3 } = require('../config/s3.config');
 
@@ -27,22 +24,16 @@ module.exports = {
             res.status(403).send({ message: 'Album not found, First create the ablum and them try to add the audio' });
         uploadSingle(req, res, async (err) => {
             if (err) return res.status(400).json({ message: err.message });
-            const newAudio = Music.create({ ...req.body });
-
             return res.status(201).send({ message: 'music successfully saved' });
         });
     },
     getAudio: (req, res) => {
-        s3.getObject(
-            {
-                Bucket: 'musica-music',
-                Key: 'auio.mp3',
-            },
-            (er, data) => {
-                if (er) throw new Error(er);
-                res.send(data.Body);
-            }
-        );
+        s3.getObject({
+            Bucket: 'sample-bucket-musica',
+            Key: 'auio.mp3',
+        })
+            .createReadStream()
+            .pipe(res);
     },
     deleteAudio: (req, res) => {
         const musicObj = Music.deleteOne({ id: req.body.id });

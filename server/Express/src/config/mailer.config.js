@@ -14,7 +14,7 @@ async function transport(to, subject, text) {
         from: env.USER_EMAIL,
         to: `${to}`,
         subject: `${subject}`,
-        text: `${text}`,
+        html: `${text}`,
     });
 }
 module.exports = transport;

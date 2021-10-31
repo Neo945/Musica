@@ -5,6 +5,7 @@ const view = require('../controllers/music.controllers');
 router.post('/add/album', view.createAlbum);
 router.get('/get/album', view.getAllUserAlbum);
 router.post('/upload', view.createMusic);
-router.post('/genre', view.saveGenre);
+// router.post('/genre', view.saveGenre);
+router.get('/get/audio', view.getAudio);
 
 module.exports = router;
