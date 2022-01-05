@@ -48,14 +48,14 @@ module.exports = {
         });
     },
     googleOauthRedirect: (req, res) => {
-        res.redirect('http://localhost:3000/');
+        res.redirect('/');
     },
     sendEmailVerfication: async (req, res) => {
         errorHandler(req, res, async () => {
             const { email } = req.body;
             const token = await User.generateEmailVerificationToken(email);
             if (token) {
-                const url = `http://localhost:3000/verify/${token}`;
+                const url = `http://localhost:5000/verify/${token}`;
                 const message = `<h1>Please verify your email</h1>
                     <p>Click on the link below to verify your email</p>
                     <a href="${url}">${url}</a>`;

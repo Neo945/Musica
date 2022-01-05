@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const env = require('./config/config');
-const app = require('./server');
+const {app} = require('./server');
 
 mongoose.connect(env.ATLAS_URI, {
     useNewUrlParser: true,

@@ -1,6 +1,7 @@
 {
     "restartable": "rs",
     "ignore": [
+      "src/views",
       ".git",
       "node_modules/**/node_modules"
     ],
