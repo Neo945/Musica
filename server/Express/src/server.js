@@ -31,15 +31,15 @@ if (process.env.NODE_ENV === 'development') app.use(require('morgan')('dev'));
 // app.use('/api', require('./router'));
 
 app.get('/', (req, res) => {
-    res.render('index', {name : 'Hello'});
+    res.render('index', { name: 'Hello' });
 });
 
 // app.get('/', (req, res) => {
 //     res.send('Hello! from muscia, and setup done');
 // });
 
-app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
 const URL = process.env.NODE_ENV === 'production' ? 'https://muscia.herokuapp.com' : `http://localhost:${env.PORT}`;
 
-module.exports = {app, URL};
+module.exports = { app, URL };

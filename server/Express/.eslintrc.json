@@ -24,6 +24,7 @@
         "global-require": "off",
         "node/no-unsupported-features/es-syntax": "off",
         "space-infix-ops": "warn",
-        "no-multiple-empty-lines": "warn"
+        "no-multiple-empty-lines": "warn",
+        "jsx-a11y/anchor-is-valid": "off"
     }
 }

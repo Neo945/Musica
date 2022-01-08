@@ -1,22 +1,16 @@
 {
     "restartable": "rs",
-    "ignore": [
-      "src/views",
-      ".git",
-      "node_modules/**/node_modules"
-    ],
+    "ignore": [".git", "node_modules/**/node_modules"],
     "verbose": false,
     "execMap": {
-      "js": "node --harmony"
+        "js": "node --harmony"
     },
     "events": {
-      "restart": "yarn run lint:fix"
+        "restart": "yarn run lint:fix"
     },
-    "watch": [
-      "."
-    ],
+    "watch": ["."],
     "env": {
-      "NODE_ENV": "development"
+        "NODE_ENV": "development"
     },
     "ext": "js,json"
-  }
+}
