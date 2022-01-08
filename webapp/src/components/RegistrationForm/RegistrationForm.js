@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function RegistrationForm(props) {
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     phone: "",
@@ -13,7 +14,15 @@ function RegistrationForm(props) {
   return (
     <>
       <div className="register">
-        <form method="POST" action="/" onSubmit={(e) => e.preventDefault()}>
+        {!loading ? <div style={{ position: "absolute" }}>Loading</div> : null}
+        <form
+          method="POST"
+          action="/"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setLoading(true);
+          }}
+        >
           <label htmlFor="profile">Profile photo: </label>
           <input
             type="file"

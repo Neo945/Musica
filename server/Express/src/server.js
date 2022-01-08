@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const path = require('path');
 const webSocketServer = require('websocket').server;
 const http = require('http');
@@ -23,24 +22,36 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
 
+// eslint-disable-next-line consistent-return
+app.all('*', (req, res, next) => {
+    if (!req.get('Origin')) return next();
+    res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.set('Access-Control-Allow-Credentials', 'true');
+    res.set('Access-Control-Allow-Methods', 'GET,POST', 'PUT', 'DELETE');
+    res.set('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
+    if (req.method === 'OPTIONS') return res.send(200);
+    next();
+});
+
+// app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cp());
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-app.use(express.json());
 if (process.env.NODE_ENV === 'development') app.use(require('morgan')('dev'));
 // app.use(require('./middleware/UserAuth.middleware'));
-app.use('/api', require('./router'));
 
-// app.get('/', (req, res) => {
-//     res.render('index', { name: 'Hello' });
+// app.get('/', async (req, res) => {
+//     //     res.render('index', { name: 'Hello' });
+//     res.send('Hello! from muscia, and setup done');
 // });
-app.get('/', async (req, res) => {
-    res.send('Hello! from muscia, and setup done');
-});
-app.use('/static', express.static(path.join(__dirname, 'static')));
 
 const URL = process.env.NODE_ENV === 'production' ? 'https://muscia.herokuapp.com' : `http://localhost:${env.PORT}`;
+
+app.use('/api', express.json(), require('./router'));
+
+app.use('/static', express.static(path.join(__dirname, 'static')));
+
 const server = http.createServer(app);
 // eslint-disable-next-line new-cap
 const wsServer = new webSocketServer({

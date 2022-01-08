@@ -5,9 +5,10 @@ const passport = require('../config/passport.config');
 
 router.get('/users', isa, view.getUser);
 router.get('/logout', isa, view.logout);
-router.get('send/email/', view.sendEmailVerfication);
-router.get('verify/email/', view.verifyEmailToken);
+router.get('/send/email/', view.sendEmailVerfication);
+router.get('/verify/email/', view.verifyEmailToken);
 router.post('/register', view.registerUser);
+router.post('/register/create/account', view.createArtistForExistingUser);
 router.post('/login', view.login);
 
 router.get(

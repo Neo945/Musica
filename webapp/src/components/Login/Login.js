@@ -2,6 +2,7 @@ import { useState } from "react";
 import isEmail from "validator/lib/isEmail";
 import isStrongPassword from "validator/lib/isStrongPassword";
 import OAuth from "../OAuth/OAuth";
+import lookup from "../lookup/Lookup";
 
 function Login(props) {
   const [loginState, setLoginState] = useState({ email: "", pass: "" });
@@ -13,7 +14,7 @@ function Login(props) {
         <form
           method="POST"
           action="/"
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
             if (!isEmail(loginState.email)) {
               alert("Not a valid email");
@@ -21,6 +22,13 @@ function Login(props) {
               alert("Not a Strong password");
             } else {
               console.log(loginState);
+              const data = await lookup(
+                "POST",
+                "/auth/login",
+                "",
+                JSON.stringify(loginState)
+              );
+              console.log(data);
               props.history("/q");
             }
           }}

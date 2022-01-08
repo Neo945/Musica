@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { isEmail } = require('validator').default;
 const { isMobilePhone } = require('validator').default;
 const { isStrongPassword } = require('validator').default;
+const { wsServer } = require('../server');
 
 const { Schema } = mongoose;
 
@@ -104,6 +105,12 @@ UserSchema.statics.verifyEmailToken = async function (id, token) {
     if (await bcrypt.compare(token, user._id)) {
         user.isVerified = true;
         user.save();
+        wsServer.on('connect', (connection) => {
+            setTimeout(() => {
+                connection.send({ success: true, message: 'Account verified' });
+            }, 5000);
+        });
+
         return true;
     }
     return false;

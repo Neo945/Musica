@@ -27,10 +27,13 @@ const upload = (bucket) =>
             },
             key: function (req, file, cb) {
                 console.log('file key ', file);
-                cb(null, 'auio.mp3');
+                const fileName = file.originalname.split('.');
+                const ext = fileName[fileName.length - 1]?.toLowerCase() ? fileName[fileName.length - 1]?.toLowerCase() : '';
+                cb(null, `${req.user?._id}/${req.body.title}.${ext}`);
             },
         }),
     });
 const uploadSingle = upload('musica-music').single('audio');
+const uploadSingleImage = upload('musica-music').single('profileImage');
 
-module.exports = { uploadSingle, s3 };
+module.exports = { uploadSingle, s3, uploadSingleImage };

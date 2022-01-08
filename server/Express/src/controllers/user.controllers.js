@@ -20,9 +20,10 @@ module.exports = {
         });
     },
     registerUser: (req, res) => {
+        console.log(req.body);
         errorHandler(req, res, async () => {
             const newUser = await User.create({ ...req.body, password: await bcrypt.genSalt(10) });
-            res.status(201).json({ message: 'success', user: { ...newUser, password: null } });
+            res.status(201).json({ success: true, message: 'success', user: { ...newUser, password: null } });
         });
     },
     login: (req, res) => {
@@ -75,7 +76,7 @@ module.exports = {
             const { token } = req.query;
             const isVerified = await User.verifyEmailToken(req._id, token);
             if (isVerified) {
-                res.json({ message: 'success' });
+                res.json({ message: 'Email varified Now go back and complete teh form' });
             } else {
                 res.json({ message: 'Email not verified' });
             }
