@@ -3,6 +3,7 @@ const { User, Artist } = require('../models/user');
 const { errorHandler } = require('../utils/errorHandler');
 const transport = require('../config/mailer.config');
 const { URL } = require('../server');
+const { uploadSingleImage } = require('../config/s3.config');
 
 module.exports = {
     getUser: (req, res) => {
@@ -14,9 +15,27 @@ module.exports = {
     createArtistForExistingUser: (req, res) => {
         errorHandler(req, res, async () => {
             if (req.body.user.isVerified) {
-                const newArtistAccount = await Artist.create({ ...req.body, user: req.body.user._id });
-                res.status(201).json({ message: 'success', user: newArtistAccount });
+                uploadSingleImage(req, res, async (err) => {
+                    if (err) return res.status(500).json({ error: err });
+                    const newArtistAccount = await Artist.create({
+                        ...req.body,
+                        user: req.body.user._id,
+                        image: req.file.location,
+                    });
+                    return res.status(201).json({ message: 'success', user: { ...newArtistAccount, password: null } });
+                });
             } else res.status(400).json({ message: 'User is not varified, first verify and then create the user account' });
+        });
+    },
+    updatePassword: (req, res) => {
+        errorHandler(req, res, async () => {
+            const { oldPassword, newPassword } = req.body;
+            if (req.user.isVerified) {
+                if (await User.updatePassword(req.user._id, oldPassword, newPassword))
+                    return res.status(200).json({ message: 'success' });
+                return res.status(400).json({ message: 'old password is not correct' });
+            }
+            return res.status(400).json({ message: 'old password is not correct' });
         });
     },
     registerUser: (req, res) => {
@@ -76,7 +95,7 @@ module.exports = {
             const { token } = req.query;
             const isVerified = await User.verifyEmailToken(req._id, token);
             if (isVerified) {
-                res.json({ message: 'Email varified Now go back and complete teh form' });
+                res.json({ message: 'Email varified!! Now go back and complete teh form' });
             } else {
                 res.json({ message: 'Email not verified' });
             }

@@ -23,6 +23,7 @@ module.exports = {
         if (album)
             res.status(403).send({ message: 'Album not found, First create the ablum and them try to add the audio' });
         uploadSingle(req, res, async (err) => {
+            // req.file.location
             if (err) return res.status(400).json({ message: err.message });
             return res.status(201).send({ message: 'music successfully saved' });
         });

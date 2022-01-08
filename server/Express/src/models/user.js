@@ -116,6 +116,17 @@ UserSchema.statics.verifyEmailToken = async function (id, token) {
     return false;
 };
 
+UserSchema.statics.updatePassword = async function (id, oldPass, newPass) {
+    const user = await this.findById(id);
+    if (await bcrypt.compare(oldPass, user.password)) {
+        const salt = await bcrypt.genSalt();
+        user.password = await bcrypt.hash(newPass, salt);
+        await user.save();
+        return true;
+    }
+    return false;
+};
+
 UserSchema.statics.savePass = async function (username, password) {
     const user = await this.findOne({ username });
     const salt = await bcrypt.genSalt();
