@@ -7,7 +7,6 @@ const GenreSchema = new Schema({
         type: String,
         required: [true, 'Cannot be empty'],
         trim: true,
-        unique: true,
         minLength: 2,
     },
 });

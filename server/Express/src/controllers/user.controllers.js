@@ -1,6 +1,8 @@
+const bcrypt = require('bcrypt');
 const { User, Artist } = require('../models/user');
 const { errorHandler } = require('../utils/errorHandler');
 const transport = require('../config/mailer.config');
+const { URL } = require('../server');
 
 module.exports = {
     getUser: (req, res) => {
@@ -11,13 +13,15 @@ module.exports = {
     },
     createArtistForExistingUser: (req, res) => {
         errorHandler(req, res, async () => {
-            const newArtistAccount = await Artist.create({ ...req.body, user: req.user._id });
-            res.status(201).json({ message: 'success', user: newArtistAccount });
+            if (req.body.user.isVerified) {
+                const newArtistAccount = await Artist.create({ ...req.body, user: req.body.user._id });
+                res.status(201).json({ message: 'success', user: newArtistAccount });
+            } else res.status(400).json({ message: 'User is not varified, first verify and then create the user account' });
         });
     },
     registerUser: (req, res) => {
         errorHandler(req, res, async () => {
-            const newUser = await User.create({ ...req.body });
+            const newUser = await User.create({ ...req.body, password: await bcrypt.genSalt(10) });
             res.status(201).json({ message: 'success', user: { ...newUser, password: null } });
         });
     },
@@ -48,14 +52,14 @@ module.exports = {
         });
     },
     googleOauthRedirect: (req, res) => {
-        res.redirect('/');
+        res.redirect(`${URL}/register/form`);
     },
     sendEmailVerfication: async (req, res) => {
         errorHandler(req, res, async () => {
             const { email } = req.body;
             const token = await User.generateEmailVerificationToken(email);
             if (token) {
-                const url = `http://localhost:5000/verify/${token}`;
+                const url = `${URL}/verify/${token}`;
                 const message = `<h1>Please verify your email</h1>
                     <p>Click on the link below to verify your email</p>
                     <a href="${url}">${url}</a>`;
@@ -73,7 +77,7 @@ module.exports = {
             if (isVerified) {
                 res.json({ message: 'success' });
             } else {
-                res.json({ message: 'User not found' });
+                res.json({ message: 'Email not verified' });
             }
         });
     },

@@ -28,16 +28,14 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 if (process.env.NODE_ENV === 'development') app.use(require('morgan')('dev'));
 // app.use(require('./middleware/UserAuth.middleware'));
-// app.use('/api', require('./router'));
-
-app.get('/', (req, res) => {
-    res.render('index', { name: 'Hello' });
-});
+app.use('/api', require('./router'));
 
 // app.get('/', (req, res) => {
-//     res.send('Hello! from muscia, and setup done');
+//     res.render('index', { name: 'Hello' });
 // });
-
+app.get('/', async (req, res) => {
+    res.send('Hello! from muscia, and setup done');
+});
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
 const URL = process.env.NODE_ENV === 'production' ? 'https://muscia.herokuapp.com' : `http://localhost:${env.PORT}`;

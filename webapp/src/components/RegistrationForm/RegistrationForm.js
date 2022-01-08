@@ -21,7 +21,7 @@ function RegistrationForm(props) {
             name="profile"
             onChange={(event) => setFile(event.target.files[0])}
           />
-          <img src={file ? URL.createObjectURL(file) : null} />
+          {file ? <img src={URL.createObjectURL(file)} alt="" /> : null}
           <br />
           <input
             name="username"
