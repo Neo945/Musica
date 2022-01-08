@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const webSocketServer = require('websocket').server;
+const http = require('http');
 require('./config/passport.config');
 const cp = require('cookie-parser');
 const cs = require('cookie-session');
@@ -39,5 +41,20 @@ app.get('/', async (req, res) => {
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
 const URL = process.env.NODE_ENV === 'production' ? 'https://muscia.herokuapp.com' : `http://localhost:${env.PORT}`;
+const server = http.createServer(app);
+// eslint-disable-next-line new-cap
+const wsServer = new webSocketServer({
+    httpServer: server,
+    autoAcceptConnections: false,
+});
 
-module.exports = { app, URL };
+wsServer.on('request', (request) => {
+    const connection = request.accept(null, request.origin);
+    console.log('Connection accepted', connection);
+    connection.on('message', (message) => {
+        console.log(message);
+    });
+    connection.send('Hi there!');
+});
+
+module.exports = { server, wsServer, URL };
