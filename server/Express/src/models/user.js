@@ -99,10 +99,9 @@ UserSchema.statics.login = async function (email, password) {
     return null;
 };
 
-UserSchema.statics.generateEmailVerificationToken = async function (email) {
-    const user = await this.findOne({ email });
-    if (user) {
-        const token = await bcrypt.hash(user._id, await bcrypt.genSalt());
+UserSchema.statics.generateEmailVerificationToken = async function (_id) {
+    if (await this.exists({ _id })) {
+        const token = await bcrypt.hash(_id, await bcrypt.genSalt());
         return token;
     }
     return null;

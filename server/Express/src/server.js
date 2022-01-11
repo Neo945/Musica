@@ -1,7 +1,6 @@
 const express = require('express');
-const path = require('path');
-const webSocketServer = require('websocket').server;
 const http = require('http');
+const path = require('path');
 require('./config/passport.config');
 const cp = require('cookie-parser');
 const cs = require('cookie-session');
@@ -53,19 +52,7 @@ app.use('/api', express.json(), require('./router'));
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
 const server = http.createServer(app);
-// eslint-disable-next-line new-cap
-const wsServer = new webSocketServer({
-    httpServer: server,
-    autoAcceptConnections: false,
-});
 
-wsServer.on('request', (request) => {
-    const connection = request.accept(null, request.origin);
-    console.log('Connection accepted', connection);
-    connection.on('message', (message) => {
-        console.log(message);
-    });
-    connection.send('Hi there!');
-});
+require('./config/socket.config')(server);
 
-module.exports = { server, wsServer, URL };
+module.exports = { server, URL };

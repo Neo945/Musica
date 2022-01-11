@@ -39,9 +39,19 @@ module.exports = {
         });
     },
     registerUser: (req, res) => {
-        console.log(req.body);
         errorHandler(req, res, async () => {
             const newUser = await User.create({ ...req.body, password: await bcrypt.genSalt(10) });
+            const token = await User.generateEmailVerificationToken(newUser._id);
+            if (token) {
+                const url = `${URL}/verify/${token}`;
+                const message = `<h1>Please verify your email</h1>
+                    <p>Click on the link below to verify your email</p>
+                    <a href="${url}">${url}</a>`;
+                transport(req.user.email, 'Learnit Verification', message);
+                res.json({ message: 'success' });
+            } else {
+                res.json({ message: 'Unable to generate token' });
+            }
             res.status(201).json({ success: true, message: 'success', user: { ...newUser, password: null } });
         });
     },
@@ -76,17 +86,17 @@ module.exports = {
     },
     sendEmailVerfication: async (req, res) => {
         errorHandler(req, res, async () => {
-            const { email } = req.body;
-            const token = await User.generateEmailVerificationToken(email);
+            // wsServer
+            const token = await User.generateEmailVerificationToken(req.user ? req.user._id : req.body._id);
             if (token) {
                 const url = `${URL}/verify/${token}`;
                 const message = `<h1>Please verify your email</h1>
                     <p>Click on the link below to verify your email</p>
                     <a href="${url}">${url}</a>`;
-                transport(req.user.email, 'Learnit Verification', message);
+                transport(req.user.email, 'Email Verification', message);
                 res.json({ message: 'success' });
             } else {
-                res.json({ message: 'User not found' });
+                res.json({ message: 'Unable to generate token' });
             }
         });
     },

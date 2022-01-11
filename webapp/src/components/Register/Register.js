@@ -1,24 +1,24 @@
 import OAuth from "../OAuth/OAuth";
+import io from "socket.io-client";
 import isEmail from "validator/lib/isEmail";
 import { useEffect, useState } from "react";
-import { w3cwebsocket as W3CWebSocket } from "websocket";
 import lookup from "../lookup/Lookup";
 
-const client = new W3CWebSocket("ws://localhost:5000");
+const socket = io("http://localhost:5000");
 
 function UserEmail(props) {
   const [state, setState] = useState({ email: "", username: "" });
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    client.onopen = () => {
-      console.log("WebSocket Client Connected");
-    };
-    client.onmessage = (message) => {
-      if (message.success) {
-        setLoading(false);
-        props.history("/register/form", { state });
-      }
-    };
+    // client.onopen = () => {
+    //   console.log("WebSocket Client Connected");
+    // };
+    // client.onmessage = (message) => {
+    //   if (message.success) {
+    //     setLoading(false);
+    //     props.history("/register/form", { state });
+    //   }
+    // };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
