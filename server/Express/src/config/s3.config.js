@@ -8,13 +8,40 @@ const s3 = new aws.S3({
     secretAccessKey: env.SECRET_S3_ACCESS_KEY,
     region: env.S3_BUCKET_REGION,
 });
-// eslint-disable-next-line no-unused-vars
-const deleteParams = {
-    Bucket: 'musica-music',
-    key: '',
-    Delete: {
-        key: [],
-    },
+// const deleteObjectParams = {
+//     Bucket: 'bucket-name',
+//     Key: '',
+//     Delete: {
+//         Objects: [{ Key: '' }],
+//     },
+// };
+const deleteObject = (bucket, key) => {
+    const deleteObjectParams = {
+        Bucket: bucket,
+        Key: key,
+    };
+    s3.deleteObject(deleteObjectParams, (err, data) => {
+        if (err) {
+            console.log(err, err.stack);
+        } else {
+            console.log(data);
+        }
+    });
+};
+const deleteObjects = (bucket, keys) => {
+    const deleteObjectParams = {
+        Bucket: bucket,
+        Delete: {
+            Objects: keys.map((key) => ({ Key: key })),
+        },
+    };
+    s3.deleteObject(deleteObjectParams, (err, data) => {
+        if (err) {
+            console.log(err, err.stack);
+        } else {
+            console.log(data);
+        }
+    });
 };
 const upload = (bucket) =>
     multer({
@@ -36,4 +63,4 @@ const upload = (bucket) =>
 const uploadSingle = upload('musica-music').single('audio');
 const uploadSingleImage = upload('musica-music').single('profileImage');
 
-module.exports = { uploadSingle, s3, uploadSingleImage };
+module.exports = { uploadSingle, s3, uploadSingleImage, deleteObject, deleteObjects };

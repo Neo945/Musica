@@ -14,6 +14,7 @@ const PostSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Music',
         },
+        artist: { type: Schema.Types.ObjectId, ref: 'Artist' },
         likes: [{ type: Schema.Types.ObjectId, ref: 'Artist' }],
         comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     },

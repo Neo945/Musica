@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { isEmail } = require('validator').default;
 const { isMobilePhone } = require('validator').default;
 const { isStrongPassword } = require('validator').default;
+const { isURL } = require('validator').default;
 const { wsServer } = require('../server');
 
 const { Schema } = mongoose;
@@ -44,6 +45,13 @@ const UserSchema = new Schema(
 );
 
 const ArtistsSchema = new Schema({
+    profileImage: {
+        type: String,
+        required: [true, 'Please provide an image'],
+        trim: true,
+        unique: true,
+        validate: [isURL, 'Please provide a valid link'],
+    },
     user: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
