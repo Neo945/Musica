@@ -13,12 +13,12 @@ const AlbumSchema = new Schema(
         },
         artist: {
             type: Schema.Types.ObjectId,
-            ref: 'artist',
+            ref: 'Artist',
         },
         music: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'music',
+                ref: 'Music',
             },
         ],
     },
@@ -26,5 +26,5 @@ const AlbumSchema = new Schema(
         timestamps: true,
     }
 );
-const Album = mongoose.model('album', AlbumSchema);
+const Album = mongoose.model('Album', AlbumSchema);
 module.exports = Album;

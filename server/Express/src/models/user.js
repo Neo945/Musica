@@ -46,12 +46,12 @@ const UserSchema = new Schema(
 const ArtistsSchema = new Schema({
     user: {
         type: mongoose.Types.ObjectId,
-        ref: 'user',
+        ref: 'User',
     },
     language: [
         {
             type: mongoose.Types.ObjectId,
-            ref: 'language',
+            ref: 'Language',
         },
     ],
     phone: {
@@ -134,8 +134,8 @@ UserSchema.statics.savePass = async function (username, password) {
     user.save();
 };
 
-const User = mongoose.model('user', UserSchema);
-const Artist = mongoose.model('artist', ArtistsSchema);
+const User = mongoose.model('User', UserSchema);
+const Artist = mongoose.model('Artist', ArtistsSchema);
 module.exports = {
     User,
     Artist,

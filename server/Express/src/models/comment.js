@@ -2,17 +2,13 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const PostSchema = new Schema(
+const CommentSchema = new Schema(
     {
-        description: {
+        comment: {
             type: String,
             required: true,
             trim: true,
             default: '',
-        },
-        music: {
-            type: Schema.Types.ObjectId,
-            ref: 'Music',
         },
         likes: [{ type: Schema.Types.ObjectId, ref: 'Artist' }],
         comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
@@ -21,5 +17,5 @@ const PostSchema = new Schema(
         timestamps: true,
     }
 );
-const Post = mongoose.model('Post', PostSchema);
-module.exports = Post;
+const Comment = mongoose.model('Comment', CommentSchema);
+module.exports = Comment;
