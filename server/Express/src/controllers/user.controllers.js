@@ -86,7 +86,9 @@ module.exports = {
     },
     sendEmailVerfication: async (req, res) => {
         errorHandler(req, res, async () => {
-            // wsServer
+            /**
+             * send token[:3] as the room to join
+             */
             const token = await User.generateEmailVerificationToken(req.user ? req.user._id : req.body._id);
             if (token) {
                 const url = `${URL}/verify/${token}`;
@@ -96,19 +98,22 @@ module.exports = {
                 transport(req.user.email, 'Email Verification', message);
                 res.json({ message: 'success' });
             } else {
-                res.json({ message: 'Unable to generate token' });
+                res.json({ message: 'Unable to generate token', room: token.slice(token.length - 4) });
             }
         });
     },
     verifyEmailToken: async (req, res) => {
         errorHandler(req, res, async () => {
-            const { token } = req.query;
-            const isVerified = await User.verifyEmailToken(req._id, token);
+            const { token } = req.body;
+            const isVerified = await User.verifyEmailToken(req.user._id, token);
             if (isVerified) {
                 res.json({ message: 'Email varified!! Now go back and complete teh form' });
             } else {
                 res.json({ message: 'Email not verified' });
             }
         });
+    },
+    emailVerificationRedirct: async (req, res) => {
+        res.redirect('http://localhost:3000/verify');
     },
 };

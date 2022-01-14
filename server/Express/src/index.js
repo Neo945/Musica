@@ -14,5 +14,6 @@ mongoose.connection.once('open', () => {
     server.listen(env.PORT, () => {
         console.log(`Server is running on port: ${env.PORT}`);
         console.log(`Environment: ${env.NODE_ENV}`);
+        console.log(`\t- ${env.PROTOCOL}://${env.HOST}:${env.PORT}`);
     });
 });

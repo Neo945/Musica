@@ -45,7 +45,8 @@ if (process.env.NODE_ENV === 'development') app.use(require('morgan')('dev'));
 //     res.send('Hello! from muscia, and setup done');
 // });
 
-const URL = process.env.NODE_ENV === 'production' ? 'https://muscia.herokuapp.com' : `http://localhost:${env.PORT}`;
+const URL =
+    process.env.NODE_ENV === 'production' ? 'https://muscia.herokuapp.com' : `${env.PROTOCOL}://${env.HOST}:${env.PORT}`;
 
 app.use('/api', express.json(), require('./router'));
 

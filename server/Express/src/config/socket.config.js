@@ -8,10 +8,12 @@ module.exports = (server) => {
         },
     });
     io.on('connection', (socket) => {
-        console.log('a user connected boom');
-        socket.on('joinVerify', ({ name, room }) => {
+        socket.on('joinVerify', ({ room }) => {
             socket.join(room);
-            socket.to(room).emit('Message', `${name} Verification in progress`);
+            socket.on('id', ({ id }) => {
+                socket.to(room).emit('id', id);
+            });
+            socket.on('send', () => socket.to(room).emit('send', 'id'));
         });
         // console.log('a user connected');
 

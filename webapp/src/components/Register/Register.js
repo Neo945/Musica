@@ -4,23 +4,18 @@ import isEmail from "validator/lib/isEmail";
 import { useEffect, useState } from "react";
 import lookup from "../lookup/Lookup";
 
-const socket = io("http://localhost:5000");
-
 function UserEmail(props) {
+  const [socket, setSocket] = useState(null);
   const [state, setState] = useState({ email: "", username: "" });
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    // client.onopen = () => {
-    //   console.log("WebSocket Client Connected");
-    // };
-    // client.onmessage = (message) => {
-    //   if (message.success) {
-    //     setLoading(false);
-    //     props.history("/register/form", { state });
-    //   }
-    // };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setSocket(io("http://localhost:5000"));
+    // if (socket) {
+    //   socket.on("connect", () => {
+    //     console.log("connected");
+    //   });
+    // }
+  }, [setSocket]);
   return (
     <>
       <div className="email-form">
@@ -50,7 +45,15 @@ function UserEmail(props) {
                   "",
                   JSON.stringify({ email: state.email })
                 );
-                if (data.success) setLoading(true);
+                if (data.success) {
+                  setLoading(true);
+                  socket.emit("joinVerify", {
+                    room: data.room,
+                  });
+                  socket.on("send", (data) => {
+                    if (data === "id") socket.emit("id", data.user._id);
+                  });
+                }
               } else {
                 alert(JSON.stringify(data.message, 2, 4));
               }
