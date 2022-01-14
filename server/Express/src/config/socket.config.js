@@ -11,9 +11,9 @@ module.exports = (server) => {
         socket.on('joinVerify', ({ room }) => {
             socket.join(room);
             socket.on('id', ({ id }) => {
-                socket.to(room).emit('id', id);
+                socket.broadcast.to(room).emit('id', id);
             });
-            socket.on('send', () => socket.to(room).emit('send', 'id'));
+            socket.on('send', () => socket.broadcast.to(room).emit('send', 'id'));
         });
         // console.log('a user connected');
 
