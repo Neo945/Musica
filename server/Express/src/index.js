@@ -12,7 +12,9 @@ mongoose.connection.once('open', () => {
     // eslint-disable-next-line node/no-unsupported-features/node-builtins
     console.clear();
     console.log('Connection with database established successfully');
+    logger.info('Mongoose connected');
     server.listen(env.PORT, () => {
+        logger.info('Server started');
         console.log(`Server is running on port: ${env.PORT}`);
         console.log(`Environment: ${env.NODE_ENV}`);
         console.log(`\t- ${env.PROTOCOL}://${env.HOST}:${env.PORT}`);
