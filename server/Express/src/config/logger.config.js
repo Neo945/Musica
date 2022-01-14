@@ -8,6 +8,7 @@ const logger = winston.createLogger({
         }),
         new winston.transports.File({
             filename: 'logs/combined.log',
+            format: winston.format.combine(winston.format.colorize(), winston.format.json()),
         }),
         new winston.transports.Console({
             format: winston.format.combine(winston.format.colorize(), winston.format.simple()),

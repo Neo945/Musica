@@ -7,7 +7,7 @@ const cs = require('cookie-session');
 const passport = require('passport');
 const helmet = require('helmet');
 require('./config/s3.config');
-const morgan = require('./config/morgan');
+const morgan = require('./config/morgan.config');
 const env = require('./config/config');
 
 const app = express();
