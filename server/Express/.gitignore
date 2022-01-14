@@ -2,6 +2,8 @@
 
 .env
 
+logs
+
 test.http
 
 docs

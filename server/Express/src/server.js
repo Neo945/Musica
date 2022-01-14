@@ -5,7 +5,9 @@ require('./config/passport.config');
 const cp = require('cookie-parser');
 const cs = require('cookie-session');
 const passport = require('passport');
+const helmet = require('helmet');
 require('./config/s3.config');
+const morgan = require('./config/morgan');
 const env = require('./config/config');
 
 const app = express();
@@ -16,6 +18,7 @@ app.use(
         keys: env.SECRET_KEY,
     })
 );
+app.use(helmet());
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jsx');
@@ -37,7 +40,10 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cp());
-if (process.env.NODE_ENV === 'development') app.use(require('morgan')('dev'));
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan.errorHandler);
+    app.use(morgan.successHandler);
+}
 // app.use(require('./middleware/UserAuth.middleware'));
 
 // app.get('/', async (req, res) => {

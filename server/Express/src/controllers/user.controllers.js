@@ -40,23 +40,22 @@ module.exports = {
     },
     registerUser: (req, res) => {
         errorHandler(req, res, async () => {
-            const user = await User.findOne({ email: req.body.email });
-            if (user) res.status(400).json({ message: 'email already exists', user });
-            else {
-                const newUser = await User.create({ ...req.body, password: await bcrypt.genSalt(10) });
-                const token = await User.generateEmailVerificationToken(newUser._id);
-                if (token) {
-                    const url = `${URL}/verify/${token}`;
-                    const message = `<h1>Please verify your email</h1>
-                        <p>Click on the link below to verify your email</p>
-                        <a href="${url}">${url}</a>`;
-                    transport(req.user.email, 'Learnit Verification', message);
-                    res.json({ message: 'success' });
-                } else {
-                    res.json({ message: 'Unable to generate token' });
-                }
-                res.status(201).json({ success: true, message: 'success', user: { ...newUser, password: null } });
+            let user = await User.findOne({ email: req.body.email });
+            if (!user) {
+                user = await User.create({ ...req.body, password: await bcrypt.genSalt(10) });
             }
+            const token = await User.generateEmailVerificationToken(user._id);
+            if (token) {
+                const url = `${URL}/verify/${token}`;
+                const message = `<h1>Please verify your email</h1>
+                    <p>Click on the link below to verify your email</p>
+                    <a href="${url}">${url}</a>`;
+                transport(req.user.email, 'Learnit Verification', message);
+                res.json({ message: 'success' });
+            } else {
+                res.json({ message: 'Unable to generate token' });
+            }
+            res.status(201).json({ success: true, message: 'success', user: { ...user, password: null } });
         });
     },
     login: (req, res) => {

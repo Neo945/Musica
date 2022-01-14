@@ -45,6 +45,7 @@
         "express": "^4.17.1",
         "express-react-views": "^0.11.0",
         "global": "^4.4.0",
+        "helmet": "^5.0.1",
         "install-peerdeps": "^3.0.3",
         "joi": "^17.4.0",
         "jsonwebtoken": "^8.5.1",
@@ -63,6 +64,6 @@
         "remove": "^0.1.5",
         "socket.io": "^4.4.1",
         "validator": "^13.6.0",
-        "winston": "^3.3.3"
+        "winston": "^3.4.0"
     }
 }
