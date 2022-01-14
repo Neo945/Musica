@@ -53,7 +53,12 @@ function UserEmail(props) {
                   socket.on("send", (data) => {
                     if (data === "id") socket.emit("id", data.user._id);
                   });
-                }
+                  socket.on("success", (success) => {
+                    if (success) {
+                      props.history("/register/success");
+                    } else alert("Something went wrong");
+                  });
+                } else alert("Something went wrong");
               } else {
                 alert(JSON.stringify(data.message, 2, 4));
               }

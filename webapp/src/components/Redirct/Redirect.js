@@ -1,5 +1,6 @@
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
+import lookup from "../lookup/Lookup";
 
 function Redirct(props) {
   const [socket, setSocket] = useState(null);
@@ -12,8 +13,18 @@ function Redirct(props) {
           room: token.slice(token.length - 4),
         });
         socket.emit("send", "id");
-        socket.on("id", (id) => {
-          // fetch to verify
+        socket.on("id", async (id) => {
+          const data = await lookup(
+            "POST",
+            "/auth/register",
+            "",
+            JSON.stringify({ id, token })
+          );
+          if (data.success) {
+            socket.emit("success", 1);
+          } else {
+            socket.emit("success", 0);
+          }
         });
       });
     } else {

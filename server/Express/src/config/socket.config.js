@@ -14,11 +14,10 @@ module.exports = (server) => {
                 socket.broadcast.to(room).emit('id', id);
             });
             socket.on('send', () => socket.broadcast.to(room).emit('send', 'id'));
+            socket.on('success', (success) => {
+                socket.broadcast.to(room).emit('success', { success });
+            });
         });
-        // console.log('a user connected');
-
-        // socket.emit('message', 'User');
-        // socket.broadcast.emit('message', 'User');
     });
     return io;
 };
