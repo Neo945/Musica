@@ -42,6 +42,12 @@ const MusicSchema = new Schema(
             trim: true,
             minLength: 5,
         },
+        plays: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Artist',
+            },
+        ],
         artist: {
             type: Schema.Types.ObjectId,
             ref: 'Artist',
