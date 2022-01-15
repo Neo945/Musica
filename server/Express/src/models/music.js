@@ -12,6 +12,13 @@ const MusicSchema = new Schema(
             unique: true,
             minLength: 5,
         },
+        linkAWS: {
+            type: String,
+            required: [true, 'Please Provide a link'],
+            trim: true,
+            unique: true,
+            validate: [isURL, 'Prease provide a valid link'],
+        },
         link: {
             type: String,
             required: [true, 'Please Provide a link'],
@@ -35,7 +42,13 @@ const MusicSchema = new Schema(
             trim: true,
             minLength: 5,
         },
-        artists: [{ type: Schema.Types.ObjectId, ref: 'Artist' }],
+        artist: {
+            type: Schema.Types.ObjectId,
+            ref: 'Artist',
+            required: [true, 'Please provide an artist'],
+        },
+        likes: [{ type: Schema.Types.ObjectId, ref: 'Artist' }],
+        collab: [{ type: Schema.Types.ObjectId, ref: 'Artist' }],
         tags: [{ type: Schema.Types.ObjectId, ref: 'Tags' }],
         language: { type: Schema.Types.ObjectId, ref: 'Language' },
         genre: [{ type: Schema.Types.ObjectId, ref: 'Genre' }],

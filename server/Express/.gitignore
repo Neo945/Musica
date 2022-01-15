@@ -21,3 +21,5 @@ views
 src/static/js
 src/static/css
 src/static/images
+
+.babelrc

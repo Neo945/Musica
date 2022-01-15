@@ -40,7 +40,7 @@ process.on('SIGINT', () => {
         logger.info('Server closed');
         mongoose.disconnect(() => {
             logger.info('Mongoose disconnected');
+            process.exit(1);
         });
-        process.exit(1);
     });
 });
