@@ -21,14 +21,14 @@ module.exports = {
             const { _id } = req.body;
             const music = await Music.findOne({ _id, artist: req.user._id });
             if (!music) res.status(404).send({ message: 'Music not found' });
-            res.send(music);
+            res.send({ ...music, likes: music.likes.length });
         });
     },
     getCurrentArtistMusics: async (req, res) => {
         errorHandler(req, res, async () => {
             const musics = await Music.find({ artist: req.user._id });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics);
+            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
         });
     },
     getMusicByArtist: async (req, res) => {
@@ -36,7 +36,7 @@ module.exports = {
             const { artist } = req.body;
             const musics = await Music.find({ $or: [{ artist: artist._id }, { collab: artist._id }] });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics);
+            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
         });
     },
     getAlbumMusics: async (req, res) => {
@@ -44,7 +44,7 @@ module.exports = {
             const { album } = req.body;
             const musics = await Music.find({ album: album._id });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics);
+            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
         });
     },
     getMusicByTitle: async (req, res) => {
@@ -52,7 +52,7 @@ module.exports = {
             const { title } = req.body;
             const music = await Music.find({ title: { $regex: title, $options: 'i' } });
             if (!music) res.status(404).send({ message: 'Music not found' });
-            res.send(music);
+            res.send(music.map((m) => ({ ...m, likes: m.likes.length })));
         });
     },
     getMusicsByTagIds: async (req, res) => {
@@ -60,7 +60,7 @@ module.exports = {
             const { tags } = req.body;
             const musics = await Music.find({ tags: { $in: tags } });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics);
+            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
         });
     },
     getMusicsByGenreIds: async (req, res) => {
@@ -68,7 +68,7 @@ module.exports = {
             const { genres } = req.body;
             const musics = await Music.find({ genres: { $in: genres } });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics);
+            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
         });
     },
     getMusicsByLanguageIds: async (req, res) => {
@@ -76,7 +76,7 @@ module.exports = {
             const { languages } = req.body;
             const musics = await Music.find({ language: { $in: languages } });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics);
+            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
         });
     },
     getMusicsBySearchString: async (req, res) => {
@@ -98,7 +98,7 @@ module.exports = {
                 ],
             });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics);
+            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
         });
     },
     createMusic: async (req, res) => {
@@ -116,15 +116,15 @@ module.exports = {
                             length,
                             linkAWS: req.file.location,
                             collab: artists,
-                            tags,
-                            lang,
-                            genre,
+                            lang: lang.map((e) => e._id),
+                            genre: genre.map((e) => e._id),
                             artist: req.user._id,
                         });
                         await music.save();
                         music.link = `/music/audio/${music._id}`;
                         await music.save();
-                        await Album.findOneAndUpdate({ _id: album }, { $push: { music } });
+                        await Tag.saveTags(music, tags);
+                        await Album.findOneAndUpdate({ _id: album }, { $push: { music: music._id } });
                         res.send(music);
                     }
                 });
@@ -134,11 +134,11 @@ module.exports = {
     deleteMusic: async (req, res) => {
         errorHandler(req, res, async () => {
             const musicObj = Music.deleteOne({ id: req.body.id });
-            await Album.updateMany({ musics: musicObj._id }, { $pull: { musics: musicObj._id } });
+            await Album.updateMany({ musics: musicObj._id }, { $pull: { music: musicObj._id } });
             s3.deleteObject(
                 {
                     Bucket: 'musica-music',
-                    Key: `${req.user.id}/${musicObj.id}.mp3`,
+                    Key: `${req.user.id}/${musicObj._id}.mp3`,
                 },
                 (err, data) => {
                     if (err) throw new Error(err);
@@ -165,6 +165,40 @@ module.exports = {
                     await music.save();
                     res.send(music);
                 }
+            }
+        });
+    },
+    likeMusic: async (req, res) => {
+        errorHandler(req, res, async () => {
+            const { musicId } = req.body;
+            const music = await Music.findById(musicId);
+            if (!music) res.status(404).send({ message: 'Music not found' });
+            else if (!req.user) res.status(404).send({ message: 'User not found' });
+            else if (music.likes.includes(req.user._id)) {
+                music.likes = music.likes.filter((e) => e !== req.user._id);
+                await music.save();
+                res.send(music);
+            } else {
+                music.likes.push(req.user._id);
+                await music.save();
+                res.send(music);
+            }
+        });
+    },
+    listenMusic: async (req, res) => {
+        errorHandler(req, res, async () => {
+            const { musicId } = req.body;
+            const music = await Music.findById(musicId);
+            if (!music) res.status(404).send({ message: 'Music not found' });
+            else {
+                music.plays += 1;
+                await music.save();
+                s3.getObject({
+                    Bucket: 'sample-bucket-musica',
+                    Key: `${req.user.id}/${music._id}.mp3`,
+                })
+                    .createReadStream()
+                    .pipe(res);
             }
         });
     },
