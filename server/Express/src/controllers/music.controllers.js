@@ -191,7 +191,7 @@ module.exports = {
             const music = await Music.findById(musicId);
             if (!music) res.status(404).send({ message: 'Music not found' });
             else {
-                music.plays += 1;
+                music.plays.push(req.user._id);
                 await music.save();
                 s3.getObject({
                     Bucket: 'sample-bucket-musica',
