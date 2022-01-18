@@ -5,6 +5,11 @@ const { Schema } = mongoose;
 
 const MessageSchema = new Schema(
     {
+        user: {
+            type: mongoose.Types.ObjectId,
+            ref: 'Artist',
+            required: [true, 'Please provide an artist'],
+        },
         text: {
             type: String,
             required: true,
@@ -19,7 +24,11 @@ const MessageSchema = new Schema(
         type: {
             type: String,
             required: true,
-            enum: ['image', 'video', 'text'],
+            default: 'text',
+            enum: {
+                values: ['text', 'image', 'video'],
+                message: 'Invalid type of message {VALUE}',
+            },
         },
     },
     {
