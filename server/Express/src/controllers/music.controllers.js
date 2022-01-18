@@ -7,6 +7,7 @@ const { Artist } = require('../models/user');
 const { uploadSingle } = require('../config/s3.config');
 const { s3 } = require('../config/s3.config');
 const { errorHandler } = require('../utils/errorHandler');
+const Playlist = require('../models/playlist');
 
 /**
  * LanguageSchema{lang,}
@@ -82,10 +83,16 @@ module.exports = {
     getMusicsBySearchString: async (req, res) => {
         errorHandler(req, res, async () => {
             const { searchString } = req.body;
-            const tags = await Tag.find({ tag: { $regex: searchString, $options: 'i' } });
-            const genres = await Genre.find({ genre: { $regex: searchString, $options: 'i' } });
-            const languages = await Language.find({ name: { $regex: searchString, $options: 'i' } });
-            const artist = await Artist.find({ name: { $regex: searchString, $options: 'i' } });
+            const tags = await Tag.find({ tag: { $regex: searchString, $options: 'i' } }).limit(5);
+            const genres = await Genre.find({ genre: { $regex: searchString, $options: 'i' } }).limit(5);
+            const languages = await Language.find({ name: { $regex: searchString, $options: 'i' } }).limit(5);
+            const artist = await Artist.find({ name: { $regex: searchString, $options: 'i' } }).limit(5);
+            const playlist = await Playlist.find({
+                $or: [
+                    { title: { $regex: searchString, $options: 'i' } },
+                    { description: { $regex: searchString, $options: 'i' } },
+                ],
+            }).limit(5);
             const musics = await Music.find({
                 $or: [
                     { title: { $regex: searchString, $options: 'i' } },
@@ -96,9 +103,15 @@ module.exports = {
                     { language: { $in: languages.map((e) => e._id) } },
                     { collab: { $in: artist.map((e) => e._id) } },
                 ],
-            });
-            if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
+            }).limit(10);
+            res.send([
+                musics.map((music) => ({ ...music, likes: music.likes.length })),
+                tags,
+                genres,
+                languages,
+                artist,
+                playlist,
+            ]);
         });
     },
     createMusic: async (req, res) => {
@@ -121,10 +134,25 @@ module.exports = {
                             artist: req.user._id,
                         });
                         await music.save();
+                        await Tag.saveTags(music, tags);
                         music.link = `/music/audio/${music._id}`;
                         await music.save();
-                        await Tag.saveTags(music, tags);
-                        await Album.findOneAndUpdate({ _id: album }, { $push: { music: music._id } });
+                        // await Album.findOneAndUpdate({ _id: album }, { $push: { music: music._id } });
+                        const albumObj = await Album.findOne({ _id: album._id });
+                        music.tags.forEach((tag) => {
+                            if (albumObj.tags.indexOf(tag._id) === -1) albumObj.tags.push(tag._id);
+                        });
+                        music.genres.forEach((g) => {
+                            if (albumObj.genres.indexOf(g._id) === -1) albumObj.genres.push(g._id);
+                        });
+                        music.language.forEach((l) => {
+                            if (albumObj.lang.indexOf(l._id) === -1) albumObj.lang.push(l._id);
+                        });
+                        music.collab.forEach((collab) => {
+                            if (albumObj.collab.indexOf(collab._id) === -1) albumObj.artists.push(collab._id);
+                        });
+                        albumObj.music.push(music._id);
+                        await albumObj.save();
                         res.send(music);
                     }
                 });

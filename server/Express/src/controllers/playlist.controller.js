@@ -78,12 +78,22 @@ module.exports = {
     addMusicToPlaylist: async (req, res) => {
         errorHandler(req, res, async () => {
             const { music, playlist } = req.body;
-            const playlistMusic = await Playlist.findOneAndUpdate(
-                { _id: playlist._id, user: req.user._id },
-                { $push: { musics: music._id } },
-                { new: true }
-            );
+            const playlistMusic = await Playlist.findOne({ _id: playlist._id, user: req.user._id });
             if (!playlistMusic) res.status(404).send({ message: 'Playlist not found' });
+            playlistMusic.songs.push(music._id);
+            music.tags.forEach((tag) => {
+                if (playlistMusic.tags.indexOf(tag._id) === -1) playlistMusic.tags.push(tag._id);
+            });
+            music.genres.forEach((g) => {
+                if (playlistMusic.genres.indexOf(g._id) === -1) playlistMusic.genres.push(g._id);
+            });
+            music.language.forEach((l) => {
+                if (playlistMusic.lang.indexOf(l._id) === -1) playlistMusic.lang.push(l._id);
+            });
+            music.collab.forEach((collab) => {
+                if (playlistMusic.collab.indexOf(collab._id) === -1) playlistMusic.artists.push(collab._id);
+            });
+            await playlistMusic.save();
             res.send(playlistMusic);
         });
     },

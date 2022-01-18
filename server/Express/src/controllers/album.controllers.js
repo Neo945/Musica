@@ -26,6 +26,18 @@ module.exports = {
                 const music = await Music.findOne({ _id: req.body.album.musicId });
                 if (music) {
                     album.songs.push(music._id);
+                    music.tags.forEach((tag) => {
+                        if (album.tags.indexOf(tag._id) === -1) album.tags.push(tag._id);
+                    });
+                    music.genres.forEach((g) => {
+                        if (album.genres.indexOf(g._id) === -1) album.genres.push(g._id);
+                    });
+                    music.language.forEach((l) => {
+                        if (album.lang.indexOf(l._id) === -1) album.lang.push(l._id);
+                    });
+                    music.collab.forEach((collab) => {
+                        if (album.collab.indexOf(collab._id) === -1) album.artists.push(collab._id);
+                    });
                     await album.save();
                     res.status(201).json({ message: 'success', album });
                 } else {

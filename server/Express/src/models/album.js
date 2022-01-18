@@ -23,6 +23,12 @@ const AlbumSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Artist',
         },
+        artists: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Artist',
+            },
+        ],
         genre: [{ type: Schema.Types.ObjectId, ref: 'Genre' }],
         language: { type: Schema.Types.ObjectId, ref: 'Language' },
         music: [
