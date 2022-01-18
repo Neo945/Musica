@@ -6,7 +6,7 @@ logs
 
 test.http
 
-docs
+/docs
 
 run.env.js
 
