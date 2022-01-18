@@ -1,3 +1,4 @@
+// Import libraries
 const express = require('express');
 const http = require('http');
 const path = require('path');
@@ -10,8 +11,23 @@ require('./config/s3.config');
 const morgan = require('./config/morgan.config');
 const env = require('./config/config');
 
+// Create Express App
 const app = express();
 
+/**
+ *  Register middlewares
+ * - Helmet to secure the app
+ * - Morgan to log the requests
+ * - Cookie Parser to parse the cookies
+ * - Cookie Session to store the session
+ * - Passport to authenticate the user
+ * - Static files to serve the static files
+ * - View Engine to render the views
+ * - Body Parser to parse the body of the request (by default JSON parser by express)
+ * - CORS to allow cross origin requests (custom headers)
+ * - Error Handler to handle API errors
+ * - Routes to handle the API requests
+ * */
 app.use(
     cs({
         maxAge: env.TOKEN_LENGTH,
@@ -51,15 +67,19 @@ if (process.env.NODE_ENV === 'development') {
 //     res.send('Hello! from muscia, and setup done');
 // });
 
+// Hosted URL
 const URL =
     process.env.NODE_ENV === 'production' ? 'https://muscia.herokuapp.com' : `${env.PROTOCOL}://${env.HOST}:${env.PORT}`;
 
+// Routes for the API (all the routes are prefixed with /api)
 app.use('/api', express.json(), require('./router'));
 
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
+// Create http server
 const server = http.createServer(app);
 
+// Integrate websocket with server
 require('./config/socket.config')(server);
 
 module.exports = { server, URL };
