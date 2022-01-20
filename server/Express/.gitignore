@@ -23,3 +23,5 @@ src/static/css
 src/static/images
 
 .babelrc
+
+cc.yml
