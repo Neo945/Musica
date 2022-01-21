@@ -1,4 +1,5 @@
 import 'package:application/pages/home_page.dart';
+import 'package:application/pages/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 
@@ -32,13 +33,7 @@ class _RootAppState extends State<RootApp> {
                   color: Colors.white,
                   fontWeight: FontWeight.bold)),
         ),
-        Center(
-          child: Text('Search',
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold)),
-        ),
+        SearchPage(),
         Center(
           child: Text('Settings',
               style: TextStyle(
