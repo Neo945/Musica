@@ -2,6 +2,9 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
+const compression = require('compression');
+const xss = require('xss-clean');
+const mongoSanitize = require('mongo-sanitize');
 require('./config/passport.config');
 const cp = require('cookie-parser');
 const cs = require('cookie-session');
@@ -60,6 +63,13 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan.errorHandler);
     app.use(morgan.successHandler);
 }
+
+app.use(xss());
+app.use(mongoSanitize());
+
+// gzip compression
+app.use(compression());
+
 // app.use(require('./middleware/UserAuth.middleware'));
 
 // app.get('/', async (req, res) => {
