@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                               const SizedBox(
                                 height: 5,
                               ),
-                              Container(
+                              SizedBox(
                                 width: 180,
                                 child: Text(
                                   songs[index]['description'],
@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePage> {
                               const SizedBox(
                                 height: 5,
                               ),
-                              Container(
+                              SizedBox(
                                 width: 180,
                                 child: Text(
                                   songs[index + 5]['description'],

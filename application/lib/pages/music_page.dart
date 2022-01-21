@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:application/json/sample_data.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -156,7 +154,7 @@ class _MusicPageState extends State<MusicPage> {
                             fontSize: 18,
                             fontWeight: FontWeight.bold),
                       ),
-                      Container(
+                      SizedBox(
                         width: 150,
                         child: Text(
                           widget.description,
@@ -223,14 +221,14 @@ class _MusicPageState extends State<MusicPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
+                const IconButton(
                     onPressed: null,
                     icon: Icon(
                       Feather.shuffle,
                       color: Colors.white,
                       size: 25,
                     )),
-                IconButton(
+                const IconButton(
                     onPressed: null,
                     icon: Icon(
                       Feather.skip_back,
@@ -253,11 +251,11 @@ class _MusicPageState extends State<MusicPage> {
                       }
                     },
                     icon: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: primary,
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Icon(
                           Entypo.controller_stop,
                           size: 25,
@@ -265,14 +263,14 @@ class _MusicPageState extends State<MusicPage> {
                         ),
                       ),
                     )),
-                IconButton(
+                const IconButton(
                     onPressed: null,
                     icon: Icon(
                       Feather.skip_forward,
                       size: 25,
                       color: Colors.white,
                     )),
-                IconButton(
+                const IconButton(
                     onPressed: null,
                     icon: Icon(
                       AntDesign.retweet,
@@ -294,7 +292,7 @@ class _MusicPageState extends State<MusicPage> {
                 size: 20,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, top: 3),
+                padding: EdgeInsets.only(left: 20, top: 3),
                 child: Text(
                   "Chrome Cast",
                   style: TextStyle(

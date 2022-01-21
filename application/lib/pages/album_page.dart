@@ -122,7 +122,7 @@ class _AlbumPageState extends State<AlbumPage> {
                               const SizedBox(
                                 height: 5,
                               ),
-                              Container(
+                              SizedBox(
                                 width: size.width - 210,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -188,7 +188,7 @@ class _AlbumPageState extends State<AlbumPage> {
                       },
                       child: Row(
                         children: [
-                          Container(
+                          SizedBox(
                             width: (size.width - 60) * 0.77,
                             child: Text(
                               "${index + 1} " + widget.song['songs'][index]['title'],
