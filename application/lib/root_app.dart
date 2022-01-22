@@ -1,3 +1,4 @@
+import 'package:application/json/sample_data.dart';
 import 'package:application/pages/home_page.dart';
 import 'package:application/pages/search_page.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,15 @@ class RootApp extends StatefulWidget {
 
 class _RootAppState extends State<RootApp> {
   int tab = 0;
+  _tapSetTab (int index) {
+    setState(() {
+      tab = index;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       backgroundColor: Colors.black,
       bottomNavigationBar: getFooter(),
       body: getBody(),
@@ -46,32 +53,36 @@ class _RootAppState extends State<RootApp> {
   }
 
   Widget getFooter() {
-    List iconList = [
-      Feather.home,
-      Feather.book,
-      Feather.search,
-      Feather.settings
+    List<Map<String, dynamic>> iconList = [
+      {"icon":Feather.home, "label": "Home"},
+      {"icon":Feather.book, "label": "Book"},
+      {"icon":Feather.search, "label": "Search"},
+      {"icon":Feather.settings, "label": "Settings"}
     ];
     return Container(
-      height: 80,
-      decoration: const BoxDecoration(color: Colors.black),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: List.generate(
-              iconList.length,
-              (index) => IconButton(
-                  onPressed: () => setState(() {
-                        tab = index;
-                      }),
-                  icon: Icon(
-                    iconList[index],
-                    color:
-                        tab == index ? const Color(0xFF04be4e) : Colors.white,
-                    // color: Colors.white,
-                  ))),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.black, Colors.transparent],
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          stops: [0.3, 0.8],
         ),
+      ),
+      child: BottomNavigationBar(
+        elevation: 0,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: tab,
+        backgroundColor: Colors.transparent,
+        onTap: _tapSetTab,
+        items: List.generate(
+            iconList.length,
+            (index) => BottomNavigationBarItem(
+                    icon: Icon(
+                  iconList[index]["icon"],
+                  color: tab == index ? const Color(0xFF04be4e) : Colors.white,
+                ),
+                label: iconList[index]["label"],
+            )),
       ),
     );
   }
