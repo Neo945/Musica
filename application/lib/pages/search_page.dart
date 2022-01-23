@@ -12,6 +12,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -175,6 +176,9 @@ class _SearchPageState extends State<SearchPage> {
                       children: List.generate(4, (index) => getAlbumBox())),
                 )
               ],
+            ),
+            const SizedBox(
+              height: 130,
             ),
           ],
         ),
