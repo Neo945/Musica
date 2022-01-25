@@ -1,21 +1,20 @@
 import 'package:application/models/language_model.dart';
 
 class User {
-  late String id;
+  late String _id;
   late bool isVarified;
   late String username;
   late String email;
   // late String _password;
 
   User({
-    required this.id,
     required this.isVarified,
     required this.username,
     required this.email,
   });
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json['_id'];
+    _id = json['_id'];
     isVarified = json['isVarified'];
     username = json['username'];
     if (
@@ -29,7 +28,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = id;
+    data['_id'] = _id;
     data['isVarified'] = isVarified;
     data['username'] = username;
     data['email'] = email;
