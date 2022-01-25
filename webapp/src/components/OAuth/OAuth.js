@@ -1,18 +1,23 @@
-import { useState } from 'react';
+import { Link, List, ListItem } from "@mui/material";
+import { useState } from "react";
 function OAuth(props) {
-	const [linkList, setLinkList] = useState([
-		{
-			provider: 'Google',
-			link: '/',
-			logo: '/'
-		}
-	]);
-	return (
-		<ul>
-		{linkList.map((e, i) => <li key={i}><a href={e.link}>{e.provider}</a></li>)}
-		</ul>
-	);
-};
+  // eslint-disable-next-line no-unused-vars
+  const [linkList, _] = useState([
+    {
+      provider: "Google",
+      link: "/",
+      logo: "/",
+    },
+  ]);
+  return (
+    <List>
+      {linkList.map((e, i) => (
+        <ListItem key={i}>
+          <Link href={e.link}>{e.provider}</Link>
+        </ListItem>
+      ))}
+    </List>
+  );
+}
 
 export default OAuth;
-

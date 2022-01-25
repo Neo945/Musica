@@ -3,6 +3,15 @@ import isEmail from "validator/lib/isEmail";
 import isStrongPassword from "validator/lib/isStrongPassword";
 import OAuth from "../OAuth/OAuth";
 import lookup from "../lookup/Lookup";
+import {
+  Button,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  OutlinedInput,
+  TextField,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 function Login(props) {
   const [loginState, setLoginState] = useState({ email: "", pass: "" });
@@ -11,7 +20,7 @@ function Login(props) {
     <>
       <div className="login">
         <OAuth />
-        <form
+        <FormControl
           method="POST"
           action="/"
           onSubmit={async (e) => {
@@ -33,8 +42,10 @@ function Login(props) {
             }
           }}
         >
-          <input
+          <TextField
             autoComplete="email"
+            label="Email"
+            variant="outlined"
             name="email"
             type="email"
             value={loginState.email}
@@ -42,24 +53,32 @@ function Login(props) {
               setLoginState({ ...loginState, email: e.target.value });
             }}
           />
-          <input
+          <OutlinedInput
             autoComplete="current-password"
             type={passVis ? "text" : "password"}
             name="password"
+            label="Password"
+            variant="outlined"
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setPassVis(!passVis)}
+                  edge="end"
+                >
+                  {!passVis ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
             value={loginState.pass}
             onChange={(e) => {
               setLoginState({ ...loginState, pass: e.target.value });
             }}
           />
-          <input
-            type="checkbox"
-            value={passVis}
-            onChange={(e) => {
-              setPassVis(e.target.checked);
-            }}
-          />
-          <input type="submit" name="sumbit" />
-        </form>
+          <Button type="submit" variant="contained" name="sumbit">
+            Submit
+          </Button>
+        </FormControl>
       </div>
     </>
   );

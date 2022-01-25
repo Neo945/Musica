@@ -1,8 +1,8 @@
+import { Box, Button, Chip, FormControl } from "@mui/material";
 import { useEffect, useState } from "react";
 
 function RegistrationForm(props) {
   const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     phone: "",
@@ -13,14 +13,12 @@ function RegistrationForm(props) {
   });
   return (
     <>
-      <div className="register">
-        {!loading ? <div style={{ position: "absolute" }}>Loading</div> : null}
-        <form
+      <Box className="register">
+        <FormControl
           method="POST"
           action="/"
           onSubmit={(e) => {
             e.preventDefault();
-            setLoading(true);
           }}
         >
           <label htmlFor="profile">Profile photo: </label>
@@ -69,7 +67,7 @@ function RegistrationForm(props) {
               onClick={() =>
                 setFormData({
                   ...formData,
-                  lang: formData.lang.filter((listEle) => listEle != ele),
+                  lang: formData.lang.filter((listEle) => listEle !== ele),
                 })
               }
               style={{ cursor: "pointer" }}
@@ -119,18 +117,17 @@ function RegistrationForm(props) {
           <br />
           <div> Select Prefered Language </div>
           {formData.genre.map((ele, i) => (
-            <div
-              onClick={() =>
+            <Chip
+              // deleteIcon={}
+              label={ele}
+              onDelete={() =>
                 setFormData({
                   ...formData,
-                  genre: formData.genre.filter((listEle) => listEle != ele),
+                  genre: formData.genre.filter((listEle) => listEle !== ele),
                 })
               }
-              style={{ cursor: "pointer" }}
               key={i}
-            >
-              {ele}
-            </div>
+            ></Chip>
           ))}
           <label htmlFor="gnere">Genre: </label>
           <select
@@ -153,9 +150,11 @@ function RegistrationForm(props) {
           </select>
           <br />
           <br />
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
+          <Button type="submit" value="Submit">
+            Submit
+          </Button>
+        </FormControl>
+      </Box>
     </>
   );
 }

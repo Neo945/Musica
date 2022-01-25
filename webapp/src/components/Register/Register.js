@@ -3,6 +3,12 @@ import io from "socket.io-client";
 import isEmail from "validator/lib/isEmail";
 import { useEffect, useState } from "react";
 import lookup from "../lookup/Lookup";
+import {
+  Button,
+  CircularProgress,
+  FormControl,
+  TextField,
+} from "@mui/material";
 
 function UserEmail(props) {
   const [socket, setSocket] = useState(null);
@@ -19,8 +25,8 @@ function UserEmail(props) {
   return (
     <>
       <div className="email-form">
-        {!loading ? <div style={{ position: "absolute" }}>Loading</div> : null}
-        <form
+        {loading ? <CircularProgress style={{ position: "absolute" }} /> : null}
+        <FormControl
           method="POST"
           action="/"
           onSubmit={async (e) => {
@@ -65,20 +71,32 @@ function UserEmail(props) {
             }
           }}
         >
-          <input
-            type="text"
+          <TextField
+            autoComplete="username"
+            label="Username"
+            variant="outlined"
             name="username"
+            type="text"
             value={state.username}
-            onChange={(e) => setState({ ...state, username: e.target.value })}
+            onChange={(e) => {
+              setState({ ...state, email: e.target.value });
+            }}
           />
-          <input
-            type="email"
+          <TextField
+            autoComplete="email"
+            label="Email"
+            variant="outlined"
             name="email"
+            type="email"
             value={state.email}
-            onChange={(e) => setState({ ...state, email: e.target.value })}
+            onChange={(e) => {
+              setState({ ...state, email: e.target.value });
+            }}
           />
-          <input type="submit" />
-        </form>
+          <Button type="submit" variant="contained" name="sumbit">
+            Submit
+          </Button>
+        </FormControl>
       </div>
     </>
   );
