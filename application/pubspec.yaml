@@ -37,6 +37,9 @@ dependencies:
   page_transition: ^2.0.4
   audioplayers:
   http: ^0.13.4
+  shared_preferences: ^2.0.12
+  cached_network_image: ^3.2.0
+  web_socket_channel: ^2.1.0
 
 dev_dependencies:
   flutter_test:

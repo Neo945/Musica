@@ -1,12 +1,41 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NetworkService {
   final JsonDecoder _decoder = const JsonDecoder();
   final JsonEncoder _encoder = const JsonEncoder();
+  late SharedPreferences _prefs;
+  final String _url = 'http://localhost:3000/api/v1';
 
-  Map<String, String> headers = {"content-type": "application/json", "Accept": "application/json"};
+  NetworkService() {
+    SharedPreferences.getInstance().then((value) async {
+      _prefs = value;
+      String cookie = _prefs.getString("cookies")!;
+      var cookies = cookie.split(';');
+      for (var cookie in cookies) {
+        _setCookie(cookie);
+      }
+    });
+  }
+
+  Future<bool> _saveCookie(String cookie) async {
+    return await _prefs.setString("cookies", cookie);
+  }
+
+  Future<dynamic> getPreferances(String key) async {
+    return await _decoder.convert(_prefs.getString(key)!);
+  }
+
+  Future<bool> savePreferance(String key, Map<String, dynamic> value) async {
+    return await _prefs.setString(key, _encoder.convert(value));
+  }
+
+  Map<String, String> headers = {
+    "content-type": "application/json",
+    "Accept": "application/json"
+  };
   Map<String, String> cookies = {};
 
   void _updateCookie(http.Response response) {
@@ -24,6 +53,7 @@ class NetworkService {
       }
 
       headers['cookie'] = _generateCookieHeader();
+      _saveCookie(headers['cookie']!);
     }
   }
 
@@ -44,12 +74,10 @@ class NetworkService {
 
   String _generateCookieHeader() {
     String cookie = "";
-
     for (var key in cookies.keys) {
       if (cookie.isNotEmpty) cookie += ";";
       cookie += key + "=" + cookies[key]!;
     }
-
     return cookie;
   }
 
