@@ -1,5 +1,6 @@
 import 'package:application/models/genre_model.dart';
 import 'package:application/models/language_model.dart';
+import 'package:application/models/tags_model.dart';
 import 'package:application/models/user_model.dart';
 
 class Music {
@@ -12,7 +13,7 @@ class Music {
   late Artist artist;
   late List<Language> language;
   late List<Genre> genre;
-  late List<Genre> tag;
+  late List<Tag> tag;
   late int likes;
   late int plays;
   late List<Artist> collab;
@@ -32,7 +33,8 @@ class Music {
       required this.collab,
       required this.length,
       required this.lyrics,
-      required this.artist});
+      // required this.artist,
+      });
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
         id: json["id"],
@@ -46,9 +48,9 @@ class Music {
         language: List<Language>.from(
             json["language"].map((x) => Language.fromJson(x))),
         genre: List<Genre>.from(json["genre"].map((x) => Genre.fromJson(x))),
-        tag: List<Genre>.from(json["tag"].map((x) => Genre.fromJson(x))),
+        tag: List<Tag>.from(json["tag"].map((x) => Genre.fromJson(x))),
         lyrics: '${json["lyrics"]}',
-        artist: Artist.fromJson(json["artist"]),
+        // artist: Artist.fromJson(json["artist"]),
         collab:
             List<Artist>.from(json["collab"].map((x) => Artist.fromJson(x))),
       );
