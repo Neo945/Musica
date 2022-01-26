@@ -16,11 +16,13 @@ class Music {
   late int likes;
   late int plays;
   late List<Artist> collab;
+  late bool liked;
 
   Music(
       {required this.id,
       required this.title,
       required this.likes,
+      required this.liked,
       required this.plays,
       required this.link,
       required this.linkAWS,
@@ -37,6 +39,7 @@ class Music {
         likes: json["likes"],
         title: json["title"],
         link: json["link"],
+        liked: json["liked"],
         plays: json["plays"],
         linkAWS: json["linkAWS"],
         length: json["length"].toDouble(),
@@ -46,7 +49,8 @@ class Music {
         tag: List<Genre>.from(json["tag"].map((x) => Genre.fromJson(x))),
         lyrics: '${json["lyrics"]}',
         artist: Artist.fromJson(json["artist"]),
-        collab: List<Artist>.from(json["collab"].map((x) => Artist.fromJson(x))),
+        collab:
+            List<Artist>.from(json["collab"].map((x) => Artist.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,6 +59,7 @@ class Music {
         "likes": likes,
         "plays": plays,
         "link": link,
+        "liked": liked,
         "linkAWS": linkAWS,
         "length": length,
         "lyrics": lyrics,

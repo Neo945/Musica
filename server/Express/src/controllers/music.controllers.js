@@ -22,14 +22,16 @@ module.exports = {
             const { _id } = req.body;
             const music = await Music.findOne({ _id, artist: req.user._id });
             if (!music) res.status(404).send({ message: 'Music not found' });
-            res.send({ ...music, likes: music.likes.length });
+            res.send({ ...music, likes: music.likes.length, liked: music.likes.includes(req.user._id) });
         });
     },
     getCurrentArtistMusics: async (req, res) => {
         errorHandler(req, res, async () => {
             const musics = await Music.find({ artist: req.user._id });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
+            res.send(
+                musics.map((music) => ({ ...music, likes: music.likes.length, liked: music.likes.includes(req.user._id) }))
+            );
         });
     },
     getMusicByArtist: async (req, res) => {
@@ -37,7 +39,9 @@ module.exports = {
             const { artist } = req.body;
             const musics = await Music.find({ $or: [{ artist: artist._id }, { collab: artist._id }] });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
+            res.send(
+                musics.map((music) => ({ ...music, likes: music.likes.length, liked: music.likes.includes(req.user._id) }))
+            );
         });
     },
     getAlbumMusics: async (req, res) => {
@@ -45,7 +49,9 @@ module.exports = {
             const { album } = req.body;
             const musics = await Music.find({ album: album._id });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
+            res.send(
+                musics.map((music) => ({ ...music, likes: music.likes.length, liked: music.likes.includes(req.user._id) }))
+            );
         });
     },
     getMusicByTitle: async (req, res) => {
@@ -53,7 +59,7 @@ module.exports = {
             const { title } = req.body;
             const music = await Music.find({ title: { $regex: title, $options: 'i' } });
             if (!music) res.status(404).send({ message: 'Music not found' });
-            res.send(music.map((m) => ({ ...m, likes: m.likes.length })));
+            res.send(music.map((m) => ({ ...m, likes: m.likes.length, liked: m.likes.includes(req.user._id) })));
         });
     },
     getMusicsByTagIds: async (req, res) => {
@@ -61,7 +67,9 @@ module.exports = {
             const { tags } = req.body;
             const musics = await Music.find({ tags: { $in: tags } });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
+            res.send(
+                musics.map((music) => ({ ...music, likes: music.likes.length, liked: music.likes.includes(req.user._id) }))
+            );
         });
     },
     getMusicsByGenreIds: async (req, res) => {
@@ -69,7 +77,9 @@ module.exports = {
             const { genres } = req.body;
             const musics = await Music.find({ genres: { $in: genres } });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
+            res.send(
+                musics.map((music) => ({ ...music, likes: music.likes.length, liked: music.likes.includes(req.user._id) }))
+            );
         });
     },
     getMusicsByLanguageIds: async (req, res) => {
@@ -77,7 +87,9 @@ module.exports = {
             const { languages } = req.body;
             const musics = await Music.find({ language: { $in: languages } });
             if (!musics) res.status(404).send({ message: 'Musics not found' });
-            res.send(musics.map((music) => ({ ...music, likes: music.likes.length })));
+            res.send(
+                musics.map((music) => ({ ...music, likes: music.likes.length, liked: music.likes.includes(req.user._id) }))
+            );
         });
     },
     getMusicsBySearchString: async (req, res) => {
@@ -105,7 +117,7 @@ module.exports = {
                 ],
             }).limit(10);
             res.send([
-                musics.map((music) => ({ ...music, likes: music.likes.length })),
+                musics.map((music) => ({ ...music, likes: music.likes.length, liked: music.likes.includes(req.user._id) })),
                 tags,
                 genres,
                 languages,
