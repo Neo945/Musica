@@ -22,6 +22,7 @@ const List song_type_2 = [
 ];
 const List songs = [
   {
+    "id": 1,
     "img": "assets/images/img_3.jpg",
     "title": "Feelin' Good",
     "description": "Feel good with this positively timeless playlist!",
@@ -40,6 +41,7 @@ const List songs = [
     ]
   },
   {
+    "id": 2,
     "img": "assets/images/img_5.jpg",
     "title": "Peaceful Piano",
     "description": "Relax and indulge with beautiful piano pieces",
@@ -58,6 +60,7 @@ const List songs = [
     ]
   },
   {
+    "id": 3,
     "img": "assets/images/img_7.jpg",
     "title": "Deep Focus",
     "description": "Keep calm and focus with ambient and post-rock music.",
@@ -76,6 +79,7 @@ const List songs = [
     ]
   },
   {
+    "id": 4,
     "img": "assets/images/img_4.jpg",
     "title": "Lo-Fi Beats",
     "description": "Beats to relax, study and focus.",
@@ -94,6 +98,7 @@ const List songs = [
     ]
   },
   {
+    "id": 5,
     "img": "assets/images/img_2.jpg",
     "title": "Chill Lofi Study Beats",
     "description": "The perfect study beats, twenty four seven.",
@@ -112,6 +117,7 @@ const List songs = [
     ]
   },
   {
+    "id": 6,
     "img": "assets/images/img_6.jpg",
     "title": "Chill Hits",
     "description": "Kick back to the best new and recent chill tunes.",
@@ -130,6 +136,7 @@ const List songs = [
     ]
   },
   {
+    "id": 7,
     "img": "assets/images/img_1.jpg",
     "title": "Dark & Stormy",
     "description": "Beautifully dark, dramatic tracks.",
@@ -148,6 +155,7 @@ const List songs = [
     ]
   },
   {
+    "id": 8,
     "img": "assets/images/img_8.jpg",
     "title": "Feel Good Piano",
     "description": "Positive piano music",
@@ -166,6 +174,7 @@ const List songs = [
     ]
   },
   {
+    "id": 9,
     "img": "assets/images/img_9.jpg",
     "title": "Sad Songs",
     "description": "Beautiful songs to break your heart...",
@@ -184,6 +193,7 @@ const List songs = [
     ]
   },
   {
+    "id": 10,
     "img": "assets/images/img_10.jpg",
     "title": "Mood Booster",
     "description": "Get happy with today's dose of feel-good songs",

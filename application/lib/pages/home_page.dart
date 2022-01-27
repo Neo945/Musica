@@ -115,25 +115,33 @@ class _HomePageState extends State<HomePage> {
                         child: GestureDetector(
                           onTap: () {
                             Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: AlbumPage(
-                                      song: songs[index],
-                                    ),
-                                    alignment: Alignment.bottomCenter,
-                                    type: PageTransitionType.scale));
+                              context,
+                              PageTransition(
+                                child: AlbumPage(
+                                  song: songs[index],
+                                ),
+                                alignment: Alignment.bottomCenter,
+                                type: PageTransitionType.scale,
+                              ),
+                            );
                           },
                           child: Column(
                             children: [
-                              Container(
-                                width: 180,
-                                height: 180,
-                                decoration: BoxDecoration(
+                              Hero(
+                                tag: 'album-tag-${songs[index + 5]['id']}',
+                                child: Container(
+                                  width: 180,
+                                  height: 180,
+                                  decoration: BoxDecoration(
                                     color: primary,
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                        image:
-                                            AssetImage(songs[index]['img']))),
+                                      image:
+                                        AssetImage(songs[index]['img'],
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                               const SizedBox(
                                 height: 20,
@@ -237,25 +245,30 @@ class _HomePageState extends State<HomePage> {
                         child: GestureDetector(
                           onTap: () {
                             Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: AlbumPage(
-                                      song: songs[index + 5],
-                                    ),
-                                    alignment: Alignment.bottomCenter,
-                                    type: PageTransitionType.scale));
+                              context,
+                              PageTransition(
+                                child: AlbumPage(
+                                  song: songs[index + 5],
+                                ),
+                                alignment: Alignment.bottomCenter,
+                                type: PageTransitionType.scale,
+                              ),
+                            );
                           },
                           child: Column(
                             children: [
-                              Container(
-                                width: 180,
-                                height: 180,
-                                decoration: BoxDecoration(
-                                    color: primary,
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            songs[index + 5]['img']))),
+                              Hero(
+                                tag: 'album-tag-${songs[index + 5]['id']}',
+                                child: Container(
+                                  width: 180,
+                                  height: 180,
+                                  decoration: BoxDecoration(
+                                      color: primary,
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              songs[index + 5]['img']))),
+                                ),
                               ),
                               const SizedBox(
                                 height: 20,

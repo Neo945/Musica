@@ -1,18 +1,16 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'language_model.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Language {
-  late String language;
+  late String name;
+  late String code;
   late String id;
 
-  Language({required this.language,required this.id});
+  Language({required this.name, required this.code, required this.id});
 
-  Language.fromJson(Map<String, dynamic> json) {
-    language = json['language'];
-    id = json['_id'];
-  }
+  factory Language.fromJson(Map<String, dynamic> json) => _$LanguageFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['language'] = language;
-    data['_id'] = id;
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$LanguageToJson(this);
 }

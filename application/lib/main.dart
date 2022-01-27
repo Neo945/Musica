@@ -1,7 +1,8 @@
 // import 'dart:async';
 
 import 'package:application/root_app.dart';
-import 'package:application/state/music.dart';
+import 'package:application/state/music_playing_state.dart';
+import 'package:application/state/tag_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,16 +1,17 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'genre_model.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Genre {
   late String id;
-  late String name;
+  late String genre;
 
-  Genre({required this.id,required this.name});
+  Genre({ required this.id, required this.genre });
 
-  factory Genre.fromJson(Map<String, dynamic> json) => Genre(
-    id: json["_id"],
-    name: json["name"],
-  );
+  factory Genre.fromJson(Map<String, dynamic> json) => _$GenreFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "name": name,
-  };
+  /// Connect the generated [_$PersonToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$GenreToJson(this);
+
 }

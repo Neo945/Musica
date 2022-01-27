@@ -2,7 +2,8 @@ import 'package:application/components/bottom_music_player.dart';
 import 'package:application/json/sample_data.dart';
 import 'package:application/pages/home_page.dart';
 import 'package:application/pages/search_page.dart';
-import 'package:application/state/music.dart';
+import 'package:application/state/music_playing_state.dart';
+import 'package:application/state/tag_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:provider/provider.dart';
@@ -96,4 +97,3 @@ class RootApp extends StatelessWidget {
     });
   }
 }
-

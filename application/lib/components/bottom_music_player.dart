@@ -1,5 +1,5 @@
 import 'package:application/json/sample_data.dart';
-import 'package:application/state/music.dart';
+import 'package:application/state/music_playing_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';
 

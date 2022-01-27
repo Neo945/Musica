@@ -27,12 +27,16 @@ class _AlbumPageState extends State<AlbumPage> {
         children: [
           Column(
             children: [
-              Container(
-                width: size.width,
-                height: 220,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(widget.song['img']), fit: BoxFit.cover),
+              Hero(
+                tag: 'album-tag-${widget.song["id"]}',
+                child: Container(
+                  width: size.width,
+                  height: 220,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(widget.song['img']),
+                        fit: BoxFit.cover),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -174,24 +178,26 @@ class _AlbumPageState extends State<AlbumPage> {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: MusicPage(
-                                      title: widget.song['songs'][index]['title'],
-                                      description: widget.song['songs'][index]['description'],
-                                      color: widget.song['songs'][index]['color'],
-                                      img: widget.song['songs'][index]['img'],
-                                      url: widget.song['songs'][index]['song_url'],
-                                    ),
-                                    alignment: Alignment.bottomCenter,
-                                    type: PageTransitionType.scale));
+                            context,
+                            PageTransition(
+                                child: MusicPage(
+                                  title: widget.song['songs'][index]['title'],
+                                  description: widget.song['songs'][index]
+                                      ['description'],
+                                  color: widget.song['songs'][index]['color'],
+                                  img: widget.song['songs'][index]['img'],
+                                  url: widget.song['songs'][index]['song_url'],
+                                ),
+                                alignment: Alignment.bottomCenter,
+                                type: PageTransitionType.scale));
                       },
                       child: Row(
                         children: [
                           SizedBox(
                             width: (size.width - 60) * 0.77,
                             child: Text(
-                              "${index + 1} " + widget.song['songs'][index]['title'],
+                              "${index + 1} " +
+                                  widget.song['songs'][index]['title'],
                               style: const TextStyle(
                                 color: Colors.white,
                               ),
