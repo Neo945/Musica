@@ -4,20 +4,28 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NetworkService {
-  final JsonDecoder _decoder = const JsonDecoder();
-  final JsonEncoder _encoder = const JsonEncoder();
+  late JsonDecoder _decoder;
+  late JsonEncoder _encoder;
   late SharedPreferences _prefs;
-  final String _url = 'http://localhost:3000/api/v1';
+  late String _url;
 
-  NetworkService() {
-    SharedPreferences.getInstance().then((value) async {
-      _prefs = value;
-      String cookie = _prefs.getString("cookies")!;
-      var cookies = cookie.split(';');
-      for (var cookie in cookies) {
-        _setCookie(cookie);
-      }
-    });
+  NetworkService({required url}) {
+    _url = url;
+    _decoder = const JsonDecoder();
+    _encoder = const JsonEncoder();
+  }
+
+  void initSharedPrefs() async {
+    _prefs = await SharedPreferences.getInstance();
+    initCookies();
+  }
+
+  void initCookies() {
+    String cookie = _prefs.getString("cookies")!;
+    var cookies = cookie.split(';');
+    for (var cookie in cookies) {
+      _setCookie(cookie);
+    }
   }
 
   Future<bool> _saveCookie(String cookie) async {
@@ -82,7 +90,7 @@ class NetworkService {
   }
 
   Future<dynamic> get(String url) {
-    Uri uri = Uri.parse(url);
+    Uri uri = Uri.parse("$_url$url");
     return http.get(uri, headers: headers).then((http.Response response) {
       final String res = response.body;
       final int statusCode = response.statusCode;
@@ -96,8 +104,9 @@ class NetworkService {
     });
   }
 
-  Future<dynamic> post(String url, {body, encoding}) {
-    Uri uri = Uri.parse(url);
+  Future<dynamic> post(String url, {required body, encoding}) async {
+    encoding ??= Encoding.getByName("utf-8");
+    Uri uri = Uri.parse("$_url$url");
     return http
         .post(uri,
             body: _encoder.convert(body), headers: headers, encoding: encoding)
