@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (_) => TabState(),
           ),
-        ]
+        ],
       ),
     );
   }

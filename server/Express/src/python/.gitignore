@@ -1,0 +1,7 @@
+venv
+/data
+
+mytable.csv
+model.pickle
+
+*/__pycache__
