@@ -8,10 +8,14 @@ const CommentSchema = new Schema(
             type: String,
             required: true,
             trim: true,
-            default: '',
         },
         likes: [{ type: Schema.Types.ObjectId, ref: 'Artist' }],
         comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+        artist: {
+            type: Schema.Types.ObjectId,
+            ref: 'Artist',
+            required: true,
+        },
     },
     {
         timestamps: true,

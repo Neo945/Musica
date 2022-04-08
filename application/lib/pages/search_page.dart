@@ -40,22 +40,10 @@ class _SearchPageState extends State<SearchPage> {
                 // ),
                 color: const Color(0xFF86B7AE),
               ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Stack(
                 children: [
-                  const Expanded(
-                    flex: 4,
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text("Title", style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold
-                      ),),
-                    ),
-                  ),
                   Transform.translate(
-                    offset: const Offset(20, 30),
+                    offset: const Offset(100, 30),
                     child: Transform.rotate(
                       angle: 2 * pi / 14.4,
                       child: Container(
@@ -67,6 +55,14 @@ class _SearchPageState extends State<SearchPage> {
                                     AssetImage(songs[index]['img']))),
                       ),
                     ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text("Title", style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                    ),),
                   ),
                 ],
               ),

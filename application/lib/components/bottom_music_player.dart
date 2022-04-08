@@ -37,8 +37,7 @@ class _MusicBottomBarState extends State<MusicBottomBar> {
   }
 
   onDragStart() {
-    RenderBox box2 =
-        _key2.currentContext!.findRenderObject() as RenderBox;
+    RenderBox box2 = _key2.currentContext!.findRenderObject() as RenderBox;
     Offset position2 = box2.localToGlobal(Offset.zero);
     setState(() {
       posy = position2.dy;
@@ -46,7 +45,9 @@ class _MusicBottomBarState extends State<MusicBottomBar> {
   }
 
   onDragUpdate(DragUpdateDetails details) {
-    double op = 1 - (details.localPosition.dy - posy) / (MediaQuery.of(context).size.height - posy);
+    double op = 1 -
+        (details.localPosition.dy - posy) /
+            (MediaQuery.of(context).size.height - posy);
     setState(() {
       opacity.value = op.clamp(0, 1);
     });
@@ -67,6 +68,7 @@ class _MusicBottomBarState extends State<MusicBottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    Widget com = component();
     if (widget.play.music != null) {
       return Draggable<MusicPlayingState>(
         onDragStarted: onDragStart,
@@ -83,12 +85,12 @@ class _MusicBottomBarState extends State<MusicBottomBar> {
               maxWidth: MediaQuery.of(context).size.width,
               minHeight: MediaQuery.of(context).size.height,
             ),
-            child: component(),
+            child: com,
           ),
         ),
       );
     }
-    return Container();
+    return com;
   }
 
   Widget component() {
@@ -104,7 +106,7 @@ class _MusicBottomBarState extends State<MusicBottomBar> {
               return Opacity(
                 opacity: opacity.value,
                 child: Container(
-                  child: child, 
+                  child: child,
                   height: 60,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),

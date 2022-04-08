@@ -28,7 +28,7 @@ const MusicSchema = new Schema(
         },
         length: {
             type: Number,
-            required: [true],
+            required: true,
             validate: {
                 validator: function (v) {
                     return v > 0;
@@ -54,6 +54,7 @@ const MusicSchema = new Schema(
             required: [true, 'Please provide an artist'],
         },
         likes: [{ type: Schema.Types.ObjectId, ref: 'Artist' }],
+        comment: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
         collab: [{ type: Schema.Types.ObjectId, ref: 'Artist' }],
         tags: [{ type: Schema.Types.ObjectId, ref: 'Tags' }],
         language: { type: Schema.Types.ObjectId, ref: 'Language' },

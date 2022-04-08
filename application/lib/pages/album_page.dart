@@ -21,6 +21,7 @@ class _AlbumPageState extends State<AlbumPage> {
   }
 
   Widget getBody() {
+    // print("${widget.song} getbody");
     var size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Stack(
@@ -28,7 +29,7 @@ class _AlbumPageState extends State<AlbumPage> {
           Column(
             children: [
               Hero(
-                tag: 'album-tag-${widget.song["id"]}',
+                tag: 'album-${widget.song["id"]}',
                 child: Container(
                   width: size.width,
                   height: 220,

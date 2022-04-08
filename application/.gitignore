@@ -49,3 +49,5 @@ web
 /assets
 
 *.g.dart
+
+temp

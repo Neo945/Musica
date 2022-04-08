@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:application/json/sample_data.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +29,10 @@ class _MusicPageState extends State<MusicPage> {
   double _slider = 0;
 
   late AudioPlayer player;
-  late AudioCache audioCache;
-  bool isPlaying = true;
+  bool _isPlaying = true;
+  List<int> _time = [0, 0, 1];
+  List<int> _currentTime = [0, 0, 1];
+  late Timer _timer;
 
   @override
   void initState() {
@@ -37,27 +41,66 @@ class _MusicPageState extends State<MusicPage> {
   }
 
   initPlayer() {
-    player = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
-    audioCache = AudioCache(fixedPlayer: player);
-    playSound(widget.url);
-    // print(widget.url);
-
+    player = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
+    playSound("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
   }
 
-  playSound(localPath) {
-    audioCache.play(localPath);
+  playSound(localPath) async {
+    player.play(localPath, isLocal: false).then((value) async {
+      moveSlider();
+      await Future.delayed(const Duration(seconds: 2));
+      player.getDuration().then((data) {
+        if (_time[2] == 1) {
+          setState(() {
+            _time = _msToSec(data);
+            _isPlaying = true;
+          });
+        }
+      });
+    });
+  }
+
+  moveSlider() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_currentTime[2] == _time[2] && _currentTime[2] != 1) {
+        _timer.cancel();
+        setState(() {
+          _isPlaying = false;
+        });
+        return;
+      }
+      setState(() {
+        player.getCurrentPosition().then((data) {
+          _currentTime = _msToSec(data.toInt());
+        });
+      });
+    });
   }
 
   stopSound(localPath) async {
-    Uri audioFile = await audioCache.load(localPath);
-    await player.setUrl(audioFile.path);
-    player.stop();
+    await player.stop();
+    _timer.cancel();
+    setState(() {
+      _isPlaying = false;
+    });
   }
 
-  seekSound(localPath) async {
-    Uri audioFile = await audioCache.load(localPath);
-    await player.setUrl(audioFile.path);
-    player.seek(const Duration(milliseconds: 2000));
+  pauseSound() async {
+    await player.pause();
+    setState(() {
+      _isPlaying = false;
+    });
+  }
+
+  resumeSound() async {
+    await player.resume();
+    setState(() {
+      _isPlaying = true;
+    });
+  }
+
+  seekSound(ms) async {
+    await player.seek(Duration(milliseconds: ms));
   }
 
   @override
@@ -88,6 +131,14 @@ class _MusicPageState extends State<MusicPage> {
             ))
       ],
     );
+  }
+
+  List<int> _msToSec(int ms) {
+    return [
+      Duration(milliseconds: ms).inMinutes,
+      Duration(milliseconds: ms).inSeconds,
+      ms
+    ];
   }
 
   Widget getBody() {
@@ -122,7 +173,9 @@ class _MusicPageState extends State<MusicPage> {
                   height: size.width - 60,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(widget.img), fit: BoxFit.cover),
+                      image: AssetImage(widget.img),
+                      fit: BoxFit.cover,
+                    ),
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
@@ -181,14 +234,14 @@ class _MusicPageState extends State<MusicPage> {
           ),
           Slider(
               activeColor: primary,
-              value: _slider,
+              value: _currentTime[2].toDouble(),
               min: 0,
-              max: 200,
+              max: _time[2].toDouble(),
               onChanged: (value) {
-                setState(() {
-                  _slider = value;
-                });
-                seekSound(widget.url);
+                // setState(() {
+                //   _slider = value;
+                // });
+                seekSound(value.toInt());
               }),
           const SizedBox(
             height: 20,
@@ -199,13 +252,13 @@ class _MusicPageState extends State<MusicPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "1:50",
+                  "${_currentTime[0]}:${_currentTime[1] - _currentTime[0] * 60}",
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.5),
                   ),
                 ),
                 Text(
-                  "4:68",
+                  "${_time[0]}:${_time[1] - _time[0] * 60}",
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.5),
                   ),
@@ -228,9 +281,9 @@ class _MusicPageState extends State<MusicPage> {
                       color: Colors.white,
                       size: 25,
                     )),
-                const IconButton(
-                    onPressed: null,
-                    icon: Icon(
+                IconButton(
+                    onPressed: () async {},
+                    icon: const Icon(
                       Feather.skip_back,
                       size: 25,
                       color: Colors.white,
@@ -238,16 +291,10 @@ class _MusicPageState extends State<MusicPage> {
                 IconButton(
                     iconSize: 50,
                     onPressed: () {
-                      if (isPlaying) {
-                        stopSound(widget.url);
-                        setState(() {
-                          isPlaying = false;
-                        });
+                      if (_isPlaying) {
+                        pauseSound();
                       } else {
-                        playSound(widget.url);
-                        setState(() {
-                          isPlaying = true;
-                        });
+                        resumeSound();
                       }
                     },
                     icon: Container(
@@ -255,9 +302,11 @@ class _MusicPageState extends State<MusicPage> {
                         shape: BoxShape.circle,
                         color: primary,
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Icon(
-                          Entypo.controller_stop,
+                          _isPlaying
+                              ? Entypo.controller_play
+                              : Entypo.controller_stop,
                           size: 25,
                           color: Colors.white,
                         ),

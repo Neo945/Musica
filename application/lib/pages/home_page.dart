@@ -48,69 +48,44 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget getBody() {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 30),
-                  child: Row(
-                    children: List.generate(song_type_1.length, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 25),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              genretab1 = index;
-                            });
-                          },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                song_type_1[index],
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: genretab1 == index
-                                        ? const Color(0xFF04be4e)
-                                        : Colors.grey,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(
-                                height: 3,
-                              ),
-                              Container(
-                                height: 3,
-                                width: 10,
-                                decoration: BoxDecoration(
-                                    color: genretab1 == index
-                                        ? const Color(0xFF04be4e)
-                                        : const Color(0x00000000)),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 30),
-                  child: Row(
-                    children: List.generate(songs.length - 5, (index) {
-                      return Padding(
+  Widget _getSongTypes(Function() function, int index) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 25),
+      child: GestureDetector(
+        onTap: () {
+          setState(function);
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              song_type_2[index],
+              style: TextStyle(
+                  fontSize: 15,
+                  color: genretab2 == index
+                      ? const Color(0xFF04be4e)
+                      : Colors.grey,
+                  fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(
+              height: 3,
+            ),
+            Container(
+              height: 3,
+              width: 10,
+              decoration: BoxDecoration(
+                  color: genretab2 == index
+                      ? const Color(0xFF04be4e)
+                      : const Color(0x00000000)),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _getAlbum(int index) {
+    return Padding(
                         padding: const EdgeInsets.only(right: 30),
                         child: GestureDetector(
                           onTap: () {
@@ -128,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             children: [
                               Hero(
-                                tag: 'album-tag-${songs[index + 5]['id']}',
+                                tag: "album-${index + 1}",
                                 child: Container(
                                   width: 180,
                                   height: 180,
@@ -136,8 +111,8 @@ class _HomePageState extends State<HomePage> {
                                     color: primary,
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                      image:
-                                        AssetImage(songs[index]['img'],
+                                      image: AssetImage(
+                                        songs[index]['img'],
                                       ),
                                     ),
                                   ),
@@ -174,6 +149,42 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       );
+  }
+
+  Widget getBody() {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20, left: 30),
+                  child: Row(
+                    children: List.generate(song_type_1.length, (index) {
+                      return _getSongTypes(() {
+                        setState(() {
+                          genretab1 = index;
+                        });
+                      }, index);
+                    }),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Row(
+                    children: List.generate(songs.length - 5, (index) {
+                      // print("$index songs.length - 5");
+                      return _getAlbum(index);
                     }),
                   ),
                 ),
@@ -192,41 +203,9 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(top: 20, left: 30),
                   child: Row(
                     children: List.generate(song_type_2.length, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 25),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              genretab2 = index;
-                            });
-                          },
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                song_type_2[index],
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: genretab2 == index
-                                        ? const Color(0xFF04be4e)
-                                        : Colors.grey,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(
-                                height: 3,
-                              ),
-                              Container(
-                                height: 3,
-                                width: 10,
-                                decoration: BoxDecoration(
-                                    color: genretab2 == index
-                                        ? const Color(0xFF04be4e)
-                                        : const Color(0x00000000)),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
+                      return _getSongTypes(() {
+                        genretab2 = index;
+                      }, index);
                     }),
                   ),
                 ),
@@ -240,74 +219,15 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(left: 30),
                   child: Row(
                     children: List.generate(songs.length - 5, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 30),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                child: AlbumPage(
-                                  song: songs[index + 5],
-                                ),
-                                alignment: Alignment.bottomCenter,
-                                type: PageTransitionType.scale,
-                              ),
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              Hero(
-                                tag: 'album-tag-${songs[index + 5]['id']}',
-                                child: Container(
-                                  width: 180,
-                                  height: 180,
-                                  decoration: BoxDecoration(
-                                      color: primary,
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              songs[index + 5]['img']))),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                songs[index + 5]['title'],
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              SizedBox(
-                                width: 180,
-                                child: Text(
-                                  songs[index + 5]['description'],
-                                  maxLines: 1,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
+                      // print("$index songs.length - 5");
+                      return _getAlbum(index + 5);
                     }),
                   ),
                 ),
               )
             ],
-          )
-          ,const SizedBox(
+          ),
+          const SizedBox(
             height: 130,
           ),
         ],

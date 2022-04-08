@@ -21,7 +21,9 @@ def generate_model():
                                arr=vlqs)
     cv = CountVectorizer()
     cv_matrix = cv.fit_transform(list(vlqs))
+    print(cv_matrix)
     score = cosine_similarity(cv_matrix)
+    print(score)
     with open('model.pickle', 'wb') as f:
         pickle.dump(score, f)
 

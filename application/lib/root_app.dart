@@ -25,7 +25,7 @@ class RootApp extends StatelessWidget {
     return Stack(
       children: [
         Consumer<TabState>(builder: (_, state, __) {
-          print("Tab Changed1");
+          // print("Tab Changed1");
           return IndexedStack(
             index: state.tab,
             children: const [
@@ -52,9 +52,14 @@ class RootApp extends StatelessWidget {
             ],
           );
         }),
-        Consumer<MusicPlayingState>(builder: (_, state, __) {
-          return MusicBottomBar(play: state);
-        }),
+        Consumer<MusicPlayingState>(
+          builder: (_, state, __) {
+            // return MusicBottomBar(play: state);
+            return state.music != null
+                ? MusicBottomBar(play: state)
+                : Container();
+          },
+        ),
       ],
     );
   }
@@ -67,7 +72,7 @@ class RootApp extends StatelessWidget {
       {"icon": Feather.settings, "label": "Settings"}
     ];
     return Consumer<TabState>(builder: (_, state, __) {
-      print("Tab Changed2");
+      // print("Tab Changed2");
       return Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
