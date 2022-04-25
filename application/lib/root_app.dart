@@ -1,6 +1,7 @@
 import 'package:application/components/bottom_music_player.dart';
 import 'package:application/json/sample_data.dart';
 import 'package:application/pages/home_page.dart';
+import 'package:application/pages/library_page.dart';
 import 'package:application/pages/search_page.dart';
 import 'package:application/state/music_playing_state.dart';
 import 'package:application/state/tag_state.dart';
@@ -30,31 +31,13 @@ class RootApp extends StatelessWidget {
             index: state.tab,
             children: const [
               HomePage(),
-              Center(
-                child: Text('Library',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+              LibraryPage(),
               SearchPage(),
-              Center(
-                child: Text('Settings',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
             ],
           );
         }),
         Consumer<MusicPlayingState>(
           builder: (_, state, __) {
-            // return MusicBottomBar(play: state);
             return state.music != null
                 ? MusicBottomBar(play: state)
                 : Container();
@@ -69,7 +52,6 @@ class RootApp extends StatelessWidget {
       {"icon": Feather.home, "label": "Home"},
       {"icon": Feather.book, "label": "Book"},
       {"icon": Feather.search, "label": "Search"},
-      {"icon": Feather.settings, "label": "Settings"}
     ];
     return Consumer<TabState>(builder: (_, state, __) {
       // print("Tab Changed2");

@@ -86,69 +86,69 @@ class _HomePageState extends State<HomePage> {
 
   Widget _getAlbum(int index) {
     return Padding(
-                        padding: const EdgeInsets.only(right: 30),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                child: AlbumPage(
-                                  song: songs[index],
-                                ),
-                                alignment: Alignment.bottomCenter,
-                                type: PageTransitionType.scale,
-                              ),
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              Hero(
-                                tag: "album-${index + 1}",
-                                child: Container(
-                                  width: 180,
-                                  height: 180,
-                                  decoration: BoxDecoration(
-                                    color: primary,
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        songs[index]['img'],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                songs[index]['title'],
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              SizedBox(
-                                width: 180,
-                                child: Text(
-                                  songs[index]['description'],
-                                  maxLines: 1,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
+      padding: const EdgeInsets.only(right: 30),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            PageTransition(
+              child: AlbumPage(
+                song: songs[index],
+              ),
+              alignment: Alignment.bottomCenter,
+              type: PageTransitionType.scale,
+            ),
+          );
+        },
+        child: Column(
+          children: [
+            Hero(
+              tag: "album-${index + 1}",
+              child: Container(
+                width: 180,
+                height: 180,
+                decoration: BoxDecoration(
+                  color: primary,
+                  borderRadius: BorderRadius.circular(10),
+                  image: DecorationImage(
+                    image: AssetImage(
+                      songs[index]['img'],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              songs[index]['title'],
+              style: const TextStyle(
+                fontSize: 15,
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            SizedBox(
+              width: 180,
+              child: Text(
+                songs[index]['description'],
+                maxLines: 1,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget getBody() {

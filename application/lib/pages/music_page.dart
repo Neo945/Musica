@@ -41,7 +41,7 @@ class _MusicPageState extends State<MusicPage> {
   }
 
   initPlayer() {
-    player = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
+    player = AudioPlayer(mode: PlayerMode.MEDIA_PLAYER, playerId: "1");
     playSound("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
   }
 
