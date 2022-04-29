@@ -79,7 +79,6 @@ class _SearchPageState extends State<SearchPage> {
         padding: const EdgeInsets.only(left: 30, right: 30, top: 60),
         child: Column(
           children: [
-            // Search Box
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
