@@ -1,8 +1,8 @@
-import 'package:application/models/genre_model.dart';
-import 'package:application/models/language_model.dart';
+// import 'package:application/models/genre_model.dart';
+// import 'package:application/models/language_model.dart';
 import 'package:application/models/music_model.dart';
-import 'package:application/models/tags_model.dart';
-import 'package:application/models/user_model.dart';
+// import 'package:application/models/tags_model.dart';
+// import 'package:application/models/user_model.dart';
 import 'package:flutter/foundation.dart';
 
 class MusicPlayingState with ChangeNotifier {
@@ -10,10 +10,9 @@ class MusicPlayingState with ChangeNotifier {
   Music? music;
   bool isPlaying = false;
 
-  void play(Music? music, isPlaying){
+  void play(Music? music, isPlaying) {
     this.music = music;
     this.isPlaying = isPlaying;
     notifyListeners();
   }
 }
-

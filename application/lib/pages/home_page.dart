@@ -1,5 +1,5 @@
 import 'package:application/json/sample_data.dart';
-import 'package:application/pages/album_page.dart';
+// import 'package:application/pages/album_page.dart';
 import 'package:application/pages/album_page_v2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_font_icons/flutter_font_icons.dart';

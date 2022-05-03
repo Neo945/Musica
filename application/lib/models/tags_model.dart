@@ -7,10 +7,9 @@ class Tag {
   late String id;
   late String tag;
 
-  Tag({required this.id,required this.tag});
+  Tag({required this.id, required this.tag});
 
   factory Tag.fromJson(Map<String, dynamic> json) => _$TagFromJson(json);
 
   Map<String, dynamic> toJson() => _$TagToJson(this);
-
 }

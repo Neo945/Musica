@@ -26,7 +26,7 @@ class MusicPage extends StatefulWidget {
 }
 
 class _MusicPageState extends State<MusicPage> {
-  double _slider = 0;
+  // final double _slider = 0;
 
   late AudioPlayer player;
   bool _isPlaying = true;

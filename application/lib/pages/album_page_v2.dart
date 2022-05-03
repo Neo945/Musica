@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:application/json/sample_data.dart';
 import 'package:application/pages/music_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_font_icons/flutter_font_icons.dart';
 import 'package:page_transition/page_transition.dart';
 
 class AlbumPageV2 extends StatefulWidget {
@@ -27,71 +26,70 @@ class _AlbumPageV2State extends State<AlbumPageV2> {
     return SingleChildScrollView(
       child: Column(
         children: [
-        Stack(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                        Transform.translate(
-                          offset: Offset(-size.width * 0.1, -size.height * 0.2),
-                          child: Row(
-                            children: [
-                              ClipOval(
-                              child: Container(
-                                width: size.width,
-                                height: size.width - 40,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(widget.song['img']),
-                                      fit: BoxFit.cover),
-                                ),
-                                
-                              ),
-                            ),
-                            BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 70.0, sigmaY: 70.0),
-                            child: Container(
-                              decoration: BoxDecoration(color: Colors.white.withOpacity(0.0)),
-                            ),
-                          ),
-                            ]
+          Stack(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Transform.translate(
+                    offset: Offset(-size.width * 0.1, -size.height * 0.2),
+                    child: Row(children: [
+                      ClipOval(
+                        child: Container(
+                          width: size.width,
+                          height: size.width - 40,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(widget.song['img']),
+                                fit: BoxFit.cover),
                           ),
                         ),
-                Hero(
-                      tag: 'album-${widget.song["id"]}',
-                      child: Container(
+                      ),
+                      BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 70.0, sigmaY: 70.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.0)),
+                        ),
+                      ),
+                    ]),
+                  ),
+                  Hero(
+                    tag: 'album-${widget.song["id"]}',
+                    child: Container(
                       width: size.width * 0.65,
                       height: size.width * 0.65,
                       // decoration: BoxDecoration(color: Colors.white.withOpacity(0.5)),
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(widget.song['img']),
-                              fit: BoxFit.cover,),
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.55),
-                                  blurRadius: 10,
-                                  offset: Offset(0, 4),
-                                ),
-                              ],
+                        image: DecorationImage(
+                          image: AssetImage(widget.song['img']),
+                          fit: BoxFit.cover,
                         ),
-                    ),
-                  ),
-              ],
-          ),
-        SafeArea(
-                child: IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.55),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                       ),
                     ),
+                  ),
+                ],
               ),
-          ],
-        ),
-        Column(
+              SafeArea(
+                child: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Column(
             children: [
               const SizedBox(
                 height: 30,
@@ -295,7 +293,7 @@ class _AlbumPageV2State extends State<AlbumPageV2> {
               )
             ],
           ),
-          ],
+        ],
       ),
     );
   }

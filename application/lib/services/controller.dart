@@ -13,6 +13,4 @@ class Controller {
   static late List<Tag> tagList;
   static late List<Language> languageList;
   static late List<Genre> generList;
-  
-  
 }

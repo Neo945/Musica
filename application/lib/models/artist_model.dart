@@ -1,4 +1,3 @@
-
 import 'package:application/models/user_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -23,7 +22,7 @@ class Artist {
     required this.age,
     required this.user,
   });
-  
+
   factory Artist.fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);
 
   Map<String, dynamic> toJson() => _$ArtistToJson(this);

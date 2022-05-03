@@ -1,6 +1,6 @@
-import 'package:application/models/comment_model.dart';
+// import 'package:application/models/comment_model.dart';
 import 'package:application/models/message_model.dart';
-import 'package:application/models/music_model.dart';
+// import 'package:application/models/music_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'artist_model.dart';
@@ -19,8 +19,7 @@ class Room {
     required this.messages,
   });
 
-  factory Room.fromJson(Map<String, dynamic> json) =>
-      _$RoomFromJson(json);
+  factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
 
   Map<String, dynamic> toJson() => _$RoomToJson(this);
 }

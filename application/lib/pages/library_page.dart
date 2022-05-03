@@ -79,7 +79,7 @@ class _LibraryPageState extends State<LibraryPage> {
             padding: const EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: const [
                 Text(
                   "Artist Name",
                   style: TextStyle(
@@ -166,7 +166,7 @@ class _LibraryPageState extends State<LibraryPage> {
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
-                              color:Colors.white.withOpacity(0.7),
+                              color: Colors.white.withOpacity(0.7),
                             ),
                           ),
                         ),

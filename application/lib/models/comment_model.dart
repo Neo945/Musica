@@ -9,7 +9,11 @@ class Comment {
   late int likes;
   late List<Comment> comments;
 
-  Comment({required this.comment, required this.likes, required this.comments, required this.id});
+  Comment(
+      {required this.comment,
+      required this.likes,
+      required this.comments,
+      required this.id});
 
   factory Comment.fromJson(Map<String, dynamic> json) =>
       _$CommentFromJson(json);

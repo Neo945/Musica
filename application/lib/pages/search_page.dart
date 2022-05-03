@@ -12,7 +12,6 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +23,9 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget getAlbumBox() {
     return Row(
-      children: List.generate(2, (index) => Expanded(
+      children: List.generate(
+        2,
+        (index) => Expanded(
           flex: 5,
           child: Padding(
             padding: const EdgeInsets.all(5),
@@ -51,25 +52,26 @@ class _SearchPageState extends State<SearchPage> {
                         height: 80,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image:
-                                    AssetImage(songs[index]['img']))),
+                                image: AssetImage(songs[index]['img']))),
                       ),
                     ),
                   ),
                   const Padding(
                     padding: EdgeInsets.all(10),
-                    child: Text("Title", style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                    ),),
+                    child: Text(
+                      "Title",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
         ),
-        ),
+      ),
     );
   }
 
