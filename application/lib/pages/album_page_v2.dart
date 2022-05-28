@@ -1,9 +1,8 @@
 import 'dart:ui';
 
 import 'package:application/json/sample_data.dart';
-import 'package:application/pages/music_page.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:flutter_font_icons/flutter_font_icons.dart';
 
 class AlbumPageV2 extends StatefulWidget {
   const AlbumPageV2({Key? key, this.song}) : super(key: key);
@@ -21,277 +20,203 @@ class _AlbumPageV2State extends State<AlbumPageV2> {
     );
   }
 
+  Widget _getAlbumListTile(int index) {
+    return ListTile(
+      title: const Text("Title"),
+      subtitle: Row(
+        children: const [
+          Icon(Icons.download),
+          Text("Subtitle"),
+        ],
+      ),
+      trailing: const Icon(Icons.more_horiz),
+    );
+  }
+
   Widget getBody() {
     var size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Column(
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Stack(
         children: [
-          Stack(
+          Row(
             children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Transform.translate(
-                    offset: Offset(-size.width * 0.1, -size.height * 0.2),
-                    child: Row(children: [
-                      ClipOval(
-                        child: Container(
-                          width: size.width,
-                          height: size.width - 40,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(widget.song['img']),
-                                fit: BoxFit.cover),
+              SizedBox(
+                width: size.width - 20,
+                child: OverflowBox(
+                  maxWidth: 594,
+                  maxHeight: 594,
+                  child: Transform.translate(
+                    offset: const Offset(-137, -228),
+                    child: ClipOval(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(widget.song['img']),
+                            opacity: 0.7,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ),
-                      BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 70.0, sigmaY: 70.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.0)),
-                        ),
-                      ),
-                    ]),
-                  ),
-                  Hero(
-                    tag: 'album-${widget.song["id"]}',
-                    child: Container(
-                      width: size.width * 0.65,
-                      height: size.width * 0.65,
-                      // decoration: BoxDecoration(color: Colors.white.withOpacity(0.5)),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(widget.song['img']),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.55),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
-              SafeArea(
-                child: IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.white,
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.0),
                   ),
                 ),
               ),
             ],
           ),
-          Column(
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 30, left: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.song['title'],
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: const Padding(
-                        padding: EdgeInsets.only(
-                            left: 12, right: 12, top: 8, bottom: 8),
-                        child: Text(
-                          "Subscribe",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 30),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                SafeArea(
                   child: Row(
-                    children: List.generate(songs.length - 5, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 30),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    child: MusicPage(
-                                      title: songs[index]['title'],
-                                      description: songs[index]['description'],
-                                      color: songs[index]['color'],
-                                      img: songs[index]['img'],
-                                      url: songs[index]['song_url'],
-                                    ),
-                                    alignment: Alignment.bottomCenter,
-                                    type: PageTransitionType.scale));
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                width: 180,
-                                height: 180,
-                                decoration: BoxDecoration(
-                                    color: primary,
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            songs[index + 5]['img']))),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                songs[index]['title'],
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              SizedBox(
-                                width: size.width - 210,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        songs[index]['song_count'],
-                                        maxLines: 1,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        songs[index]['date'],
-                                        maxLines: 1,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
                         ),
-                      );
-                    }),
+                      ),
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(
+                          Feather.more_vertical,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Column(
-                children: List.generate(widget.song['songs']?.length, (index) {
-                  return Padding(
-                    padding:
-                        const EdgeInsets.only(left: 30, right: 30, bottom: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                child: MusicPage(
-                                  title: widget.song['songs'][index]['title'],
-                                  description: widget.song['songs'][index]
-                                      ['description'],
-                                  color: widget.song['songs'][index]['color'],
-                                  img: widget.song['songs'][index]['img'],
-                                  url: widget.song['songs'][index]['song_url'],
-                                ),
-                                alignment: Alignment.bottomCenter,
-                                type: PageTransitionType.scale));
-                      },
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: (size.width - 60) * 0.77,
-                            child: Text(
-                              "${index + 1} " +
-                                  widget.song['songs'][index]['title'],
-                              style: const TextStyle(
-                                color: Colors.white,
+                Hero(
+                  tag: 'album-${widget.song["id"]}',
+                  child: Container(
+                    width: size.width * 0.6,
+                    height: size.width * 0.6,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(widget.song['img']),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  widget.song['title'],
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                // const ListTile(
+                //   leading: CircleAvatar(
+                //     backgroundColor: Colors.white,
+                //   ),
+                //   title: Text(
+                //     'Music',
+                //   ),
+                // ),
+                Row(
+                  children: const [
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                    ),
+                    Text(
+                      'Music',
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        const Text("Album . 2017"),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: const [
+                            Icon(
+                              FontAwesome.heart,
+                            ),
+                            Icon(
+                              Icons.download_done_outlined,
+                            ),
+                            Icon(
+                              Feather.more_horizontal,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        SizedBox.fromSize(
+                          size: const Size(56, 56), // button width and height
+                          child: ClipOval(
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: primary,
+                              ),
+                              child: InkWell(
+                                splashColor: Colors.white, // splash color
+                                onTap: () {}, // button pressed
+                                child: const Icon(FontAwesome.play), // icon
                               ),
                             ),
                           ),
-                          SizedBox(
-                            width: (size.width - 60) * 0.23,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  widget.song['songs'][index]['duration'],
-                                  style: const TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                Container(
-                                  width: 25,
-                                  height: 25,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.grey.withOpacity(0.8),
-                                  ),
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.play_arrow,
-                                      color: Colors.white,
-                                      size: 16,
-                                    ),
-                                  ),
-                                )
-                              ],
+                        ),
+                        SizedBox.fromSize(
+                          size: const Size(26, 26), // button width and height
+                          child: ClipOval(
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: InkWell(
+                                splashColor: primary, // splash color
+                                onTap: () {}, // button pressed
+                                child: const Icon(
+                                  Icons.shuffle_rounded,
+                                  color: primary,
+                                  size: 20,
+                                ), // icon
+                              ),
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     ),
-                  );
-                }),
-              )
-            ],
+                  ],
+                ),
+                Column(
+                  children:
+                      List.generate(5, (index) => _getAlbumListTile(index)),
+                ),
+              ],
+            ),
           ),
         ],
       ),

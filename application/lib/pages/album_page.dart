@@ -179,18 +179,19 @@ class _AlbumPageState extends State<AlbumPage> {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(
-                            context,
-                            PageTransition(
-                                child: MusicPage(
-                                  title: widget.song['songs'][index]['title'],
-                                  description: widget.song['songs'][index]
-                                      ['description'],
-                                  color: widget.song['songs'][index]['color'],
-                                  img: widget.song['songs'][index]['img'],
-                                  url: widget.song['songs'][index]['song_url'],
-                                ),
-                                alignment: Alignment.bottomCenter,
-                                type: PageTransitionType.scale));
+                          context,
+                          PageTransition(
+                              child: MusicPage(
+                                title: widget.song['songs'][index]['title'],
+                                description: widget.song['songs'][index]
+                                    ['description'],
+                                color: widget.song['songs'][index]['color'],
+                                img: widget.song['songs'][index]['img'],
+                                url: widget.song['songs'][index]['song_url'],
+                              ),
+                              alignment: Alignment.bottomCenter,
+                              type: PageTransitionType.scale),
+                        );
                       },
                       child: Row(
                         children: [
